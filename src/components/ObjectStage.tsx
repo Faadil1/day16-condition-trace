@@ -1,8 +1,21 @@
-import { Canvas } from '@react-three/fiber'
+import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { ContactShadows, Environment, OrbitControls } from '@react-three/drei'
 import { Crosshair, MoveHorizontal } from 'lucide-react'
+import * as THREE from 'three'
 import { CeramicVessel } from './CeramicVessel'
 import type { WorkflowStep } from '../types/evidence'
+
+function CameraRig({ inspection }: { inspection: boolean }) {
+  const { camera } = useThree()
+  useFrame(() => {
+    const cam = camera as THREE.PerspectiveCamera
+    if (cam.fov === undefined) return
+    const target = inspection ? 33 : 36
+    cam.fov += (target - cam.fov) * 0.04
+    cam.updateProjectionMatrix()
+  })
+  return null
+}
 
 export function ObjectStage({ step, lightAngle, onLightAngle }: {
   step: WorkflowStep
@@ -14,6 +27,8 @@ export function ObjectStage({ step, lightAngle, onLightAngle }: {
     ? Math.max(0, (lightAngle - 45) / 45)
     : step === 'compare' || step === 'finding' || step === 'record' ? 1 : 0
   const x = -4 + (lightAngle / 90) * 8
+
+  const bandLeft = `${(lightAngle / 90) * 82 + 7}%`
 
   return (
     <section className="object-stage" aria-label="Three-dimensional object examination">
@@ -27,8 +42,14 @@ export function ObjectStage({ step, lightAngle, onLightAngle }: {
         </div>
       )}
 
+      {/* Grazing-light band — sweeps with spotlight during inspection */}
+      {inspection && (
+        <div className="grazing-band" style={{ left: bandLeft }} aria-hidden="true" />
+      )}
+
       <Canvas shadows camera={{ position: [0, .1, 5.7], fov: 36 }} dpr={[1, 1.5]}>
         <color attach="background" args={['#151411']} />
+        <CameraRig inspection={inspection} />
         <ambientLight intensity={inspection ? .18 : .7} color="#d6c7a6" />
         <spotLight
           position={[x, 3.5, 3]}

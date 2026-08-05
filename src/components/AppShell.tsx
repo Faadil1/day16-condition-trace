@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { MuseumHeader } from './MuseumHeader'
 import { ObjectStage } from './ObjectStage'
 import { EvidencePanel } from './EvidencePanel'
@@ -13,6 +13,29 @@ export function AppShell() {
   const [selectedId, setSelectedId] = useState('return-arrival')
   const [lightAngle, setLightAngle] = useState(24)
   const next = () => setStep(current => order[Math.min(order.indexOf(current) + 1, order.length - 1)])
+
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if ((e.target as HTMLElement).tagName === 'INPUT') return
+      if (e.key === ' ') {
+        e.preventDefault()
+        next()
+      } else if (e.key === 'r' || e.key === 'R') {
+        setStep('open')
+        setSelectedId('return-arrival')
+        setLightAngle(24)
+      } else if (e.key === 'ArrowLeft' && step === 'inspect') {
+        e.preventDefault()
+        setLightAngle(a => Math.max(0, a - 5))
+      } else if (e.key === 'ArrowRight' && step === 'inspect') {
+        e.preventDefault()
+        setLightAngle(a => Math.min(90, a + 5))
+      }
+    }
+    window.addEventListener('keydown', handleKey)
+    return () => window.removeEventListener('keydown', handleKey)
+  }, [step])
+
   return (
     <main className="app-shell">
       <MuseumHeader />

@@ -84,11 +84,11 @@ export function CeramicVessel({ reveal = 0, active = false }: { reveal?: number;
 
       {/* Handles */}
       <mesh castShadow>
-        <tubeGeometry args={[handleF, 28, 0.058, 7, false]} />
+        <tubeGeometry args={[handleF, 28, 0.042, 7, false]} />
         <meshPhysicalMaterial color="#c2aa7a" roughness={0.63} metalness={0.0} clearcoat={0.04} clearcoatRoughness={0.8} />
       </mesh>
       <mesh castShadow>
-        <tubeGeometry args={[handleB, 28, 0.058, 7, false]} />
+        <tubeGeometry args={[handleB, 28, 0.042, 7, false]} />
         <meshPhysicalMaterial color="#c2aa7a" roughness={0.63} metalness={0.0} clearcoat={0.04} clearcoatRoughness={0.8} />
       </mesh>
 

@@ -50,6 +50,7 @@ button:focus-visible, input:focus-visible { outline: 2px solid #cba56e; outline-
 .stage-examination-badge { position: absolute; z-index: 3; right: 25px; top: 22px; text-align: right; }
 .exam-label { display: block; font: 400 9px DM Mono; letter-spacing: .16em; color: var(--muted); text-transform: uppercase; }
 .exam-status { display: block; font: 400 8px DM Mono; letter-spacing: .1em; color: #4e4b44; margin-top: 3px; }
+.grazing-band { position: absolute; z-index: 2; top: 0; bottom: 0; width: 90px; transform: translateX(-50%); background: linear-gradient(90deg, transparent, rgba(246,230,189,.05) 50%, transparent); pointer-events: none; transition: left .08s linear; }
 .light-console { position: absolute; z-index: 5; width: 410px; right: 25px; bottom: 25px; padding: 15px 18px 13px; background: rgba(25,23,19,.94); border: 1px solid rgba(191,158,105,.35); }
 .light-console-copy { display: grid; grid-template-columns: 24px 1fr auto; align-items: center; gap: 8px; }
 .light-console-copy strong, .light-console-copy span { display: block; }
@@ -107,17 +108,17 @@ dd { margin: 0; font-size: 12.5px; line-height: 1.55; text-align: right; max-wid
 .record-track { display: grid; grid-template-columns: repeat(4, 1fr); padding: 2px 12px 15px; }
 .track-segment { display: flex; min-width: 0; position: relative; }
 .record-node { position: relative; flex: 1; text-align: left; background: transparent; border: 0; border-top: 1px solid #39362f; padding: 17px 8px 4px 0; cursor: pointer; }
-.record-node.active { border-color: #c39c65; }
+.record-node.active { border-color: #d9a84a; }
 .node-dot { position: absolute; top: -4px; left: 0; width: 7px; height: 7px; background: #5a554b; border-radius: 50%; box-shadow: 0 0 0 4px #141310; }
-.record-node.active .node-dot { background: #d0ad78; }
+.record-node.active .node-dot { background: #e8c068; }
 .node-index { position: absolute; right: 8px; top: 7px; color: #5e594f; font: 400 8px DM Mono; }
-.node-date, .node-institution { display: block; color: var(--muted); font: 400 7px DM Mono; letter-spacing: .05em; }
-.record-node strong { display: block; font: 500 10px Manrope; margin: 5px 0 2px; }
+.node-date, .node-institution { display: block; color: var(--muted); font: 400 8px DM Mono; letter-spacing: .05em; }
+.record-node strong { display: block; font: 500 11px Manrope; margin: 5px 0 2px; }
 .record-node .evidence-status { margin-top: 7px; }
-.handoff { width: 65px; flex: 0 0 65px; height: 25px; margin-top: -12px; display: flex; flex-direction: column; align-items: center; color: #6f695e; font: 400 6px DM Mono; text-transform: uppercase; }
+.handoff { width: 65px; flex: 0 0 65px; height: 25px; margin-top: -12px; display: flex; flex-direction: column; align-items: center; color: #6f695e; font: 400 7px DM Mono; text-transform: uppercase; }
 .handoff i { display: block; width: 100%; border-top: 1px dashed #48443c; margin-top: 5px; }
-.handoff.highlight { color: #d0aa72; }
-.handoff.highlight i { border-color: #b58d56; }
+.handoff.highlight { color: #e8c07a; }
+.handoff.highlight i { border-color: #c9993f; }
 
 .comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
 .comparison-frame { padding: 9px; border: 1px solid var(--line); }
@@ -141,7 +142,7 @@ dd { margin: 0; font-size: 12.5px; line-height: 1.55; text-align: right; max-wid
 .finding-list dd { display: flex; align-items: center; gap: 5px; }
 
 .drawer-backdrop { position: fixed; inset: 0; z-index: 20; background: rgba(5,5,4,.72); display: flex; justify-content: flex-end; }
-.record-drawer { width: min(850px, 70vw); height: 100%; background: var(--paper); color: #28251f; position: relative; overflow: auto; box-shadow: -25px 0 70px #000; animation: drawer-in .38s ease-out; }
+.record-drawer { width: min(850px, 70vw); height: 100%; background: var(--paper); color: #28251f; position: relative; overflow: auto; box-shadow: -25px 0 70px #000; animation: drawer-in .48s ease-out; }
 @keyframes drawer-in { from { transform: translateX(100%); } }
 .drawer-close { position: absolute; right: 22px; top: 20px; background: none; border: 0; color: #4a453b; cursor: pointer; }
 .document-header { min-height: 110px; padding: 25px 70px 20px 35px; border-bottom: 1px solid rgba(40,37,31,.25); display: flex; align-items: center; gap: 18px; }
