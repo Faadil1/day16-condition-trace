@@ -1,0 +1,26 @@
+{
+  "name": "condition-trace-submission-video",
+  "version": "1.0.0",
+  "description": "Remotion submission film for Condition Trace — Day 16",
+  "scripts": {
+    "studio": "npx remotion studio",
+    "render": "npx remotion render ConditionTraceFinal renders/Condition_Trace_Final_1080p.mp4 --codec h264 --crf 18 --pixel-format yuv420p",
+    "render-silent": "npx remotion render ConditionTraceFinal renders/Condition_Trace_Final_Silent_1080p.mp4 --codec h264 --crf 18 --pixel-format yuv420p --muted",
+    "cover-portrait": "npx remotion still CoverPortrait screenshots/04-condition-trace-cover-4x5.png --frame 0",
+    "cover-square": "npx remotion still CoverSquare screenshots/05-condition-trace-cover-square.png --frame 0"
+  },
+  "dependencies": {
+    "remotion": "^4.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "@remotion/cli": "^4.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "typescript": "^5.0.0"
+  },
+  "remotion": {
+    "entryPoint": "src/index.ts"
+  }
+}
