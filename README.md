@@ -1,5 +1,20 @@
 # Condition Trace
 
+**Day 16 of “30 Days of Real Business Problems”**
+
+## Live Demo
+
+[https://day16-condition-trace.vercel.app](https://day16-condition-trace.vercel.app)
+
+## GitHub
+
+[https://github.com/Faadil1/day16-condition-trace](https://github.com/Faadil1/day16-condition-trace)
+
+> Best viewed on desktop at 1440 × 900. All institutions, objects, and records are fictional.
+> The system identifies the **first documented appearance** of a feature in the record chain — not physical cause or liability.
+
+---
+
 A polished desktop prototype for Day 16 of the “30 Days of Real Business Problems” challenge.
 
 ## Purpose
