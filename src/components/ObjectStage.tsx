@@ -48,7 +48,7 @@ export function ObjectStage({ step, lightAngle, onLightAngle }: {
       )}
 
       <Canvas shadows camera={{ position: [0, .1, 5.7], fov: 36 }} dpr={[1, 1.5]}>
-        <color attach="background" args={['#151411']} />
+        <color attach="background" args={['#190E0C']} />
         <CameraRig inspection={inspection} />
         <ambientLight intensity={inspection ? .18 : .7} color="#d6c7a6" />
         <spotLight
