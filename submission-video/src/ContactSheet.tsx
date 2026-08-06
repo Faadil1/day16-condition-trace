@@ -7,14 +7,14 @@ import React from 'react';
 import { AbsoluteFill, Img, staticFile } from 'remotion';
 
 const FRAMES = [
-  { file: 'frame-0090.png', label: '3 s — Opening object' },
-  { file: 'frame-0210.png', label: '7 s — Record chain' },
-  { file: 'frame-0360.png', label: '12 s — Raking light' },
-  { file: 'frame-0480.png', label: '16 s — Crack visible' },
-  { file: 'frame-0630.png', label: '21 s — Compare' },
-  { file: 'frame-0720.png', label: '24 s — Finding' },
-  { file: 'frame-0810.png', label: '27 s — Evidence drawer' },
-  { file: 'frame-0900.png', label: '30 s — End card' },
+  { file: 'frame-0105.png', label: '3.5 s — Opening object'   },
+  { file: 'frame-0210.png', label: '7.0 s — Record chain'     },
+  { file: 'frame-0390.png', label: '13.0 s — Raking light'    },
+  { file: 'frame-0525.png', label: '17.5 s — Crack visible'   },
+  { file: 'frame-0645.png', label: '21.5 s — Compare'         },
+  { file: 'frame-0750.png', label: '25.0 s — Finding'         },
+  { file: 'frame-0840.png', label: '28.0 s — Evidence drawer' },
+  { file: 'frame-0930.png', label: '31.0 s — End card'        },
 ];
 
 const CELL_W = 460;
@@ -42,7 +42,7 @@ export const ContactSheet: React.FC = () => (
         fontFamily: '"Courier New", Courier, monospace',
         fontSize: 11, color: '#B58A59', letterSpacing: '0.16em', textTransform: 'uppercase',
       }}>
-        1920×1080 · 30 fps · H.264 · 31 s
+        1920×1080 · 30 fps · H.264 · 33 s
       </div>
     </div>
 
