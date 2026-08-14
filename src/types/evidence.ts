@@ -21,5 +21,6 @@ export interface CapturedObservation {
   area: string
   feature: string
   status: 'Human-reviewed'
+  capturedAt: string
   imageDataUrl: string
 }
