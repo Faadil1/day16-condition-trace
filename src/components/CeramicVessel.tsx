@@ -24,10 +24,16 @@ function buildCeramicTextures() {
   for (let y = 0; y < size; y += 1) {
     for (let x = 0; x < size; x += 1) {
       const i = (y * size + x) * 4
-      const broad = Math.sin(x * 0.052) * 5.2 + Math.cos(y * 0.041) * 4.4
-      const kiln = Math.sin((x + y) * 0.018) * 5.5 + Math.cos((x - y) * 0.026) * 3.6
-      const speck = Math.sin(x * 0.39 + y * 0.17) * 2 + Math.cos(x * 0.16 - y * 0.31) * 1.6
-      const mottling = Math.sin(x * 0.013) * Math.cos(y * 0.017) * 5.5
+      const u = (x / size) * Math.PI * 2
+      const v = y / (size - 1)
+
+      // Every circumferential term uses an integer number of cycles so u=0 and
+      // u=2π match exactly. This removes the vertical panel seams that appeared
+      // when the previous non-tileable canvas was repeated around the lathe UVs.
+      const broad = Math.sin(u * 2 + v * 1.7) * 3.6 + Math.cos(u * 5 - v * 2.3) * 1.8
+      const kiln = Math.sin(u * 3 + v * 5.2) * 2.7 + Math.cos(u * 7 - v * 3.1) * 1.35
+      const speck = Math.sin(u * 17 + v * 31) * 0.9 + Math.cos(u * 29 - v * 19) * 0.65
+      const mottling = Math.sin(u * 4 + v * 2.1) * Math.cos(v * Math.PI * 2.4) * 2.2
       const variation = broad + kiln + speck + mottling
 
       colorImage.data[i] = Math.max(0, Math.min(255, 176 + variation))
@@ -35,12 +41,18 @@ function buildCeramicTextures() {
       colorImage.data[i + 2] = Math.max(0, Math.min(255, 108 + variation * 0.48))
       colorImage.data[i + 3] = 255
 
-      const rough = 172 + Math.sin(x * 0.068 + y * 0.041) * 24 + Math.cos(y * 0.13) * 12 + speck * 2
-      roughImage.data[i] = roughImage.data[i + 1] = roughImage.data[i + 2] = Math.max(130, Math.min(232, rough))
+      const rough = 176
+        + Math.sin(u * 3 + v * 4.2) * 18
+        + Math.cos(u * 8 - v * 5.4) * 8
+        + speck * 4
+      roughImage.data[i] = roughImage.data[i + 1] = roughImage.data[i + 2] = Math.max(138, Math.min(224, rough))
       roughImage.data[i + 3] = 255
 
-      const bump = 127 + Math.sin(x * 0.21) * 3.6 + Math.cos(y * 0.17) * 3.4 + Math.sin((x + y) * 0.35) * 1.7
-      bumpImage.data[i] = bumpImage.data[i + 1] = bumpImage.data[i + 2] = Math.max(114, Math.min(140, bump))
+      const bump = 127
+        + Math.sin(u * 12 + v * 18) * 2.4
+        + Math.cos(u * 23 - v * 11) * 1.8
+        + Math.sin(u * 37 + v * 29) * 0.9
+      bumpImage.data[i] = bumpImage.data[i + 1] = bumpImage.data[i + 2] = Math.max(118, Math.min(136, bump))
       bumpImage.data[i + 3] = 255
     }
   }
@@ -56,8 +68,8 @@ function buildCeramicTextures() {
 
   ;[colorMap, roughnessMap, bumpMap].forEach(texture => {
     texture.wrapS = THREE.RepeatWrapping
-    texture.wrapT = THREE.RepeatWrapping
-    texture.repeat.set(2.15, 1.7)
+    texture.wrapT = THREE.ClampToEdgeWrapping
+    texture.repeat.set(1, 1)
     texture.needsUpdate = true
   })
 
@@ -67,9 +79,6 @@ function buildCeramicTextures() {
 export function CeramicVessel({ reveal = 0, active = false }: { reveal?: number; active?: boolean }) {
   const group = useRef<THREE.Group>(null)
 
-  // Sparse historical-form control points are spline-sampled before lathe generation.
-  // This preserves a slightly handmade silhouette without the large planar facets that
-  // made the previous version read like a low-poly game asset.
   const profile = useMemo(() => {
     const curve = new THREE.CatmullRomCurve3([
       new THREE.Vector3(0.40, -1.62, 0),
@@ -135,41 +144,40 @@ export function CeramicVessel({ reveal = 0, active = false }: { reveal?: number;
     new THREE.Vector3(0.95, 0.38, 0.02),
   ], false, 'centripetal'), [])
 
-  // The feature sits slightly proud of the rendered surface to avoid depth-fighting.
-  // A dark interruption plus a faint adjacent highlight approximates a shallow groove
-  // becoming legible under raking light without turning into a painted black line.
+  // The crack is intentionally front-biased on the upper-right shoulder so the
+  // examination reticle and the captured evidence refer to the same visible area.
   const crackMain = useMemo(() => new THREE.CatmullRomCurve3([
-    new THREE.Vector3(0.61, 0.91, 0.70),
-    new THREE.Vector3(0.635, 0.84, 0.72),
-    new THREE.Vector3(0.615, 0.775, 0.735),
-    new THREE.Vector3(0.655, 0.705, 0.715),
-    new THREE.Vector3(0.635, 0.635, 0.725),
-    new THREE.Vector3(0.665, 0.565, 0.69),
+    new THREE.Vector3(0.53, 0.91, 0.76),
+    new THREE.Vector3(0.555, 0.84, 0.78),
+    new THREE.Vector3(0.535, 0.775, 0.795),
+    new THREE.Vector3(0.575, 0.705, 0.775),
+    new THREE.Vector3(0.555, 0.635, 0.785),
+    new THREE.Vector3(0.585, 0.565, 0.75),
   ], false, 'centripetal'), [])
 
   const crackBranch = useMemo(() => new THREE.CatmullRomCurve3([
-    new THREE.Vector3(0.64, 0.735, 0.725),
-    new THREE.Vector3(0.69, 0.71, 0.695),
-    new THREE.Vector3(0.725, 0.675, 0.66),
+    new THREE.Vector3(0.56, 0.735, 0.785),
+    new THREE.Vector3(0.61, 0.71, 0.755),
+    new THREE.Vector3(0.645, 0.675, 0.72),
   ], false, 'centripetal'), [])
 
   useFrame((_, delta) => {
     if (group.current && !active) group.current.rotation.y += delta * 0.028
   })
 
-  const crackOpacity = Math.max(0.012, reveal * 0.68)
+  const crackOpacity = Math.max(0.008, reveal * 0.66)
 
   const ceramicMaterial = {
     map: colorMap,
     color: '#f3ead5',
-    roughness: 0.68,
+    roughness: 0.7,
     roughnessMap,
     bumpMap,
-    bumpScale: 0.018,
+    bumpScale: 0.014,
     metalness: 0,
-    clearcoat: 0.055,
-    clearcoatRoughness: 0.84,
-    envMapIntensity: 0.16,
+    clearcoat: 0.045,
+    clearcoatRoughness: 0.88,
+    envMapIntensity: 0.14,
   } as const
 
   return (
@@ -180,22 +188,21 @@ export function CeramicVessel({ reveal = 0, active = false }: { reveal?: number;
 
       <mesh position={[0.008, -1.59, -0.004]} rotation={[Math.PI / 2, 0, 0]} castShadow>
         <torusGeometry args={[0.48, 0.046, 12, 96]} />
-        <meshPhysicalMaterial {...ceramicMaterial} color="#e4d5b7" roughness={0.74} bumpScale={0.015} />
+        <meshPhysicalMaterial {...ceramicMaterial} color="#e4d5b7" roughness={0.76} bumpScale={0.012} />
       </mesh>
       <mesh position={[-0.006, 1.555, 0.004]} rotation={[Math.PI / 2, 0, 0]} castShadow>
         <torusGeometry args={[0.535, 0.052, 14, 112]} />
-        <meshPhysicalMaterial {...ceramicMaterial} color="#eee0c2" roughness={0.64} />
+        <meshPhysicalMaterial {...ceramicMaterial} color="#eee0c2" roughness={0.67} />
       </mesh>
       <mesh position={[-0.006, 1.565, 0.004]} rotation={[Math.PI / 2, 0, 0]}>
         <torusGeometry args={[0.455, 0.025, 10, 96]} />
         <meshStandardMaterial color="#745f43" roughness={0.96} />
       </mesh>
 
-      {/* Hand-applied decoration: lower contrast, thinner and deliberately imperfect. */}
       {[-0.38, -0.22].map((y, index) => (
         <mesh key={y} position={[0, y + (index ? 0.004 : -0.003), 0]} rotation={[Math.PI / 2, 0, 0]}>
           <torusGeometry args={[1.074 - index * 0.004, 0.0065, 7, 144]} />
-          <meshStandardMaterial color="#77694b" roughness={0.96} transparent opacity={0.46} />
+          <meshStandardMaterial color="#77694b" roughness={0.96} transparent opacity={0.44} />
         </mesh>
       ))}
 
@@ -212,22 +219,22 @@ export function CeramicVessel({ reveal = 0, active = false }: { reveal?: number;
             scale={[0.82 + (i % 3) * 0.08, lengthScale, 1]}
           >
             <capsuleGeometry args={[0.009, 0.45, 4, 8]} />
-            <meshStandardMaterial color="#6c6549" roughness={1} transparent opacity={0.38 + (i % 4) * 0.025} />
+            <meshStandardMaterial color="#6c6549" roughness={1} transparent opacity={0.36 + (i % 4) * 0.025} />
           </mesh>
         )
       })}
 
       <mesh castShadow>
         <tubeGeometry args={[handleLeft, 48, 0.052, 10, false]} />
-        <meshPhysicalMaterial {...ceramicMaterial} color="#eadabd" roughness={0.72} bumpScale={0.015} />
+        <meshPhysicalMaterial {...ceramicMaterial} color="#eadabd" roughness={0.74} bumpScale={0.012} />
       </mesh>
       <mesh castShadow>
         <tubeGeometry args={[handleRight, 48, 0.049, 10, false]} />
-        <meshPhysicalMaterial {...ceramicMaterial} color="#e7d6b7" roughness={0.73} bumpScale={0.015} />
+        <meshPhysicalMaterial {...ceramicMaterial} color="#e7d6b7" roughness={0.75} bumpScale={0.012} />
       </mesh>
 
       <mesh renderOrder={4}>
-        <tubeGeometry args={[crackMain, 36, 0.0052, 6, false]} />
+        <tubeGeometry args={[crackMain, 36, 0.0048, 6, false]} />
         <meshStandardMaterial
           color="#594638"
           roughness={1}
@@ -239,12 +246,12 @@ export function CeramicVessel({ reveal = 0, active = false }: { reveal?: number;
         />
       </mesh>
       <mesh renderOrder={4}>
-        <tubeGeometry args={[crackBranch, 18, 0.0031, 5, false]} />
-        <meshStandardMaterial color="#604a3a" roughness={1} transparent opacity={reveal * 0.48} depthWrite={false} />
+        <tubeGeometry args={[crackBranch, 18, 0.0028, 5, false]} />
+        <meshStandardMaterial color="#604a3a" roughness={1} transparent opacity={reveal * 0.44} depthWrite={false} />
       </mesh>
       <mesh position={[-0.006, 0.003, 0.006]} renderOrder={5}>
-        <tubeGeometry args={[crackMain, 36, 0.0019, 4, false]} />
-        <meshStandardMaterial color="#e0cfa9" roughness={0.98} transparent opacity={reveal * 0.24} depthWrite={false} />
+        <tubeGeometry args={[crackMain, 36, 0.0017, 4, false]} />
+        <meshStandardMaterial color="#e0cfa9" roughness={0.98} transparent opacity={reveal * 0.22} depthWrite={false} />
       </mesh>
     </group>
   )
