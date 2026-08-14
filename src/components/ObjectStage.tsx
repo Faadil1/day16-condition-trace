@@ -83,25 +83,38 @@ export function ObjectStage({ step, lightAngle, onLightAngle, observation, onCan
           camera={{ position: [0, 0.04, 6.2], fov: 30 }}
           dpr={[1, 1.5]}
           gl={{ preserveDrawingBuffer: true, antialias: true }}
-          onCreated={({ gl }) => onCanvasReady(gl.domElement)}
+          onCreated={({ gl }) => {
+            gl.toneMappingExposure = 1.08
+            onCanvasReady(gl.domElement)
+          }}
         >
           <color attach="background" args={['#190E0C']} />
           <CameraRig inspection={inspection} />
-          <hemisphereLight args={['#e6d6b8', '#2d1915', inspection ? 0.16 : 0.38]} />
-          <ambientLight intensity={inspection ? 0.09 : 0.28} color="#d6c7a6" />
+
+          {/* Quiet museum fill: enough to read the whole ceramic form without flattening it. */}
+          <hemisphereLight args={['#ead9bb', '#2c1814', inspection ? 0.24 : 0.5]} />
+          <ambientLight intensity={inspection ? 0.12 : 0.34} color="#d8c8aa" />
+
+          {/* Examination light remains directional and becomes the dominant source in inspect mode. */}
           <spotLight
             position={[x, 1.85, 3.7]}
-            angle={inspection ? 0.2 : 0.48}
-            penumbra={inspection ? 0.52 : 0.8}
-            intensity={inspection ? 6.3 : 2.35}
-            color="#f2dfb8"
+            angle={inspection ? 0.19 : 0.5}
+            penumbra={inspection ? 0.5 : 0.84}
+            intensity={inspection ? 5.5 : 1.72}
+            color="#f1ddb6"
             castShadow
           />
-          <directionalLight position={[-3.2, 2.5, 4]} intensity={inspection ? 0.22 : 0.48} color="#b9aa8c" />
-          <directionalLight position={[2.8, 2.4, -4.8]} intensity={0.18} color="#9ca5b5" />
+
+          {/* Broad front-left fill restores body and decoration readability. */}
+          <directionalLight position={[-3.4, 2.7, 4.4]} intensity={inspection ? 0.3 : 0.66} color="#c7b89b" />
+          {/* Very soft low fill prevents the foot and reed pattern from falling into black. */}
+          <directionalLight position={[-1.8, -2.6, 3.2]} intensity={inspection ? 0.07 : 0.14} color="#a88f72" />
+          {/* Restrained cool rim for silhouette separation only. */}
+          <directionalLight position={[2.8, 2.4, -4.8]} intensity={0.11} color="#9da4ae" />
+
           <CeramicVessel reveal={reveal} active={inspection} />
-          <ContactShadows position={[0, -1.53, 0]} opacity={0.42} scale={4.7} blur={3.1} />
-          <Environment preset="studio" environmentIntensity={0.1} />
+          <ContactShadows position={[0, -1.53, 0]} opacity={0.34} scale={4.7} blur={3.4} />
+          <Environment preset="studio" environmentIntensity={0.055} />
           <OrbitControls
             enablePan={false}
             enableZoom={false}
