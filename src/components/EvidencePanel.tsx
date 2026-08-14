@@ -1,7 +1,7 @@
 import { ArrowRight, Check, FileText, Lightbulb, ShieldCheck } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { objectRecord, records } from '../data/objectRecord'
-import type { WorkflowStep } from '../types/evidence'
+import type { CapturedObservation, WorkflowStep } from '../types/evidence'
 import { EvidenceStatus } from './EvidenceStatus'
 import { ComparisonView } from './ComparisonView'
 
@@ -11,16 +11,17 @@ const stepMeta: Record<WorkflowStep, { n: string; label: string }> = {
   finding: { n: '05', label: 'First documented appearance' }, record: { n: '06', label: 'Evidence record' },
 }
 
-export function EvidencePanel({ step, selectedId, lightAngle, onNext }: {
+export function EvidencePanel({ step, selectedId, lightAngle, observation, onNext }: {
   step: WorkflowStep
   selectedId: string
   lightAngle: number
+  observation: CapturedObservation | null
   onNext: () => void
 }) {
   const selected = records.find(r => r.id === selectedId) ?? records[3]
   const ready = lightAngle >= 72
   const buttons: Partial<Record<WorkflowStep, string>> = {
-    open: 'Begin return inspection', records: 'Inspect current condition', inspect: 'Mark observed feature',
+    open: 'Begin return inspection', records: 'Inspect current condition', inspect: 'Capture observation',
     compare: 'Review record chain', finding: 'Generate evidence record',
   }
   return (
@@ -58,14 +59,14 @@ export function EvidencePanel({ step, selectedId, lightAngle, onNext }: {
             </div>
           </>}
           {step === 'inspect' && <>
-            <p className="lead">Move the examination light across the surface. Observation and interpretation remain with the examiner.</p>
+            <p className="lead">Move the examination light across the surface. Once the feature is legible, capture the observation for comparison.</p>
             <div className="inspection-readout">
               <Lightbulb size={20} />
-              <div><span>EXAMINATION CONDITION</span><strong>{ready ? 'Shallow angle reached' : 'Adjust raking-light angle'}</strong><p>{ready ? 'Feature is legible for human review.' : 'Move the control to examine the shoulder relief.'}</p></div>
+              <div><span>EXAMINATION CONDITION</span><strong>{ready ? 'Shallow angle reached' : 'Adjust raking-light angle'}</strong><p>{ready ? 'Feature is legible. Capture will preserve this exact examination frame.' : 'Move the control to examine the shoulder relief.'}</p></div>
             </div>
             <div className="feature-spec"><span>TRACKED AREA</span><strong>Upper-right shoulder</strong><p>No feature has been automatically detected or classified.</p></div>
           </>}
-          {step === 'compare' && <ComparisonView observationAngle={lightAngle} />}
+          {step === 'compare' && <ComparisonView observation={observation} observationAngle={lightAngle} />}
           {step === 'finding' && <>
             <p className="lead">The available chain supports a qualified finding about the documentation record—not physical cause.</p>
             <div className="period-card">
