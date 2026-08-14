@@ -4,6 +4,7 @@ import { App } from './App'
 import './styles/globals.css'
 import './styles/compare-redesign.css'
 import './styles/compare-stage.css'
+import './styles/vessel-v2.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
