@@ -3,7 +3,7 @@ import { ContactShadows, Environment, OrbitControls } from '@react-three/drei'
 import { Crosshair, MoveHorizontal } from 'lucide-react'
 import * as THREE from 'three'
 import { CeramicVessel } from './CeramicVessel'
-import type { WorkflowStep } from '../types/evidence'
+import type { CapturedObservation, WorkflowStep } from '../types/evidence'
 
 function CameraRig({ inspection }: { inspection: boolean }) {
   const { camera } = useThree()
@@ -17,77 +17,40 @@ function CameraRig({ inspection }: { inspection: boolean }) {
   return null
 }
 
-function CapturedEvidenceStage({ angle }: { angle: number }) {
+function CapturedEvidenceStage({ observation }: { observation: CapturedObservation | null }) {
   return (
     <div className="captured-evidence-stage" aria-label="Captured raking-light observation">
       <div className="capture-stage-meta">
-        <span>CAPTURED OBSERVATION / RETURN ARRIVAL</span>
-        <strong>Raking light · {Math.round(angle)}°</strong>
+        <span>CAPTURED OBSERVATION / {observation?.id ?? 'OBS-04'}</span>
+        <strong>Raking light · {Math.round(observation?.angle ?? 72)}°</strong>
       </div>
 
-      <svg className="capture-stage-vessel" viewBox="0 0 520 500" role="img" aria-label="Vessel under raking light with upper-right shoulder crack marked">
-        <defs>
-          <linearGradient id="capture-body" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stopColor="#665a45" />
-            <stop offset=".43" stopColor="#8f7d5c" />
-            <stop offset=".57" stopColor="#d8c59a" />
-            <stop offset=".68" stopColor="#897757" />
-            <stop offset="1" stopColor="#493f32" />
-          </linearGradient>
-          <linearGradient id="capture-shade" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stopColor="#160c0a" stopOpacity=".46" />
-            <stop offset=".5" stopColor="#160c0a" stopOpacity="0" />
-            <stop offset="1" stopColor="#160c0a" stopOpacity=".34" />
-          </linearGradient>
-          <linearGradient id="capture-beam" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stopColor="#f6e6bd" stopOpacity="0" />
-            <stop offset=".48" stopColor="#f6e6bd" stopOpacity=".2" />
-            <stop offset=".58" stopColor="#fff3cc" stopOpacity=".34" />
-            <stop offset="1" stopColor="#f6e6bd" stopOpacity="0" />
-          </linearGradient>
-          <filter id="capture-soft" x="-30%" y="-30%" width="160%" height="160%">
-            <feGaussianBlur stdDeviation="8" />
-          </filter>
-        </defs>
-
-        <ellipse cx="260" cy="445" rx="120" ry="18" fill="#050302" opacity=".48" filter="url(#capture-soft)" />
-
-        <path d="M222 86 C220 112 208 127 188 139 C157 158 139 192 133 233 C125 289 141 354 183 385 C205 401 232 408 260 408 C289 408 316 401 338 385 C380 354 396 289 387 233 C381 192 363 158 332 139 C312 127 300 112 298 86 Z" fill="url(#capture-body)" stroke="#d7c69d" strokeOpacity=".28" strokeWidth="2" />
-        <ellipse cx="260" cy="86" rx="39" ry="11" fill="#8e7e5f" stroke="#d7c69d" strokeOpacity=".32" />
-
-        <path d="M222 96 C193 99 181 122 178 147" fill="none" stroke="#b9a57c" strokeWidth="10" strokeLinecap="round" opacity=".8" />
-        <path d="M298 96 C327 99 339 122 342 147" fill="none" stroke="#b9a57c" strokeWidth="10" strokeLinecap="round" opacity=".8" />
-        <path d="M138 167 C116 156 95 166 84 188 C69 220 75 267 101 288 C112 297 124 301 139 297" fill="none" stroke="#b39e73" strokeWidth="11" strokeLinecap="round" opacity=".72" />
-        <path d="M382 167 C404 156 425 166 436 188 C451 220 445 267 419 288 C408 297 396 301 381 297" fill="none" stroke="#b39e73" strokeWidth="11" strokeLinecap="round" opacity=".72" />
-
-        <path d="M154 244 C184 233 220 228 260 228 C301 228 337 233 367 244" fill="none" stroke="#675f47" strokeWidth="5" opacity=".76" />
-        <path d="M154 263 C188 254 222 250 260 250 C298 250 332 254 367 263" fill="none" stroke="#675f47" strokeWidth="5" opacity=".76" />
-
-        {[190, 212, 234, 256, 278, 300, 322].map((x, index) => (
-          <path key={x} d={`M${x} 270 C${x + (index % 2 ? 8 : -7)} 289 ${x + (index % 2 ? -5 : 7)} 313 ${x} 340`} fill="none" stroke="#625b42" strokeWidth="5" strokeLinecap="round" opacity=".72" />
-        ))}
-
-        <path d="M222 86 C220 112 208 127 188 139 C157 158 139 192 133 233 C125 289 141 354 183 385 C205 401 232 408 260 408 C289 408 316 401 338 385 C380 354 396 289 387 233 C381 192 363 158 332 139 C312 127 300 112 298 86 Z" fill="url(#capture-shade)" />
-
-        <path d="M330 80 L410 430" stroke="url(#capture-beam)" strokeWidth="82" opacity=".9" filter="url(#capture-soft)" />
-        <path d="M332 151 C340 165 332 178 344 193 C334 210 347 226 338 244" fill="none" stroke="#2b231c" strokeWidth="4" strokeLinecap="round" />
-        <circle cx="339" cy="195" r="38" fill="none" stroke="#b58a59" strokeWidth="1.5" strokeDasharray="4 7" opacity=".72" />
-        <circle cx="339" cy="195" r="5" fill="#b58a59" />
-      </svg>
+      <div className="capture-stage-photo-frame">
+        {observation?.imageDataUrl ? (
+          <img className="capture-stage-photo" src={observation.imageDataUrl} alt="Captured raking-light view of the vessel" />
+        ) : (
+          <div className="capture-stage-fallback" aria-hidden="true">
+            <span className="fallback-vessel" />
+          </div>
+        )}
+        <div className="capture-focus-ring"><i /><span>{observation?.area ?? 'Upper-right shoulder'}</span></div>
+      </div>
 
       <div className="capture-stage-readout">
-        <div><span>OBSERVATION</span><strong>Hairline crack legible</strong></div>
-        <div><span>AREA</span><strong>Upper-right shoulder</strong></div>
-        <div><span>STATUS</span><strong>Human-reviewed</strong></div>
+        <div><span>OBSERVATION</span><strong>{observation?.feature ?? 'Hairline crack legible'}</strong></div>
+        <div><span>AREA</span><strong>{observation?.area ?? 'Upper-right shoulder'}</strong></div>
+        <div><span>STATUS</span><strong>{observation?.status ?? 'Human-reviewed'}</strong></div>
       </div>
     </div>
   )
 }
 
-export function ObjectStage({ step, lightAngle, onLightAngle }: {
+export function ObjectStage({ step, lightAngle, onLightAngle, observation, onCanvasReady }: {
   step: WorkflowStep
   lightAngle: number
   onLightAngle: (value: number) => void
+  observation: CapturedObservation | null
+  onCanvasReady: (canvas: HTMLCanvasElement) => void
 }) {
   const inspection = step === 'inspect'
   const compare = step === 'compare'
@@ -108,14 +71,18 @@ export function ObjectStage({ step, lightAngle, onLightAngle }: {
         </div>
       )}
 
-      {inspection && (
-        <div className="grazing-band" style={{ left: bandLeft }} aria-hidden="true" />
-      )}
+      {inspection && <div className="grazing-band" style={{ left: bandLeft }} aria-hidden="true" />}
 
       {compare ? (
-        <CapturedEvidenceStage angle={lightAngle} />
+        <CapturedEvidenceStage observation={observation} />
       ) : (
-        <Canvas shadows camera={{ position: [0, .1, 5.7], fov: 36 }} dpr={[1, 1.5]}>
+        <Canvas
+          shadows
+          camera={{ position: [0, .1, 5.7], fov: 36 }}
+          dpr={[1, 1.5]}
+          gl={{ preserveDrawingBuffer: true, antialias: true }}
+          onCreated={({ gl }) => onCanvasReady(gl.domElement)}
+        >
           <color attach="background" args={['#190E0C']} />
           <CameraRig inspection={inspection} />
           <ambientLight intensity={inspection ? .18 : .7} color="#d6c7a6" />
@@ -142,7 +109,7 @@ export function ObjectStage({ step, lightAngle, onLightAngle }: {
       )}
 
       <div className="object-caption">
-        <span>{'GLAZED EARTHENWARE / CIRCA 1880'}</span>
+        <span>GLAZED EARTHENWARE / CIRCA 1880</span>
         <h1>Vessel with Reed Pattern</h1>
         <p>North Archive Museum · {inspection ? 'Raking-light examination' : compare ? 'Captured return-arrival observation' : 'Return arrival review'}</p>
       </div>
