@@ -90,6 +90,7 @@
   display: block;
   object-fit: cover;
   object-position: center;
+  filter: brightness(1.045) contrast(.99) saturate(.92);
 }
 
 .capture-stage-photo-frame::after {
@@ -98,8 +99,8 @@
   inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(180deg, rgba(255,220,232,.025), transparent 28%, transparent 72%, rgba(0,0,0,.22)),
-    radial-gradient(circle at 50% 48%, transparent 32%, rgba(12,5,4,.13) 72%, rgba(12,5,4,.35));
+    linear-gradient(180deg, rgba(255,220,232,.025), transparent 28%, transparent 72%, rgba(0,0,0,.18)),
+    radial-gradient(circle at 50% 48%, transparent 34%, rgba(12,5,4,.09) 74%, rgba(12,5,4,.28));
 }
 
 .capture-stage-fallback {
@@ -185,15 +186,19 @@
   font: 500 9px/1.35 Manrope;
 }
 
+/* Compare B is intentionally a forensic crop, not a second whole-object view. */
 .comparison-captured-photo {
   position: absolute;
-  inset: 0;
   z-index: 1;
-  width: 100%;
-  height: 100%;
+  width: 152%;
+  height: 152%;
+  left: 50%;
+  top: 50%;
   object-fit: cover;
   object-position: center;
+  transform: translate(-55%, -43%);
   display: block;
+  filter: brightness(1.1) contrast(1.04) saturate(.9);
 }
 
 @media (max-height: 820px) {
