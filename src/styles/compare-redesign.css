@@ -1,0 +1,251 @@
+.comparison {
+  display: grid;
+  gap: 12px;
+}
+
+.comparison-pair-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 10px;
+  border: 1px solid rgba(255, 220, 232, 0.12);
+  background: rgba(29, 18, 16, 0.42);
+  font: 400 7px DM Mono;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.comparison-pair-label span { color: var(--bronze); }
+.comparison-pair-label strong { color: var(--rose-subtle); font-weight: 400; text-align: right; }
+
+.comparison-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 30px minmax(0, 1fr);
+  gap: 6px;
+  align-items: stretch;
+}
+
+.comparison-frame {
+  min-width: 0;
+  padding: 9px;
+  border: 1px solid var(--line);
+  background: rgba(29, 18, 16, 0.25);
+}
+
+.comparison-frame.current {
+  border-color: rgba(181, 138, 89, 0.5);
+  background: linear-gradient(180deg, rgba(181, 138, 89, 0.08), rgba(29, 18, 16, 0.28));
+}
+
+.comparison-frame-head {
+  min-height: 22px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 7px;
+  margin-bottom: 7px;
+}
+
+.comparison-frame-head .eyebrow {
+  color: var(--rose-subtle);
+  font-size: 6.5px;
+  line-height: 1.45;
+}
+
+.comparison-frame.current .comparison-frame-head .eyebrow { color: var(--bronze); }
+
+.comparison-visual {
+  height: 118px;
+  margin: 0 0 9px;
+  position: relative;
+  overflow: hidden;
+  background: #190E0C;
+  border: 1px solid rgba(255, 220, 232, 0.08);
+}
+
+.comparison-visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(255, 220, 232, 0.025), transparent 28%, transparent 72%, rgba(0, 0, 0, 0.24)),
+    linear-gradient(90deg, transparent 49.8%, rgba(255, 220, 232, 0.07) 50%, transparent 50.2%);
+}
+
+.comparison-reticle {
+  position: absolute;
+  z-index: 4;
+  right: 6px;
+  bottom: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  max-width: calc(100% - 12px);
+  padding: 4px 5px;
+  border: 1px solid rgba(181, 138, 89, 0.34);
+  background: rgba(20, 10, 8, 0.82);
+  color: var(--bronze);
+  font: 400 5.5px DM Mono;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.comparison-light-band {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  bottom: 0;
+  left: 62%;
+  width: 32px;
+  transform: translateX(-50%) skewX(-6deg);
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(246, 230, 189, 0.12), transparent);
+  filter: blur(.2px);
+}
+
+.comparison-meta > span,
+.comparison-meta > strong,
+.comparison-meta > p { display: block; }
+
+.comparison-meta > span {
+  color: var(--rose-subtle);
+  font: 400 6.5px DM Mono;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.comparison-meta > strong {
+  margin-top: 4px;
+  color: var(--rose);
+  font: 500 9.5px/1.35 Manrope;
+}
+
+.comparison-meta > p {
+  margin: 3px 0 0;
+  color: var(--muted);
+  font: 400 7.5px/1.45 Manrope;
+}
+
+.comparison-observation {
+  margin-top: 8px;
+  padding-top: 7px;
+  border-top: 1px solid rgba(255, 220, 232, 0.1);
+}
+
+.comparison-observation span,
+.comparison-observation strong { display: block; }
+
+.comparison-observation span {
+  color: var(--rose-subtle);
+  font: 400 6px DM Mono;
+  letter-spacing: .11em;
+}
+
+.comparison-observation strong {
+  margin-top: 3px;
+  color: var(--rose-muted);
+  font: 500 8px/1.4 Manrope;
+}
+
+.comparison-observation.verified strong { color: var(--verified); }
+
+.comparison-sync-rail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  color: var(--bronze);
+  position: relative;
+}
+
+.comparison-sync-rail::before,
+.comparison-sync-rail::after {
+  content: "";
+  width: 1px;
+  flex: 1;
+  min-height: 18px;
+  background: linear-gradient(180deg, transparent, rgba(181, 138, 89, 0.45));
+}
+
+.comparison-sync-rail::after { background: linear-gradient(180deg, rgba(181, 138, 89, 0.45), transparent); }
+
+.comparison-sync-rail span {
+  color: var(--rose-subtle);
+  font: 400 5px/1.35 DM Mono;
+  letter-spacing: .08em;
+  text-align: center;
+}
+
+.comparison-limit {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 11px;
+  border: 1px solid rgba(181, 138, 89, 0.32);
+  background: rgba(181, 138, 89, 0.07);
+}
+
+.comparison-limit > svg {
+  flex: 0 0 auto;
+  margin-top: 1px;
+  color: var(--bronze);
+}
+
+.comparison-limit span,
+.comparison-limit strong { display: block; }
+
+.comparison-limit span {
+  color: var(--bronze);
+  font: 400 6.5px DM Mono;
+  letter-spacing: .12em;
+}
+
+.comparison-limit strong {
+  margin-top: 3px;
+  color: var(--rose);
+  font: 500 9px/1.4 Manrope;
+}
+
+.comparison-limit p {
+  margin: 3px 0 0;
+  color: var(--muted);
+  font: 400 7.5px/1.5 Manrope;
+}
+
+.comparison-finding {
+  display: flex;
+  gap: 10px;
+  margin: 0;
+  padding: 10px 11px;
+  border-left: 2px solid var(--bronze);
+  background: var(--surface);
+}
+
+.comparison-finding svg {
+  flex: 0 0 auto;
+  color: var(--bronze);
+  margin-top: 1px;
+}
+
+.comparison-finding p {
+  margin: 0;
+  color: var(--rose-muted);
+  font: 400 8.5px/1.55 Manrope;
+}
+
+.comparison-finding strong { color: var(--ivory); }
+
+@media (max-height: 820px) {
+  .comparison { gap: 8px; }
+  .comparison-pair-label { padding-block: 6px; }
+  .comparison-visual { height: 88px; }
+  .comparison-frame { padding: 7px; }
+  .comparison-frame-head { margin-bottom: 5px; }
+  .comparison-observation { margin-top: 5px; padding-top: 5px; }
+  .comparison-limit, .comparison-finding { padding: 7px 9px; }
+  .comparison-limit p { line-height: 1.35; }
+}
