@@ -119,19 +119,21 @@ export function CeramicVessel({ reveal = 0, active = false }: { reveal?: number;
     new THREE.Vector3(0.95, 0.38, 0.02),
   ], false, 'centripetal'), [])
 
+  // Follow the actual shoulder radius at each height. The previous curve dipped
+  // inside the lathed body, making the condition feature nearly impossible to see.
   const crackMain = useMemo(() => new THREE.CatmullRomCurve3([
-    new THREE.Vector3(0.49, 0.91, 0.785),
-    new THREE.Vector3(0.515, 0.845, 0.805),
-    new THREE.Vector3(0.495, 0.782, 0.82),
-    new THREE.Vector3(0.535, 0.715, 0.80),
-    new THREE.Vector3(0.512, 0.647, 0.812),
-    new THREE.Vector3(0.545, 0.575, 0.777),
+    new THREE.Vector3(0.387, 0.91, 0.768),
+    new THREE.Vector3(0.396, 0.845, 0.786),
+    new THREE.Vector3(0.409, 0.782, 0.813),
+    new THREE.Vector3(0.432, 0.715, 0.857),
+    new THREE.Vector3(0.446, 0.647, 0.884),
+    new THREE.Vector3(0.459, 0.575, 0.911),
   ], false, 'centripetal'), [])
 
   const crackBranch = useMemo(() => new THREE.CatmullRomCurve3([
-    new THREE.Vector3(0.52, 0.744, 0.81),
-    new THREE.Vector3(0.565, 0.718, 0.782),
-    new THREE.Vector3(0.598, 0.684, 0.747),
+    new THREE.Vector3(0.421, 0.744, 0.835),
+    new THREE.Vector3(0.458, 0.718, 0.850),
+    new THREE.Vector3(0.488, 0.684, 0.842),
   ], false, 'centripetal'), [])
 
   useFrame((_, delta) => {
@@ -139,9 +141,9 @@ export function CeramicVessel({ reveal = 0, active = false }: { reveal?: number;
   })
 
   const visibility = THREE.MathUtils.smoothstep(reveal, 0.42, 0.92)
-  const crackOpacity = visibility * 0.78
-  const branchOpacity = visibility * 0.52
-  const highlightOpacity = visibility * 0.26
+  const crackOpacity = visibility * 0.86
+  const branchOpacity = visibility * 0.56
+  const highlightOpacity = visibility * 0.34
 
   const ceramicMaterial = {
     map: colorMap,
@@ -204,19 +206,19 @@ export function CeramicVessel({ reveal = 0, active = false }: { reveal?: number;
         <meshPhysicalMaterial {...ceramicMaterial} color="#e7d6b7" roughness={0.75} bumpScale={0.012} />
       </mesh>
 
-      {/* Condition feature is intentionally absent under diffuse light, then becomes
-          perceptible as a very thin shadow/highlight pair under the shallow raking condition. */}
+      {/* Condition feature is absent under diffuse light, then becomes a fine
+          shadow/highlight pair once shallow raking light reveals the surface break. */}
       <mesh renderOrder={8}>
-        <tubeGeometry args={[crackMain, 40, 0.0062, 6, false]} />
-        <meshBasicMaterial color="#3f3028" transparent opacity={crackOpacity} depthWrite={false} depthTest={false} />
+        <tubeGeometry args={[crackMain, 40, 0.0065, 6, false]} />
+        <meshBasicMaterial color="#382920" transparent opacity={crackOpacity} depthWrite={false} depthTest={false} />
       </mesh>
       <mesh renderOrder={8}>
-        <tubeGeometry args={[crackBranch, 20, 0.0036, 5, false]} />
-        <meshBasicMaterial color="#47372d" transparent opacity={branchOpacity} depthWrite={false} depthTest={false} />
+        <tubeGeometry args={[crackBranch, 20, 0.0038, 5, false]} />
+        <meshBasicMaterial color="#413027" transparent opacity={branchOpacity} depthWrite={false} depthTest={false} />
       </mesh>
-      <mesh position={[-0.007, 0.003, 0.008]} renderOrder={9}>
-        <tubeGeometry args={[crackMain, 40, 0.0018, 4, false]} />
-        <meshBasicMaterial color="#ead8ae" transparent opacity={highlightOpacity} depthWrite={false} depthTest={false} />
+      <mesh position={[-0.006, 0.003, 0.008]} renderOrder={9}>
+        <tubeGeometry args={[crackMain, 40, 0.0022, 4, false]} />
+        <meshBasicMaterial color="#f0dfb8" transparent opacity={highlightOpacity} depthWrite={false} depthTest={false} />
       </mesh>
     </group>
   )
