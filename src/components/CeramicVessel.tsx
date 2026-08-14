@@ -30,8 +30,6 @@ function buildCeramicTextures() {
       const mottling = Math.sin(x * 0.013) * Math.cos(y * 0.017) * 5.5
       const variation = broad + kiln + speck + mottling
 
-      // Warm olive-brown fired earthenware. The map carries most of the colour so
-      // the physical material can remain neutral and avoid the dark "metal" look.
       colorImage.data[i] = Math.max(0, Math.min(255, 176 + variation))
       colorImage.data[i + 1] = Math.max(0, Math.min(255, 151 + variation * 0.78))
       colorImage.data[i + 2] = Math.max(0, Math.min(255, 108 + variation * 0.48))
@@ -69,24 +67,31 @@ function buildCeramicTextures() {
 export function CeramicVessel({ reveal = 0, active = false }: { reveal?: number; active?: boolean }) {
   const group = useRef<THREE.Group>(null)
 
-  const profile = useMemo(() => [
-    new THREE.Vector2(0.40, -1.62),
-    new THREE.Vector2(0.56, -1.58),
-    new THREE.Vector2(0.73, -1.44),
-    new THREE.Vector2(0.91, -1.13),
-    new THREE.Vector2(1.05, -0.70),
-    new THREE.Vector2(1.10, -0.16),
-    new THREE.Vector2(1.08, 0.32),
-    new THREE.Vector2(0.97, 0.70),
-    new THREE.Vector2(0.79, 0.98),
-    new THREE.Vector2(0.57, 1.16),
-    new THREE.Vector2(0.47, 1.28),
-    new THREE.Vector2(0.46, 1.48),
-    new THREE.Vector2(0.54, 1.56),
-  ], [])
+  // Sparse historical-form control points are spline-sampled before lathe generation.
+  // This preserves a slightly handmade silhouette without the large planar facets that
+  // made the previous version read like a low-poly game asset.
+  const profile = useMemo(() => {
+    const curve = new THREE.CatmullRomCurve3([
+      new THREE.Vector3(0.40, -1.62, 0),
+      new THREE.Vector3(0.56, -1.58, 0),
+      new THREE.Vector3(0.73, -1.44, 0),
+      new THREE.Vector3(0.91, -1.13, 0),
+      new THREE.Vector3(1.05, -0.70, 0),
+      new THREE.Vector3(1.10, -0.16, 0),
+      new THREE.Vector3(1.08, 0.32, 0),
+      new THREE.Vector3(0.97, 0.70, 0),
+      new THREE.Vector3(0.79, 0.98, 0),
+      new THREE.Vector3(0.57, 1.16, 0),
+      new THREE.Vector3(0.47, 1.28, 0),
+      new THREE.Vector3(0.46, 1.48, 0),
+      new THREE.Vector3(0.54, 1.56, 0),
+    ], false, 'centripetal')
+
+    return curve.getPoints(72).map(point => new THREE.Vector2(Math.max(0.39, point.x), point.y))
+  }, [])
 
   const bodyGeometry = useMemo(() => {
-    const geometry = new THREE.LatheGeometry(profile, 128)
+    const geometry = new THREE.LatheGeometry(profile, 160)
     const positions = geometry.attributes.position as THREE.BufferAttribute
 
     for (let i = 0; i < positions.count; i += 1) {
@@ -95,16 +100,16 @@ export function CeramicVessel({ reveal = 0, active = false }: { reveal?: number;
       const z = positions.getZ(i)
       const theta = Math.atan2(z, x)
       const radialVariation = 1
-        + Math.sin(theta * 3.1 + y * 2.7) * 0.006
-        + Math.sin(theta * 7.4 - y * 1.6) * 0.0028
-      const lean = (y + 1.6) * 0.0045
-      const verticalWobble = Math.sin(theta * 2.2 + y * 3.4) * 0.0025
+        + Math.sin(theta * 3.1 + y * 2.7) * 0.0045
+        + Math.sin(theta * 7.4 - y * 1.6) * 0.0018
+      const lean = (y + 1.6) * 0.0038
+      const verticalWobble = Math.sin(theta * 2.2 + y * 3.4) * 0.0018
 
       positions.setXYZ(
         i,
         x * radialVariation + lean,
         y + verticalWobble,
-        z * (radialVariation + Math.sin(theta * 4.4) * 0.0018),
+        z * (radialVariation + Math.sin(theta * 4.4) * 0.0012),
       )
     }
 
@@ -120,7 +125,7 @@ export function CeramicVessel({ reveal = 0, active = false }: { reveal?: number;
     new THREE.Vector3(-1.18, 0.91, -0.02),
     new THREE.Vector3(-1.22, 0.61, 0.02),
     new THREE.Vector3(-0.97, 0.39, 0.03),
-  ]), [])
+  ], false, 'centripetal'), [])
 
   const handleRight = useMemo(() => new THREE.CatmullRomCurve3([
     new THREE.Vector3(0.56, 1.16, 0.00),
@@ -128,28 +133,31 @@ export function CeramicVessel({ reveal = 0, active = false }: { reveal?: number;
     new THREE.Vector3(1.20, 0.88, 0.02),
     new THREE.Vector3(1.18, 0.58, -0.01),
     new THREE.Vector3(0.95, 0.38, 0.02),
-  ]), [])
+  ], false, 'centripetal'), [])
 
+  // The feature sits slightly proud of the rendered surface to avoid depth-fighting.
+  // A dark interruption plus a faint adjacent highlight approximates a shallow groove
+  // becoming legible under raking light without turning into a painted black line.
   const crackMain = useMemo(() => new THREE.CatmullRomCurve3([
-    new THREE.Vector3(0.70, 0.91, 0.61),
-    new THREE.Vector3(0.73, 0.84, 0.63),
-    new THREE.Vector3(0.705, 0.77, 0.65),
-    new THREE.Vector3(0.75, 0.69, 0.63),
-    new THREE.Vector3(0.725, 0.61, 0.65),
-    new THREE.Vector3(0.755, 0.53, 0.62),
-  ]), [])
+    new THREE.Vector3(0.61, 0.91, 0.70),
+    new THREE.Vector3(0.635, 0.84, 0.72),
+    new THREE.Vector3(0.615, 0.775, 0.735),
+    new THREE.Vector3(0.655, 0.705, 0.715),
+    new THREE.Vector3(0.635, 0.635, 0.725),
+    new THREE.Vector3(0.665, 0.565, 0.69),
+  ], false, 'centripetal'), [])
 
   const crackBranch = useMemo(() => new THREE.CatmullRomCurve3([
-    new THREE.Vector3(0.735, 0.73, 0.645),
-    new THREE.Vector3(0.79, 0.70, 0.61),
-    new THREE.Vector3(0.82, 0.66, 0.58),
-  ]), [])
+    new THREE.Vector3(0.64, 0.735, 0.725),
+    new THREE.Vector3(0.69, 0.71, 0.695),
+    new THREE.Vector3(0.725, 0.675, 0.66),
+  ], false, 'centripetal'), [])
 
   useFrame((_, delta) => {
     if (group.current && !active) group.current.rotation.y += delta * 0.028
   })
 
-  const crackOpacity = Math.max(0.018, reveal * 0.52)
+  const crackOpacity = Math.max(0.012, reveal * 0.68)
 
   const ceramicMaterial = {
     map: colorMap,
@@ -170,7 +178,6 @@ export function CeramicVessel({ reveal = 0, active = false }: { reveal?: number;
         <meshPhysicalMaterial {...ceramicMaterial} />
       </mesh>
 
-      {/* Slightly imperfect foot and lip reveal real wall thickness rather than a closed primitive. */}
       <mesh position={[0.008, -1.59, -0.004]} rotation={[Math.PI / 2, 0, 0]} castShadow>
         <torusGeometry args={[0.48, 0.046, 12, 96]} />
         <meshPhysicalMaterial {...ceramicMaterial} color="#e4d5b7" roughness={0.74} bumpScale={0.015} />
@@ -184,53 +191,60 @@ export function CeramicVessel({ reveal = 0, active = false }: { reveal?: number;
         <meshStandardMaterial color="#745f43" roughness={0.96} />
       </mesh>
 
-      {/* Restrained hand-applied reed decoration: visible, but subordinate to the ceramic surface. */}
+      {/* Hand-applied decoration: lower contrast, thinner and deliberately imperfect. */}
       {[-0.38, -0.22].map((y, index) => (
-        <mesh key={y} position={[0, y, 0]} rotation={[Math.PI / 2, 0, 0]}>
-          <torusGeometry args={[1.075 - index * 0.005, 0.0105, 8, 128]} />
-          <meshStandardMaterial color="#625a3e" roughness={0.94} transparent opacity={0.72} />
+        <mesh key={y} position={[0, y + (index ? 0.004 : -0.003), 0]} rotation={[Math.PI / 2, 0, 0]}>
+          <torusGeometry args={[1.074 - index * 0.004, 0.0065, 7, 144]} />
+          <meshStandardMaterial color="#77694b" roughness={0.96} transparent opacity={0.46} />
         </mesh>
       ))}
 
-      {Array.from({ length: 18 }).map((_, i) => {
-        const a = (i / 18) * Math.PI * 2
-        const radial = 1.005 + Math.sin(i * 1.83) * 0.008
-        const lengthScale = 0.88 + (i % 4) * 0.035
-        const yOffset = -0.79 + Math.sin(i * 2.11) * 0.018
+      {Array.from({ length: 16 }).map((_, i) => {
+        const a = (i / 16) * Math.PI * 2 + Math.sin(i * 2.17) * 0.055
+        const radial = 1.004 + Math.sin(i * 1.83) * 0.008
+        const lengthScale = 0.82 + (i % 5) * 0.045
+        const yOffset = -0.80 + Math.sin(i * 2.11) * 0.022
         return (
           <mesh
             key={i}
             position={[Math.sin(a) * radial, yOffset, Math.cos(a) * radial]}
-            rotation={[0, a, Math.sin(i * 1.47) * 0.08]}
-            scale={[1, lengthScale, 1]}
+            rotation={[0, a, Math.sin(i * 1.47) * 0.11]}
+            scale={[0.82 + (i % 3) * 0.08, lengthScale, 1]}
           >
-            <capsuleGeometry args={[0.0115, 0.48, 4, 8]} />
-            <meshStandardMaterial color="#5b573c" roughness={0.96} transparent opacity={0.57 + (i % 3) * 0.03} />
+            <capsuleGeometry args={[0.009, 0.45, 4, 8]} />
+            <meshStandardMaterial color="#6c6549" roughness={1} transparent opacity={0.38 + (i % 4) * 0.025} />
           </mesh>
         )
       })}
 
       <mesh castShadow>
-        <tubeGeometry args={[handleLeft, 40, 0.052, 9, false]} />
+        <tubeGeometry args={[handleLeft, 48, 0.052, 10, false]} />
         <meshPhysicalMaterial {...ceramicMaterial} color="#eadabd" roughness={0.72} bumpScale={0.015} />
       </mesh>
       <mesh castShadow>
-        <tubeGeometry args={[handleRight, 40, 0.049, 9, false]} />
+        <tubeGeometry args={[handleRight, 48, 0.049, 10, false]} />
         <meshPhysicalMaterial {...ceramicMaterial} color="#e7d6b7" roughness={0.73} bumpScale={0.015} />
       </mesh>
 
-      {/* Hairline condition feature: a low-contrast surface interruption, not a painted black line. */}
-      <mesh>
-        <tubeGeometry args={[crackMain, 30, 0.0037, 5, false]} />
-        <meshStandardMaterial color="#5a4635" roughness={1} transparent opacity={crackOpacity} depthWrite={false} />
+      <mesh renderOrder={4}>
+        <tubeGeometry args={[crackMain, 36, 0.0052, 6, false]} />
+        <meshStandardMaterial
+          color="#594638"
+          roughness={1}
+          transparent
+          opacity={crackOpacity}
+          depthWrite={false}
+          polygonOffset
+          polygonOffsetFactor={-2}
+        />
       </mesh>
-      <mesh>
-        <tubeGeometry args={[crackBranch, 16, 0.0024, 5, false]} />
-        <meshStandardMaterial color="#614b38" roughness={1} transparent opacity={reveal * 0.34} depthWrite={false} />
+      <mesh renderOrder={4}>
+        <tubeGeometry args={[crackBranch, 18, 0.0031, 5, false]} />
+        <meshStandardMaterial color="#604a3a" roughness={1} transparent opacity={reveal * 0.48} depthWrite={false} />
       </mesh>
-      <mesh position={[-0.004, 0.002, 0.003]}>
-        <tubeGeometry args={[crackMain, 30, 0.0016, 4, false]} />
-        <meshStandardMaterial color="#dbc79f" roughness={0.96} transparent opacity={reveal * 0.10} depthWrite={false} />
+      <mesh position={[-0.006, 0.003, 0.006]} renderOrder={5}>
+        <tubeGeometry args={[crackMain, 36, 0.0019, 4, false]} />
+        <meshStandardMaterial color="#e0cfa9" roughness={0.98} transparent opacity={reveal * 0.24} depthWrite={false} />
       </mesh>
     </group>
   )
