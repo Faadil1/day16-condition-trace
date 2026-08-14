@@ -65,7 +65,7 @@ export function EvidencePanel({ step, selectedId, lightAngle, onNext }: {
             </div>
             <div className="feature-spec"><span>TRACKED AREA</span><strong>Upper-right shoulder</strong><p>No feature has been automatically detected or classified.</p></div>
           </>}
-          {step === 'compare' && <ComparisonView />}
+          {step === 'compare' && <ComparisonView observationAngle={lightAngle} />}
           {step === 'finding' && <>
             <p className="lead">The available chain supports a qualified finding about the documentation record—not physical cause.</p>
             <div className="period-card">
