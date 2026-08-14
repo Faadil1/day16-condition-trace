@@ -67,13 +67,13 @@ export function GeneratedRecord({ observation, onClose }: { observation: Capture
 
           <div className="doc-observation">
             <div className="doc-observation-visual">
-              {observation?.imageDataUrl ? <img src={observation.imageDataUrl} alt="Captured raking-light observation" /> : <span>CAPTURE UNAVAILABLE</span>}
+              {observation?.imageDataUrl ? <img src={observation.imageDataUrl} alt="Captured raking-light observation of the upper-right shoulder" /> : <span>CAPTURE UNAVAILABLE</span>}
             </div>
             <div className="doc-observation-copy">
               <span className="document-label">CAPTURED OBSERVATION / {observation?.id ?? 'OBS-04'}</span>
               <strong>{observation?.feature ?? 'Hairline crack legible'}</strong>
               <p>{observation?.area ?? 'Upper-right shoulder'} · {observation?.angle ?? 9}° from surface · Human-reviewed</p>
-              <small>{observation?.capturedAt ? `Captured ${new Date(observation.capturedAt).toLocaleString()}` : 'Captured during return-arrival examination'}</small>
+              <small>{observation?.capturedAt ? `Review capture ${new Date(observation.capturedAt).toLocaleString()}` : 'Captured during return-arrival examination'}</small>
             </div>
           </div>
 
