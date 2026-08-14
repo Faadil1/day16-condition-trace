@@ -24,22 +24,25 @@ function buildCeramicTextures() {
   for (let y = 0; y < size; y += 1) {
     for (let x = 0; x < size; x += 1) {
       const i = (y * size + x) * 4
-      const broad = Math.sin(x * 0.055) * 4.5 + Math.cos(y * 0.043) * 3.8
-      const kiln = Math.sin((x + y) * 0.019) * 5 + Math.cos((x - y) * 0.027) * 3
-      const speck = Math.sin(x * 0.41 + y * 0.19) * 2.1 + Math.cos(x * 0.17 - y * 0.33) * 1.7
-      const variation = broad + kiln + speck
+      const broad = Math.sin(x * 0.052) * 5.2 + Math.cos(y * 0.041) * 4.4
+      const kiln = Math.sin((x + y) * 0.018) * 5.5 + Math.cos((x - y) * 0.026) * 3.6
+      const speck = Math.sin(x * 0.39 + y * 0.17) * 2 + Math.cos(x * 0.16 - y * 0.31) * 1.6
+      const mottling = Math.sin(x * 0.013) * Math.cos(y * 0.017) * 5.5
+      const variation = broad + kiln + speck + mottling
 
-      colorImage.data[i] = Math.max(0, Math.min(255, 158 + variation))
-      colorImage.data[i + 1] = Math.max(0, Math.min(255, 137 + variation * 0.78))
-      colorImage.data[i + 2] = Math.max(0, Math.min(255, 100 + variation * 0.5))
+      // Warm olive-brown fired earthenware. The map carries most of the colour so
+      // the physical material can remain neutral and avoid the dark "metal" look.
+      colorImage.data[i] = Math.max(0, Math.min(255, 176 + variation))
+      colorImage.data[i + 1] = Math.max(0, Math.min(255, 151 + variation * 0.78))
+      colorImage.data[i + 2] = Math.max(0, Math.min(255, 108 + variation * 0.48))
       colorImage.data[i + 3] = 255
 
-      const rough = 150 + Math.sin(x * 0.071 + y * 0.043) * 25 + Math.cos(y * 0.14) * 11 + speck * 2
-      roughImage.data[i] = roughImage.data[i + 1] = roughImage.data[i + 2] = Math.max(105, Math.min(220, rough))
+      const rough = 172 + Math.sin(x * 0.068 + y * 0.041) * 24 + Math.cos(y * 0.13) * 12 + speck * 2
+      roughImage.data[i] = roughImage.data[i + 1] = roughImage.data[i + 2] = Math.max(130, Math.min(232, rough))
       roughImage.data[i + 3] = 255
 
-      const bump = 127 + Math.sin(x * 0.22) * 4 + Math.cos(y * 0.18) * 4 + Math.sin((x + y) * 0.37) * 2
-      bumpImage.data[i] = bumpImage.data[i + 1] = bumpImage.data[i + 2] = Math.max(112, Math.min(142, bump))
+      const bump = 127 + Math.sin(x * 0.21) * 3.6 + Math.cos(y * 0.17) * 3.4 + Math.sin((x + y) * 0.35) * 1.7
+      bumpImage.data[i] = bumpImage.data[i + 1] = bumpImage.data[i + 2] = Math.max(114, Math.min(140, bump))
       bumpImage.data[i + 3] = 255
     }
   }
@@ -56,7 +59,7 @@ function buildCeramicTextures() {
   ;[colorMap, roughnessMap, bumpMap].forEach(texture => {
     texture.wrapS = THREE.RepeatWrapping
     texture.wrapT = THREE.RepeatWrapping
-    texture.repeat.set(2.2, 1.6)
+    texture.repeat.set(2.15, 1.7)
     texture.needsUpdate = true
   })
 
@@ -146,44 +149,46 @@ export function CeramicVessel({ reveal = 0, active = false }: { reveal?: number;
     if (group.current && !active) group.current.rotation.y += delta * 0.028
   })
 
-  const crackOpacity = Math.max(0.025, reveal * 0.62)
+  const crackOpacity = Math.max(0.018, reveal * 0.52)
+
+  const ceramicMaterial = {
+    map: colorMap,
+    color: '#f3ead5',
+    roughness: 0.68,
+    roughnessMap,
+    bumpMap,
+    bumpScale: 0.018,
+    metalness: 0,
+    clearcoat: 0.055,
+    clearcoatRoughness: 0.84,
+    envMapIntensity: 0.16,
+  } as const
 
   return (
     <group ref={group} rotation={[0.015, -0.20, -0.008]} position={[0, -0.02, 0]} scale={0.92}>
       <mesh geometry={bodyGeometry} castShadow receiveShadow>
-        <meshPhysicalMaterial
-          map={colorMap}
-          color="#d4c29c"
-          roughness={0.5}
-          roughnessMap={roughnessMap}
-          bumpMap={bumpMap}
-          bumpScale={0.028}
-          metalness={0}
-          clearcoat={0.2}
-          clearcoatRoughness={0.58}
-          envMapIntensity={0.38}
-        />
+        <meshPhysicalMaterial {...ceramicMaterial} />
       </mesh>
 
       {/* Slightly imperfect foot and lip reveal real wall thickness rather than a closed primitive. */}
       <mesh position={[0.008, -1.59, -0.004]} rotation={[Math.PI / 2, 0, 0]} castShadow>
         <torusGeometry args={[0.48, 0.046, 12, 96]} />
-        <meshPhysicalMaterial map={colorMap} color="#c7b48d" roughness={0.62} bumpMap={bumpMap} bumpScale={0.018} />
+        <meshPhysicalMaterial {...ceramicMaterial} color="#e4d5b7" roughness={0.74} bumpScale={0.015} />
       </mesh>
       <mesh position={[-0.006, 1.555, 0.004]} rotation={[Math.PI / 2, 0, 0]} castShadow>
         <torusGeometry args={[0.535, 0.052, 14, 112]} />
-        <meshPhysicalMaterial map={colorMap} color="#d0bd94" roughness={0.48} roughnessMap={roughnessMap} clearcoat={0.16} clearcoatRoughness={0.62} />
+        <meshPhysicalMaterial {...ceramicMaterial} color="#eee0c2" roughness={0.64} />
       </mesh>
       <mesh position={[-0.006, 1.565, 0.004]} rotation={[Math.PI / 2, 0, 0]}>
         <torusGeometry args={[0.455, 0.025, 10, 96]} />
-        <meshStandardMaterial color="#6e5c45" roughness={0.88} />
+        <meshStandardMaterial color="#745f43" roughness={0.96} />
       </mesh>
 
-      {/* Restrained, hand-applied reed decoration. */}
+      {/* Restrained hand-applied reed decoration: visible, but subordinate to the ceramic surface. */}
       {[-0.38, -0.22].map((y, index) => (
         <mesh key={y} position={[0, y, 0]} rotation={[Math.PI / 2, 0, 0]}>
-          <torusGeometry args={[1.075 - index * 0.005, 0.010, 8, 128]} />
-          <meshStandardMaterial color="#5f5b42" roughness={0.82} transparent opacity={0.58} />
+          <torusGeometry args={[1.075 - index * 0.005, 0.0105, 8, 128]} />
+          <meshStandardMaterial color="#625a3e" roughness={0.94} transparent opacity={0.72} />
         </mesh>
       ))}
 
@@ -199,33 +204,33 @@ export function CeramicVessel({ reveal = 0, active = false }: { reveal?: number;
             rotation={[0, a, Math.sin(i * 1.47) * 0.08]}
             scale={[1, lengthScale, 1]}
           >
-            <capsuleGeometry args={[0.011, 0.48, 4, 8]} />
-            <meshStandardMaterial color="#5a5841" roughness={0.86} transparent opacity={0.42 + (i % 3) * 0.035} />
+            <capsuleGeometry args={[0.0115, 0.48, 4, 8]} />
+            <meshStandardMaterial color="#5b573c" roughness={0.96} transparent opacity={0.57 + (i % 3) * 0.03} />
           </mesh>
         )
       })}
 
       <mesh castShadow>
         <tubeGeometry args={[handleLeft, 40, 0.052, 9, false]} />
-        <meshPhysicalMaterial map={colorMap} color="#c8b48a" roughness={0.56} roughnessMap={roughnessMap} bumpMap={bumpMap} bumpScale={0.018} clearcoat={0.14} clearcoatRoughness={0.64} />
+        <meshPhysicalMaterial {...ceramicMaterial} color="#eadabd" roughness={0.72} bumpScale={0.015} />
       </mesh>
       <mesh castShadow>
         <tubeGeometry args={[handleRight, 40, 0.049, 9, false]} />
-        <meshPhysicalMaterial map={colorMap} color="#c8b48a" roughness={0.56} roughnessMap={roughnessMap} bumpMap={bumpMap} bumpScale={0.018} clearcoat={0.14} clearcoatRoughness={0.64} />
+        <meshPhysicalMaterial {...ceramicMaterial} color="#e7d6b7" roughness={0.73} bumpScale={0.015} />
       </mesh>
 
-      {/* Hairline condition feature: low-contrast surface interruption that becomes legible under grazing light. */}
+      {/* Hairline condition feature: a low-contrast surface interruption, not a painted black line. */}
       <mesh>
-        <tubeGeometry args={[crackMain, 30, 0.0042, 5, false]} />
-        <meshStandardMaterial color="#4a3c30" roughness={0.98} transparent opacity={crackOpacity} depthWrite={false} />
+        <tubeGeometry args={[crackMain, 30, 0.0037, 5, false]} />
+        <meshStandardMaterial color="#5a4635" roughness={1} transparent opacity={crackOpacity} depthWrite={false} />
       </mesh>
       <mesh>
-        <tubeGeometry args={[crackBranch, 16, 0.0028, 5, false]} />
-        <meshStandardMaterial color="#514236" roughness={1} transparent opacity={reveal * 0.42} depthWrite={false} />
+        <tubeGeometry args={[crackBranch, 16, 0.0024, 5, false]} />
+        <meshStandardMaterial color="#614b38" roughness={1} transparent opacity={reveal * 0.34} depthWrite={false} />
       </mesh>
       <mesh position={[-0.004, 0.002, 0.003]}>
-        <tubeGeometry args={[crackMain, 30, 0.0019, 4, false]} />
-        <meshStandardMaterial color="#d7c397" roughness={0.9} transparent opacity={reveal * 0.14} depthWrite={false} />
+        <tubeGeometry args={[crackMain, 30, 0.0016, 4, false]} />
+        <meshStandardMaterial color="#dbc79f" roughness={0.96} transparent opacity={reveal * 0.10} depthWrite={false} />
       </mesh>
     </group>
   )
