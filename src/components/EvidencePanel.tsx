@@ -1,15 +1,16 @@
-import { ArrowRight, Check, FileText, Lightbulb, ShieldCheck } from 'lucide-react'
+import { ArrowRight, Lightbulb, ShieldCheck } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { objectRecord, records } from '../data/objectRecord'
 import { toGrazingAngle } from '../lib/examination'
 import type { CapturedObservation, WorkflowStep } from '../types/evidence'
 import { EvidenceStatus } from './EvidenceStatus'
 import { ComparisonView } from './ComparisonView'
+import { EvidenceLineage } from './EvidenceLineage'
 
 const stepMeta: Record<WorkflowStep, { n: string; label: string }> = {
   open: { n: '01', label: 'Open object' }, records: { n: '02', label: 'Review record chain' },
   inspect: { n: '03', label: 'Inspect with raking light' }, compare: { n: '04', label: 'Compare documentation' },
-  finding: { n: '05', label: 'First documented appearance' }, record: { n: '06', label: 'Evidence record' },
+  finding: { n: '05', label: 'Qualified finding' }, record: { n: '06', label: 'Evidence record' },
 }
 
 export function EvidencePanel({ step, selectedId, lightAngle, observation, onNext }: {
@@ -74,21 +75,14 @@ export function EvidencePanel({ step, selectedId, lightAngle, observation, onNex
           </>}
           {step === 'compare' && <ComparisonView observation={observation} observationAngle={lightAngle} />}
           {step === 'finding' && <>
-            <p className="lead">The available chain supports a qualified finding about the documentation record—not physical cause.</p>
-            <div className="period-card">
-              <span className="section-kicker">PERIOD REQUIRING REVIEW</span>
-              <div><strong>Alder House Museum</strong><span>Return handoff · Aug 1</span></div>
-              <ArrowRight />
-              <div><strong>North Archive Museum</strong><span>Return arrival · Aug 3</span></div>
+            <p className="lead finding-lead">The conclusion below is derived from the visible evidence chain. Each step remains inspectable and preserves the limitation that prevents a stronger claim.</p>
+            <EvidenceLineage observation={observation} />
+            <div className="finding-verdict">
+              <span>QUALIFIED FINDING / FND-01</span>
+              <strong>First documented appearance · Aug 3, 2026</strong>
+              <p>The feature is first documented in captured observation {observation?.id ?? 'OBS-04'}. Prior physical absence cannot be confirmed because equivalent raking-light documentation is unavailable.</p>
+              <small>No determination of cause, moment of damage, or liability.</small>
             </div>
-            <dl className="finding-list">
-              <div><dt>Prior record</dt><dd>Feature not visible</dd></div>
-              <div><dt>Current record</dt><dd>Feature observed</dd></div>
-              <div><dt>Comparison limitation</dt><dd>Different examination conditions</dd></div>
-              <div><dt>Conclusion strength</dt><dd>Qualified</dd></div>
-              <div><dt>Review status</dt><dd><Check size={14} /> Human review required</dd></div>
-            </dl>
-            <div className="notice bronze"><FileText size={17} /><p><strong>Documentation gap</strong>Equivalent examination unavailable at departure.</p></div>
           </>}
           {buttons[step] && (
             <button className="primary-action" onClick={onNext} disabled={step === 'inspect' && !ready}>
