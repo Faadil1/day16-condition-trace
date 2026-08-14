@@ -39,7 +39,7 @@ export function AppShell() {
   return (
     <main className="app-shell">
       <MuseumHeader />
-      <div className="workspace">
+      <div className={`workspace ${step === 'compare' ? 'compare-mode' : ''}`}>
         <ObjectStage step={step} lightAngle={lightAngle} onLightAngle={setLightAngle} />
         <EvidencePanel step={step} selectedId={selectedId} lightAngle={lightAngle} onNext={next} />
       </div>
