@@ -4,6 +4,7 @@ import { ObjectStage } from './ObjectStage'
 import { EvidencePanel } from './EvidencePanel'
 import { RecordChain } from './RecordChain'
 import { GeneratedRecord } from './GeneratedRecord'
+import { toGrazingAngle } from '../lib/examination'
 import type { CapturedObservation, WorkflowStep } from '../types/evidence'
 
 const order: WorkflowStep[] = ['open', 'records', 'inspect', 'compare', 'finding', 'record']
@@ -25,7 +26,7 @@ export function AppShell() {
 
     setObservation({
       id: 'OBS-04',
-      angle: lightAngle,
+      angle: toGrazingAngle(lightAngle),
       area: 'Upper-right shoulder',
       feature: 'Hairline crack legible',
       status: 'Human-reviewed',
