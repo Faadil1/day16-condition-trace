@@ -1,6 +1,7 @@
 import { ArrowRight, Check, FileText, Lightbulb, ShieldCheck } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { objectRecord, records } from '../data/objectRecord'
+import { toGrazingAngle } from '../lib/examination'
 import type { CapturedObservation, WorkflowStep } from '../types/evidence'
 import { EvidenceStatus } from './EvidenceStatus'
 import { ComparisonView } from './ComparisonView'
@@ -20,9 +21,10 @@ export function EvidencePanel({ step, selectedId, lightAngle, observation, onNex
 }) {
   const selected = records.find(r => r.id === selectedId) ?? records[3]
   const ready = lightAngle >= 72
+  const grazingAngle = toGrazingAngle(lightAngle)
   const buttons: Partial<Record<WorkflowStep, string>> = {
     open: 'Begin return inspection', records: 'Inspect current condition', inspect: 'Capture observation',
-    compare: 'Review record chain', finding: 'Generate evidence record',
+    compare: 'Continue to qualified finding', finding: 'Generate evidence record',
   }
   return (
     <aside className="evidence-panel">
@@ -59,10 +61,14 @@ export function EvidencePanel({ step, selectedId, lightAngle, observation, onNex
             </div>
           </>}
           {step === 'inspect' && <>
-            <p className="lead">Move the examination light across the surface. Once the feature is legible, capture the observation for comparison.</p>
+            <p className="lead">Move the examination light across the surface. Once the shoulder relief becomes legible, capture the observation for comparison.</p>
             <div className="inspection-readout">
               <Lightbulb size={20} />
-              <div><span>EXAMINATION CONDITION</span><strong>{ready ? 'Shallow angle reached' : 'Adjust raking-light angle'}</strong><p>{ready ? 'Feature is legible. Capture will preserve this exact examination frame.' : 'Move the control to examine the shoulder relief.'}</p></div>
+              <div>
+                <span>EXAMINATION CONDITION</span>
+                <strong>{ready ? `${grazingAngle}° from surface · capture ready` : `${grazingAngle}° from surface`}</strong>
+                <p>{ready ? 'Surface relief is legible. Capture will preserve this exact examination frame.' : 'Lower the grazing angle to strengthen relief without asserting an automated detection.'}</p>
+              </div>
             </div>
             <div className="feature-spec"><span>TRACKED AREA</span><strong>Upper-right shoulder</strong><p>No feature has been automatically detected or classified.</p></div>
           </>}
