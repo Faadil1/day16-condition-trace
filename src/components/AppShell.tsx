@@ -30,6 +30,7 @@ export function AppShell() {
       area: 'Upper-right shoulder',
       feature: 'Hairline crack legible',
       status: 'Human-reviewed',
+      capturedAt: new Date().toISOString(),
       imageDataUrl,
     })
   }
@@ -86,7 +87,7 @@ export function AppShell() {
         />
       </div>
       <RecordChain selectedId={selectedId} onSelect={setSelectedId} expanded={step !== 'open'} highlightPeriod={step === 'finding' || step === 'record'} />
-      {step === 'record' && <GeneratedRecord onClose={() => setStep('finding')} />}
+      {step === 'record' && <GeneratedRecord observation={observation} onClose={() => setStep('finding')} />}
     </main>
   )
 }
