@@ -1,0 +1,491 @@
+/*
+  Condition Trace V3 — Art Direction Pass 02
+  Distinct compositions for Open, Records and Inspect.
+  Intentionally archival and material: no neon, no generic glass UI.
+*/
+
+/* ------------------------------
+   01 OPEN — editorial case hero
+   ------------------------------ */
+.step-open .object-stage {
+  isolation: isolate;
+}
+
+.step-open .object-stage::before {
+  z-index: 2;
+  background:
+    linear-gradient(90deg, rgba(8,18,20,.80) 0%, rgba(8,18,20,.46) 31%, rgba(8,18,20,.05) 54%, rgba(8,18,20,.18) 100%),
+    radial-gradient(circle at 72% 42%, transparent 20%, rgba(5,13,14,.14) 67%, rgba(5,13,14,.48) 100%);
+  pointer-events: none;
+}
+
+.open-stage-hero {
+  position: absolute;
+  z-index: 5;
+  left: clamp(34px, 5vw, 74px);
+  top: 19%;
+  width: min(410px, 38%);
+  pointer-events: none;
+}
+
+.open-stage-hero > span {
+  display: block;
+  color: var(--ct-bronze-soft);
+  font: 500 8px/1.4 'DM Mono', monospace;
+  letter-spacing: .17em;
+}
+
+.open-stage-hero h2 {
+  margin: 15px 0 18px;
+  color: var(--ct-paper-100);
+  font: 400 clamp(52px, 5.2vw, 76px)/.82 'Newsreader', serif;
+  letter-spacing: -.055em;
+}
+
+.open-stage-hero p {
+  margin: 0;
+  color: #d7c4a8;
+  font: 400 clamp(16px, 1.5vw, 21px)/1.28 'Newsreader', serif;
+}
+
+.open-stage-hero small {
+  display: block;
+  max-width: 34ch;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(183,132,85,.42);
+  color: #9faeaa;
+  font: 500 10px/1.65 'Manrope', sans-serif;
+}
+
+.step-open .object-caption {
+  left: auto;
+  right: 28px;
+  bottom: 26px;
+  width: 280px;
+  text-align: right;
+}
+.step-open .object-caption h1 {
+  font-size: 22px;
+  margin: 6px 0 2px;
+}
+.step-open .object-caption p { font-size: 8px; }
+
+.step-open .evidence-panel {
+  border-color: rgba(183,132,85,.30);
+}
+
+.step-open .panel-content {
+  max-width: 390px;
+}
+
+.step-open .panel-content .section-kicker {
+  color: #a9b9b4;
+}
+
+.step-open .panel-content h2 {
+  margin-bottom: 12px;
+  font-size: 30px;
+  letter-spacing: -.025em;
+}
+
+.step-open .lead {
+  color: #c7d0cb;
+  font-size: 11px;
+}
+
+.step-open .object-meta {
+  margin: 18px 0 14px;
+  padding: 5px 17px;
+  background:
+    linear-gradient(180deg, rgba(240,228,207,.98), rgba(226,212,188,.98));
+  border: 1px solid rgba(183,132,85,.46);
+  box-shadow: 0 16px 36px rgba(5,12,13,.18);
+}
+
+.step-open .object-meta div {
+  border-top-color: rgba(29,35,36,.14);
+}
+.step-open .object-meta div:first-child { border-top: 0; }
+.step-open .object-meta dt { color: #69736f; }
+.step-open .object-meta dd { color: var(--ct-charcoal); font-weight: 650; }
+
+.step-open .notice {
+  background: rgba(17,29,32,.26);
+  border: 1px solid rgba(240,228,207,.09);
+  border-left: 2px solid var(--ct-bronze);
+}
+
+/* ------------------------------
+   02 RECORDS — evidence archive
+   ------------------------------ */
+.step-records .workspace {
+  grid-template-columns: minmax(0, 1.55fr) minmax(390px, .68fr);
+  padding-bottom: 14px;
+}
+
+.step-records .record-chain {
+  display: none;
+}
+
+.records-archive-mode {
+  min-height: 0;
+  background:
+    radial-gradient(circle at 78% 14%, rgba(88,114,104,.12), transparent 28%),
+    linear-gradient(150deg, #122326, #1b3432 58%, #203c37);
+}
+
+.records-archive-mode::before {
+  z-index: 1;
+  background:
+    linear-gradient(90deg, rgba(240,228,207,.018) 1px, transparent 1px),
+    linear-gradient(rgba(240,228,207,.016) 1px, transparent 1px),
+    radial-gradient(circle at 46% 36%, transparent 30%, rgba(4,12,13,.33));
+  background-size: 72px 72px, 72px 72px, auto;
+}
+
+.records-overview-stage {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 64px clamp(30px, 4vw, 58px) 32px;
+}
+
+.records-stage-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 360px);
+  gap: 40px;
+  align-items: end;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(183,132,85,.42);
+}
+
+.records-stage-header span {
+  color: var(--ct-bronze-soft);
+  font: 500 7px 'DM Mono', monospace;
+  letter-spacing: .15em;
+}
+.records-stage-header h2 {
+  margin: 9px 0 0;
+  color: var(--ct-paper-100);
+  font: 400 clamp(32px, 3.2vw, 48px)/.95 'Newsreader', serif;
+  letter-spacing: -.04em;
+}
+.records-stage-header p {
+  margin: 0;
+  color: #aebdb8;
+  font: 500 10px/1.65 'Manrope', sans-serif;
+}
+
+.records-stage-rule {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 12px;
+  align-items: center;
+  margin: 18px 0 14px;
+  color: #899b96;
+  font: 500 7px 'DM Mono', monospace;
+  letter-spacing: .12em;
+}
+.records-stage-rule i { border-top: 1px solid rgba(240,228,207,.13); }
+
+.records-stage-grid {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.records-folio {
+  position: relative;
+  min-width: 0;
+  padding: 17px 18px 15px;
+  text-align: left;
+  color: var(--ct-charcoal);
+  background:
+    linear-gradient(180deg, rgba(240,228,207,.98), rgba(226,212,188,.96));
+  border: 1px solid rgba(29,35,36,.20);
+  box-shadow: 0 10px 28px rgba(5,12,13,.16);
+  cursor: pointer;
+  transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+.records-folio:hover {
+  transform: translateY(-2px);
+  border-color: rgba(183,132,85,.58);
+  box-shadow: 0 15px 34px rgba(5,12,13,.22);
+}
+.records-folio.active {
+  border-color: var(--ct-bronze);
+  box-shadow: inset 0 3px var(--ct-bronze), 0 16px 38px rgba(5,12,13,.24);
+}
+
+.records-folio-index {
+  position: absolute;
+  right: 15px;
+  top: 13px;
+  color: rgba(29,35,36,.26);
+  font: 400 17px 'Newsreader', serif;
+}
+.records-folio-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-right: 28px;
+  color: #6b7772;
+  font: 500 7px 'DM Mono', monospace;
+}
+.records-folio-topline em {
+  color: #8d613c;
+  font-style: normal;
+  letter-spacing: .08em;
+}
+.records-folio.active .records-folio-topline em { color: #587360; }
+
+.records-folio > strong {
+  display: block;
+  margin-top: 9px;
+  color: var(--ct-charcoal);
+  font: 500 18px/1 'Newsreader', serif;
+}
+.records-folio > p {
+  margin: 5px 0 12px;
+  color: #5e6b67;
+  font: 550 8px 'Manrope', sans-serif;
+}
+.records-folio dl {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 0;
+}
+.records-folio dl div {
+  min-width: 0;
+  padding-top: 8px;
+  border-top: 1px solid rgba(29,35,36,.14);
+}
+.records-folio dt {
+  color: #7b8782;
+  font: 500 6px 'DM Mono', monospace;
+  letter-spacing: .12em;
+}
+.records-folio dd {
+  margin: 4px 0 0;
+  color: #394440;
+  font: 550 8px/1.35 'Manrope', sans-serif;
+}
+.records-folio-source {
+  margin-top: 11px;
+  color: #7c8782;
+  font: 500 6px 'DM Mono', monospace;
+  letter-spacing: .1em;
+}
+
+.records-stage-footer {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  gap: 22px;
+  align-items: center;
+  margin-top: 14px;
+  padding-top: 13px;
+  border-top: 1px solid rgba(240,228,207,.10);
+  color: #81938e;
+  font: 500 7px 'DM Mono', monospace;
+  letter-spacing: .08em;
+}
+.records-stage-footer strong {
+  justify-self: end;
+  color: var(--ct-bronze-soft);
+  font-weight: 500;
+}
+
+.step-records .panel-content {
+  margin-top: 26px;
+}
+.step-records .panel-content h2 {
+  font-size: 34px;
+}
+.step-records .lead {
+  font-size: 10.5px;
+}
+.step-records .selected-record {
+  margin-top: 14px;
+}
+
+/* ------------------------------
+   03 INSPECT — conservation instrument
+   ------------------------------ */
+.step-inspect .workspace {
+  grid-template-columns: minmax(0, 1.74fr) minmax(360px, .58fr);
+}
+
+.step-inspect .object-stage::before {
+  background:
+    linear-gradient(90deg, rgba(5,12,13,.10), transparent 18%, transparent 82%, rgba(5,12,13,.20)),
+    radial-gradient(circle at 52% 44%, transparent 22%, rgba(5,12,13,.42) 84%);
+}
+
+.inspection-mode-card {
+  position: absolute;
+  z-index: 5;
+  left: 24px;
+  top: 56px;
+  width: 160px;
+  padding: 11px 12px 10px;
+  border-left: 2px solid var(--ct-stone);
+  background: rgba(17,29,32,.72);
+  box-shadow: 0 12px 28px rgba(0,0,0,.15);
+}
+.inspection-mode-card span,
+.inspection-mode-card strong,
+.inspection-mode-card small { display: block; }
+.inspection-mode-card span {
+  color: #849a9e;
+  font: 500 6px 'DM Mono', monospace;
+  letter-spacing: .14em;
+}
+.inspection-mode-card strong {
+  margin-top: 5px;
+  color: var(--ct-paper-100);
+  font: 500 13px 'Newsreader', serif;
+}
+.inspection-mode-card small {
+  margin-top: 4px;
+  color: #84948f;
+  font: 500 7px/1.35 'Manrope', sans-serif;
+}
+
+.step-inspect .object-caption {
+  max-width: 320px;
+}
+.step-inspect .object-caption h1 { font-size: 27px; }
+
+.step-inspect .light-console {
+  width: min(650px, calc(100% - 60px));
+  border-color: rgba(183,132,85,.58);
+  box-shadow: 0 24px 52px rgba(3,10,11,.38);
+}
+.step-inspect .light-console::before {
+  content: "EXAMINATION INSTRUMENT / RL-01";
+  display: block;
+  margin-bottom: 9px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(240,228,207,.09);
+  color: #819590;
+  font: 500 6px 'DM Mono', monospace;
+  letter-spacing: .13em;
+}
+.step-inspect .light-console output {
+  min-width: 58px;
+  text-align: right;
+  font: 400 22px 'Newsreader', serif;
+}
+
+.step-inspect .evidence-panel {
+  border-color: rgba(112,139,148,.30);
+}
+.step-inspect .panel-content {
+  margin-top: 29px;
+}
+.step-inspect .panel-content h2 {
+  font-size: 35px;
+}
+.step-inspect .inspection-readout {
+  padding: 15px;
+}
+.step-inspect .feature-spec {
+  margin-top: 14px;
+  padding-block: 12px;
+}
+
+/* ------------------------------
+   Responsive art-direction fallback
+   ------------------------------ */
+@media (max-width: 1199px) {
+  .step-open .object-caption {
+    left: 22px;
+    right: auto;
+    width: auto;
+    text-align: left;
+  }
+
+  .open-stage-hero {
+    left: 26px;
+    top: 70px;
+    width: min(340px, 42%);
+  }
+  .open-stage-hero h2 { font-size: 50px; }
+
+  .step-records .workspace,
+  .step-inspect .workspace {
+    grid-template-columns: 1fr;
+  }
+  .step-records .record-chain { display: none; }
+  .records-archive-mode { min-height: 620px; }
+}
+
+@media (max-width: 767px) {
+  .open-stage-hero {
+    top: 55px;
+    left: 18px;
+    width: 52%;
+  }
+  .open-stage-hero > span { font-size: 5.5px; }
+  .open-stage-hero h2 {
+    margin: 10px 0 11px;
+    font-size: 37px;
+  }
+  .open-stage-hero p { font-size: 12px; }
+  .open-stage-hero small {
+    margin-top: 11px;
+    padding-top: 9px;
+    font-size: 7px;
+    line-height: 1.45;
+  }
+  .step-open .object-caption {
+    bottom: 14px;
+    left: 16px;
+  }
+  .step-open .object-caption h1 { font-size: 17px; }
+
+  .records-archive-mode {
+    min-height: 760px;
+    overflow: auto;
+  }
+  .records-overview-stage {
+    position: relative;
+    inset: auto;
+    min-height: 760px;
+    padding: 50px 14px 20px;
+  }
+  .records-stage-header {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .records-stage-header h2 { font-size: 31px; }
+  .records-stage-header p { font-size: 8px; }
+  .records-stage-grid {
+    grid-template-columns: 1fr;
+  }
+  .records-folio { padding: 14px; }
+  .records-stage-footer {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .records-stage-footer strong {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+
+  .inspection-mode-card {
+    left: 14px;
+    top: 46px;
+    width: 136px;
+  }
+  .step-inspect .light-console {
+    width: calc(100% - 24px);
+  }
+}
