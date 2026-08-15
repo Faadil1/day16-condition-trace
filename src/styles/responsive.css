@@ -1,0 +1,244 @@
+/* Gate 6 — responsive / accessibility QA. Desktop >=1200px remains unchanged. */
+
+@media (max-width: 1199px) {
+  html, body, #root { min-width: 0; width: 100%; }
+  body { overflow-x: hidden; }
+
+  .app-shell {
+    height: auto;
+    min-height: 100svh;
+    grid-template-rows: 68px auto auto;
+    overflow: visible;
+  }
+
+  .museum-header { padding: 0 22px; }
+
+  .workspace,
+  .workspace.compare-mode {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-rows: auto auto;
+  }
+
+  .object-stage {
+    height: clamp(520px, 58svh, 680px);
+    min-height: 520px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .evidence-panel {
+    overflow: visible;
+    padding: 28px clamp(28px, 6vw, 72px) 34px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .panel-content {
+    max-width: 760px;
+    margin: 28px auto 0;
+  }
+
+  .panel-content h2 { font-size: 38px; }
+
+  .comparison-visual { height: 150px; }
+
+  .record-chain {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    padding-inline: 22px;
+  }
+
+  .record-track { min-width: 900px; }
+
+  .light-console {
+    width: min(440px, calc(100% - 48px));
+    right: 24px;
+  }
+
+  .drawer-backdrop { align-items: stretch; }
+  .record-drawer {
+    width: min(860px, 92vw);
+    max-width: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .app-shell { grid-template-rows: 60px auto auto; }
+
+  .museum-header { padding: 0 14px; }
+  .brand-lockup { gap: 10px; }
+  .brand-mark { width: 24px; height: 24px; }
+  .wordmark { font-size: 11px; letter-spacing: .14em; }
+  .tagline { display: none; }
+  .header-label, .header-divider { display: none; }
+  .header-object { gap: 10px; }
+  .header-object strong { font-size: 10px; }
+  .review-status { font-size: 7px; letter-spacing: .08em; }
+
+  .object-stage {
+    height: clamp(420px, 58svh, 560px);
+    min-height: 420px;
+  }
+
+  .stage-number { left: 16px; top: 16px; }
+  .stage-examination-badge { right: 16px; top: 16px; }
+  .object-caption { left: 16px; right: 16px; bottom: 18px; }
+  .object-caption h1 { font-size: 23px; }
+  .object-caption p { font-size: 9px; }
+
+  .annotation-marker {
+    left: auto;
+    right: 13%;
+    top: 31%;
+    gap: 32px;
+  }
+  .annotation-marker::before { width: 28px; }
+  .annotation-marker span { padding: 5px 7px; font-size: 6px; }
+
+  .light-console {
+    left: 14px;
+    right: 14px;
+    bottom: 14px;
+    width: auto;
+    padding: 12px 13px 11px;
+  }
+  .light-console-copy { grid-template-columns: 20px minmax(0, 1fr) auto; }
+  .light-console-copy strong { font-size: 9px; }
+  .light-console-copy span, .light-console p { font-size: 7px; }
+  .light-console output { font-size: 14px; }
+
+  .evidence-panel { padding: 22px 16px 28px; }
+  .workflow-progress i { width: 18px; }
+  .panel-content { max-width: none; margin-top: 24px; }
+  .panel-content h2 { font-size: 31px; margin-bottom: 12px; }
+  .lead { font-size: 12px; line-height: 1.62; margin-bottom: 19px; }
+  .primary-action, .secondary-action { min-height: 48px; }
+
+  .object-meta div,
+  .selected-record dl div,
+  .finding-list div {
+    align-items: flex-start;
+    gap: 12px;
+  }
+  dd { max-width: 62%; font-size: 11px; }
+
+  .inspection-readout { min-height: 0; padding: 14px; }
+  .inspection-readout strong, .feature-spec strong { font-size: 16px; }
+
+  .comparison-pair-label {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .comparison-pair-label strong { text-align: left; }
+
+  .comparison-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+  .comparison-visual { height: 190px; }
+  /* Mobile Compare B must preserve the actual shoulder evidence rather than
+     falling back to a generic whole-body crop. */
+  .comparison-captured-photo {
+    width: 164%;
+    height: 164%;
+    transform: translate(-63%, -43%);
+    filter: brightness(1.14) contrast(1.06) saturate(.9);
+  }
+  .comparison-sync-rail {
+    min-height: 24px;
+    flex-direction: row;
+    gap: 9px;
+  }
+  .comparison-sync-rail::before,
+  .comparison-sync-rail::after {
+    width: auto;
+    height: 1px;
+    min-height: 0;
+    min-width: 32px;
+    background: linear-gradient(90deg, transparent, rgba(181,138,89,.45));
+  }
+  .comparison-sync-rail::after {
+    background: linear-gradient(90deg, rgba(181,138,89,.45), transparent);
+  }
+  .comparison-sync-rail span { max-width: 90px; }
+
+  .evidence-lineage { padding: 8px; }
+  .lineage-node { padding: 7px 9px 7px 10px; }
+  .lineage-node-id { grid-template-columns: 14px auto 1fr; }
+  .lineage-node > strong { font-size: 9px; }
+  .lineage-node > p, .lineage-node > small { font-size: 7.5px; }
+  .finding-verdict > strong { font-size: 15px; }
+
+  .record-chain { padding-inline: 14px; }
+  .chain-heading { height: 38px; }
+  .record-track { min-width: 760px; padding-inline: 6px; }
+  .record-node { padding-top: 15px; }
+
+  .drawer-backdrop {
+    padding: 0;
+    overflow: hidden;
+  }
+  .record-drawer {
+    width: 100vw;
+    max-width: none;
+    height: 100svh;
+    max-height: none;
+    border-radius: 0;
+  }
+  .document-header {
+    grid-template-columns: auto 1fr;
+    gap: 10px;
+    padding: 16px 18px;
+  }
+  .document-header .doc-id {
+    grid-column: 2;
+    justify-self: start;
+  }
+  .document-header h2 { font-size: 23px; }
+  .document-body { padding: 18px; }
+  .doc-meta { grid-template-columns: 1fr 1fr; }
+  .doc-observation { grid-template-columns: 1fr; gap: 10px; }
+  .doc-observation-visual { height: 185px; }
+  .doc-observation-visual img {
+    object-position: 67% 32%;
+    transform: scale(1.42);
+    transform-origin: 67% 32%;
+  }
+  .doc-lineage-track {
+    grid-template-columns: 1fr;
+    gap: 5px;
+  }
+  .doc-lineage-track > i { transform: rotate(90deg); }
+  .doc-lineage-track > div { padding: 8px 10px; }
+  .doc-record { gap: 8px; }
+  .drawer-actions {
+    position: sticky;
+    bottom: 0;
+    z-index: 5;
+    padding: 10px 12px max(10px, env(safe-area-inset-bottom));
+  }
+  .drawer-actions .secondary-action,
+  .drawer-actions .primary-action { min-height: 46px; }
+}
+
+@media (max-width: 479px) {
+  .review-status span { display: none; }
+  .object-stage { height: 56svh; min-height: 390px; }
+  .object-caption h1 { font-size: 21px; }
+  .panel-content h2 { font-size: 28px; }
+  .workflow-progress { font-size: 7px; }
+  .workflow-progress i { width: 14px; }
+  .comparison-visual { height: 165px; }
+  .doc-meta { grid-template-columns: 1fr; }
+  .drawer-actions { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}

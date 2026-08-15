@@ -14,3 +14,13 @@ export interface ConditionRecord {
   evidenceStatus: EvidenceStatus
   note?: string
 }
+
+export interface CapturedObservation {
+  id: string
+  angle: number
+  area: string
+  feature: string
+  status: 'Human-reviewed'
+  capturedAt: string
+  imageDataUrl: string
+}
