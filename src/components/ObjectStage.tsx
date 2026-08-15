@@ -1,6 +1,7 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { ContactShadows, Environment, OrbitControls } from '@react-three/drei'
-import { Crosshair, MoveHorizontal } from 'lucide-react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { Check, Crosshair, MoveHorizontal } from 'lucide-react'
 import * as THREE from 'three'
 import { CeramicVessel } from './CeramicVessel'
 import { objectRecord, records } from '../data/objectRecord'
@@ -61,28 +62,41 @@ function RecordsOverviewStage({ selectedId, onSelect }: { selectedId: string; on
       <div className="records-stage-rule"><span>14 JUL</span><i /><span>03 AUG 2026</span></div>
 
       <div className="records-stage-grid">
-        {records.map((record, index) => (
-          <button
-            type="button"
-            key={record.id}
-            className={`records-folio ${selectedId === record.id ? 'active' : ''}`}
-            onClick={() => onSelect(record.id)}
-            aria-label={`Review ${record.title}`}
-          >
-            <div className="records-folio-index">0{index + 1}</div>
-            <div className="records-folio-topline">
-              <span>{record.date}</span>
-              <em>{record.evidenceStatus}</em>
-            </div>
-            <strong>{record.shortLabel}</strong>
-            <p>{record.institution}</p>
-            <dl>
-              <div><dt>LIGHT</dt><dd>{record.lighting}</dd></div>
-              <div><dt>FEATURE</dt><dd>{record.featureStatus}</dd></div>
-            </dl>
-            <div className="records-folio-source">SIGNED / {record.examiner.toUpperCase()}</div>
-          </button>
-        ))}
+        {records.map((record, index) => {
+          const active = selectedId === record.id
+          return (
+            <motion.button
+              type="button"
+              key={record.id}
+              className={`records-folio ${active ? 'active' : ''}`}
+              onClick={() => onSelect(record.id)}
+              aria-label={`Review ${record.title}`}
+              whileTap={{ scale: 0.995 }}
+              transition={{ duration: 0.16, ease: 'easeOut' }}
+            >
+              {active && (
+                <motion.span
+                  className="folio-selection-mark"
+                  layoutId="folio-selection-mark"
+                  transition={{ type: 'spring', stiffness: 430, damping: 38, mass: 0.55 }}
+                  aria-hidden="true"
+                />
+              )}
+              <div className="records-folio-index">0{index + 1}</div>
+              <div className="records-folio-topline">
+                <span>{record.date}</span>
+                <em>{record.evidenceStatus}</em>
+              </div>
+              <strong>{record.shortLabel}</strong>
+              <p>{record.institution}</p>
+              <dl>
+                <div><dt>LIGHT</dt><dd>{record.lighting}</dd></div>
+                <div><dt>FEATURE</dt><dd>{record.featureStatus}</dd></div>
+              </dl>
+              <div className="records-folio-source">SIGNED / {record.examiner.toUpperCase()}</div>
+            </motion.button>
+          )
+        })}
       </div>
 
       <footer className="records-stage-footer">
@@ -94,7 +108,7 @@ function RecordsOverviewStage({ selectedId, onSelect }: { selectedId: string; on
   )
 }
 
-export function ObjectStage({ step, lightAngle, onLightAngle, observation, onCanvasReady, selectedId, onSelectRecord }: {
+export function ObjectStage({ step, lightAngle, onLightAngle, observation, onCanvasReady, selectedId, onSelectRecord, capturePulse }: {
   step: WorkflowStep
   lightAngle: number
   onLightAngle: (value: number) => void
@@ -102,6 +116,7 @@ export function ObjectStage({ step, lightAngle, onLightAngle, observation, onCan
   onCanvasReady: (canvas: HTMLCanvasElement) => void
   selectedId: string
   onSelectRecord: (id: string) => void
+  capturePulse: boolean
 }) {
   const inspection = step === 'inspect'
   const compare = step === 'compare'
@@ -231,6 +246,26 @@ export function ObjectStage({ step, lightAngle, onLightAngle, observation, onCan
           <p>Angle shown from the object surface. Simulated examination; interpretation remains human-reviewed.</p>
         </div>
       )}
+
+      <AnimatePresence>
+        {capturePulse && (
+          <motion.div
+            className="observation-capture-seal"
+            initial={{ opacity: 0, scale: 0.985 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.01 }}
+            transition={{ duration: 0.18, ease: 'easeOut' }}
+            aria-live="polite"
+          >
+            <span className="capture-seal-crosshair" aria-hidden="true"><i /><b /></span>
+            <div>
+              <span>OBS-04 / FRAME PRESERVED</span>
+              <strong><Check size={14} /> Human-reviewed observation captured</strong>
+              <small>{grazingAngle}° from surface · Upper-right shoulder</small>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   )
 }
