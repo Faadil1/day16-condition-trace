@@ -84,37 +84,36 @@ export function ObjectStage({ step, lightAngle, onLightAngle, observation, onCan
           dpr={[1, 1.5]}
           gl={{ preserveDrawingBuffer: true, antialias: true }}
           onCreated={({ gl }) => {
-            gl.toneMappingExposure = 1.08
+            gl.toneMappingExposure = 1.04
             onCanvasReady(gl.domElement)
           }}
         >
-          <color attach="background" args={['#190E0C']} />
+          <color attach="background" args={['#14262A']} />
           <CameraRig inspection={inspection} />
 
-          {/* Quiet museum fill: enough to read the whole ceramic form without flattening it. */}
-          <hemisphereLight args={['#ead9bb', '#2c1814', inspection ? 0.24 : 0.5]} />
-          <ambientLight intensity={inspection ? 0.12 : 0.34} color="#d8c8aa" />
+          {/* Smoky Patina V3: warm conservation fill against a blue-green archive field. */}
+          <hemisphereLight args={['#ead9bb', '#14282a', inspection ? 0.23 : 0.48]} />
+          <ambientLight intensity={inspection ? 0.11 : 0.31} color="#d2c7ad" />
 
-          {/* Examination light remains directional and becomes the dominant source in inspect mode. */}
+          {/* Examination light remains directional and dominant in inspect mode. */}
           <spotLight
             position={[x, 1.85, 3.7]}
             angle={inspection ? 0.19 : 0.5}
             penumbra={inspection ? 0.5 : 0.84}
-            intensity={inspection ? 5.5 : 1.72}
-            color="#f1ddb6"
+            intensity={inspection ? 5.45 : 1.68}
+            color="#f0d9ad"
             castShadow
           />
 
-          {/* Broad front-left fill restores body and decoration readability. */}
-          <directionalLight position={[-3.4, 2.7, 4.4]} intensity={inspection ? 0.3 : 0.66} color="#c7b89b" />
-          {/* Very soft low fill prevents the foot and reed pattern from falling into black. */}
-          <directionalLight position={[-1.8, -2.6, 3.2]} intensity={inspection ? 0.07 : 0.14} color="#a88f72" />
-          {/* Restrained cool rim for silhouette separation only. */}
-          <directionalLight position={[2.8, 2.4, -4.8]} intensity={0.11} color="#9da4ae" />
+          {/* Warm museum fill preserves the ceramic body without neutralizing the patina field. */}
+          <directionalLight position={[-3.4, 2.7, 4.4]} intensity={inspection ? 0.28 : 0.62} color="#c9b99a" />
+          <directionalLight position={[-1.8, -2.6, 3.2]} intensity={inspection ? 0.065 : 0.13} color="#a58e71" />
+          {/* Stone-blue rim separates silhouette from the archive background. */}
+          <directionalLight position={[2.8, 2.4, -4.8]} intensity={0.13} color="#708B94" />
 
           <CeramicVessel reveal={reveal} active={inspection} />
-          <ContactShadows position={[0, -1.53, 0]} opacity={0.34} scale={4.7} blur={3.4} />
-          <Environment preset="studio" environmentIntensity={0.055} />
+          <ContactShadows position={[0, -1.53, 0]} opacity={0.32} scale={4.7} blur={3.5} />
+          <Environment preset="studio" environmentIntensity={0.045} />
           <OrbitControls
             enablePan={false}
             enableZoom={false}
