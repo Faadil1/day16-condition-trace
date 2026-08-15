@@ -137,6 +137,14 @@
     gap: 8px;
   }
   .comparison-visual { height: 190px; }
+  /* Mobile Compare B must preserve the actual shoulder evidence rather than
+     falling back to a generic whole-body crop. */
+  .comparison-captured-photo {
+    width: 164%;
+    height: 164%;
+    transform: translate(-63%, -43%);
+    filter: brightness(1.14) contrast(1.06) saturate(.9);
+  }
   .comparison-sync-rail {
     min-height: 24px;
     flex-direction: row;
