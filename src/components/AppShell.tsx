@@ -5,7 +5,7 @@ import { EvidencePanel } from './EvidencePanel'
 import { RecordChain } from './RecordChain'
 import { GeneratedRecord } from './GeneratedRecord'
 import { toGrazingAngle } from '../lib/examination'
-import { useEditorialMotion } from '../hooks/useEditorialMotion'
+import { useEditorialMotion, useRecordBridgeMotion } from '../hooks/useEditorialMotion'
 import type { CapturedObservation, WorkflowStep } from '../types/evidence'
 
 const order: WorkflowStep[] = ['open', 'records', 'inspect', 'compare', 'finding', 'record']
@@ -15,10 +15,18 @@ export function AppShell() {
   const [selectedId, setSelectedId] = useState('return-arrival')
   const [lightAngle, setLightAngle] = useState(24)
   const [observation, setObservation] = useState<CapturedObservation | null>(null)
+  const [recordBridge, setRecordBridge] = useState(false)
   const examinationCanvas = useRef<HTMLCanvasElement | null>(null)
   const shellRef = useRef<HTMLElement | null>(null)
+  const transitionTimers = useRef<number[]>([])
 
   useEditorialMotion(shellRef, step)
+  useRecordBridgeMotion(shellRef, recordBridge)
+
+  const clearTransitionTimers = () => {
+    transitionTimers.current.forEach(timer => window.clearTimeout(timer))
+    transitionTimers.current = []
+  }
 
   const captureObservation = () => {
     let imageDataUrl = ''
@@ -40,11 +48,26 @@ export function AppShell() {
   }
 
   const next = () => {
+    if (recordBridge) return
+
     if (step === 'inspect') captureObservation()
+
+    if (step === 'finding') {
+      clearTransitionTimers()
+      setRecordBridge(true)
+      transitionTimers.current = [
+        window.setTimeout(() => setStep('record'), 470),
+        window.setTimeout(() => setRecordBridge(false), 1180),
+      ]
+      return
+    }
+
     setStep(current => order[Math.min(order.indexOf(current) + 1, order.length - 1)])
   }
 
   const reset = () => {
+    clearTransitionTimers()
+    setRecordBridge(false)
     setStep('open')
     setSelectedId('return-arrival')
     setLightAngle(24)
@@ -69,7 +92,9 @@ export function AppShell() {
     }
     window.addEventListener('keydown', handleKey)
     return () => window.removeEventListener('keydown', handleKey)
-  }, [step, lightAngle])
+  }, [step, lightAngle, recordBridge])
+
+  useEffect(() => () => clearTransitionTimers(), [])
 
   return (
     <main ref={shellRef} className={`app-shell step-${step}`} data-workflow-step={step}>
@@ -93,6 +118,18 @@ export function AppShell() {
         />
       </div>
       <RecordChain selectedId={selectedId} onSelect={setSelectedId} expanded={step !== 'open'} highlightPeriod={step === 'finding' || step === 'record'} />
+
+      {recordBridge && (
+        <div className="record-bridge" aria-hidden="true">
+          <div className="record-bridge-inner">
+            <span className="record-bridge-fnd">FND-01</span>
+            <div className="record-bridge-rule"><i /><em>TRACE RESOLVED</em><i /></div>
+            <strong className="record-bridge-label">Evidence Record</strong>
+            <small className="record-bridge-copy">Qualified finding → institutional record</small>
+          </div>
+        </div>
+      )}
+
       {step === 'record' && <GeneratedRecord observation={observation} onClose={() => setStep('finding')} />}
     </main>
   )
