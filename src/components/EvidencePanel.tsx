@@ -8,9 +8,12 @@ import { ComparisonView } from './ComparisonView'
 import { EvidenceLineage } from './EvidenceLineage'
 
 const stepMeta: Record<WorkflowStep, { n: string; label: string }> = {
-  open: { n: '01', label: 'Open object' }, records: { n: '02', label: 'Review record chain' },
-  inspect: { n: '03', label: 'Inspect with raking light' }, compare: { n: '04', label: 'Compare documentation' },
-  finding: { n: '05', label: 'Qualified finding' }, record: { n: '06', label: 'Evidence record' },
+  open: { n: '01', label: 'Case brief' },
+  records: { n: '02', label: 'Record detail' },
+  inspect: { n: '03', label: 'Surface inspection' },
+  compare: { n: '04', label: 'Evidence comparison' },
+  finding: { n: '05', label: 'Qualified finding' },
+  record: { n: '06', label: 'Evidence record' },
 }
 
 export function EvidencePanel({ step, selectedId, lightAngle, observation, onNext }: {
@@ -24,8 +27,11 @@ export function EvidencePanel({ step, selectedId, lightAngle, observation, onNex
   const ready = lightAngle >= 72
   const grazingAngle = toGrazingAngle(lightAngle)
   const buttons: Partial<Record<WorkflowStep, string>> = {
-    open: 'Begin return inspection', records: 'Inspect current condition', inspect: 'Capture observation',
-    compare: 'Continue to qualified finding', finding: 'Generate evidence record',
+    open: 'Begin examination',
+    records: 'Enter surface inspection',
+    inspect: 'Capture observation',
+    compare: 'Continue to finding',
+    finding: 'Generate evidence record',
   }
 
   return (
@@ -49,18 +55,18 @@ export function EvidencePanel({ step, selectedId, lightAngle, observation, onNex
             <h2>{stepMeta[step].label}</h2>
 
             {step === 'open' && <>
-              <p className="lead">Begin a human-reviewed examination of the returned object and its available documentation.</p>
+              <p className="lead">Establish the first documented appearance of a surface feature across a signed but non-equivalent record chain.</p>
               <dl className="object-meta">
                 <div><dt>Accession</dt><dd>{objectRecord.accession}</dd></div>
                 <div><dt>Material</dt><dd>{objectRecord.material}</dd></div>
                 <div><dt>Loan status</dt><dd>{objectRecord.loanStatus}</dd></div>
                 <div><dt>Review</dt><dd>{objectRecord.investigationStatus}</dd></div>
               </dl>
-              <div className="notice"><ShieldCheck size={17} /><p><strong>Professional review record</strong>No determination of cause or liability is made by this record.</p></div>
+              <div className="notice"><ShieldCheck size={17} /><p><strong>Documentation boundary only</strong>This review does not determine cause, moment of damage, or liability.</p></div>
             </>}
 
             {step === 'records' && <>
-              <p className="lead">Select each inspection moment to review the evidence available at that point in the record chain.</p>
+              <p className="lead">Select a folio in the archive to inspect what was documented at that exact custody moment.</p>
               <div className="selected-record">
                 <div className="record-title"><span>{selected.date}</span><EvidenceStatus status={selected.evidenceStatus} /></div>
                 <h3>{selected.title}</h3>
@@ -75,16 +81,16 @@ export function EvidencePanel({ step, selectedId, lightAngle, observation, onNex
             </>}
 
             {step === 'inspect' && <>
-              <p className="lead">Move the examination light across the surface. Once the shoulder relief becomes legible, capture the observation for comparison.</p>
+              <p className="lead">Lower the grazing angle until the shoulder relief is legible, then preserve that exact examination frame as a human-reviewed observation.</p>
               <div className="inspection-readout">
                 <Lightbulb size={20} />
                 <div>
                   <span>EXAMINATION CONDITION</span>
                   <strong>{ready ? `${grazingAngle}° from surface · capture ready` : `${grazingAngle}° from surface`}</strong>
-                  <p>{ready ? 'Surface relief is legible. Capture will preserve this exact examination frame.' : 'Lower the grazing angle to strengthen relief without asserting an automated detection.'}</p>
+                  <p>{ready ? 'Surface relief is legible. Capture will preserve this examination frame.' : 'Lower the grazing angle to strengthen relief without asserting automated detection.'}</p>
                 </div>
               </div>
-              <div className="feature-spec"><span>TRACKED AREA</span><strong>Upper-right shoulder</strong><p>No feature has been automatically detected or classified.</p></div>
+              <div className="feature-spec"><span>AREA OF INTEREST</span><strong>Upper-right shoulder</strong><p>Observation remains human-reviewed; no feature is automatically detected or classified.</p></div>
             </>}
 
             {step === 'compare' && <ComparisonView observation={observation} observationAngle={lightAngle} />}
