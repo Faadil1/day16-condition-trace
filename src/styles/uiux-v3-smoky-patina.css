@@ -1,0 +1,660 @@
+/*
+  Condition Trace — UI/UX V3
+  Direction: Smoky Patina Archive
+  Goal: museum archive + conservation instrument, without generic AI/glass aesthetics.
+*/
+
+:root {
+  --ct-smoke-950: #111d20;
+  --ct-smoke-900: #17272a;
+  --ct-smoke-800: #24363a;
+  --ct-smoke-700: #31484b;
+  --ct-patina-800: #314b45;
+  --ct-patina-700: #3f5b53;
+  --ct-patina-600: #587268;
+  --ct-paper-100: #f0e4cf;
+  --ct-paper-200: #e2d4bc;
+  --ct-paper-300: #cabba2;
+  --ct-charcoal: #1d2324;
+  --ct-bronze: #b78455;
+  --ct-bronze-soft: #d0a779;
+  --ct-stone: #708b94;
+  --ct-dust: #a87570;
+  --ct-sage: #8ea095;
+  --ct-line-dark: rgba(240, 228, 207, .14);
+  --ct-line-warm: rgba(183, 132, 85, .36);
+  --ct-paper-line: rgba(29, 35, 36, .18);
+
+  --ink: var(--ct-smoke-950);
+  --header: #132326;
+  --panel: #1d3031;
+  --surface: #29413e;
+  --rose: #efe4d3;
+  --rose-muted: #c7c1b4;
+  --rose-subtle: #92a09c;
+  --line: var(--ct-line-dark);
+  --muted: #aeb8b3;
+  --ivory: var(--ct-paper-100);
+  --bronze: var(--ct-bronze);
+  --paper: var(--ct-paper-100);
+  --verified: #9eb09d;
+}
+
+html, body, #root {
+  background: var(--ct-smoke-950);
+}
+
+body {
+  color: var(--ct-paper-100);
+  background:
+    radial-gradient(circle at 73% 10%, rgba(63, 91, 83, .15), transparent 34%),
+    linear-gradient(135deg, #111d20 0%, #17282b 58%, #1d302f 100%);
+}
+
+/* ---------- Global frame ---------- */
+.app-shell {
+  background:
+    linear-gradient(90deg, rgba(240,228,207,.018) 1px, transparent 1px),
+    linear-gradient(rgba(240,228,207,.014) 1px, transparent 1px),
+    radial-gradient(circle at 42% 20%, rgba(88,114,104,.08), transparent 31%),
+    linear-gradient(145deg, #111d20 0%, #17272a 54%, #1e3431 100%);
+  background-size: 96px 96px, 96px 96px, auto, auto;
+}
+
+.museum-header {
+  background: rgba(17, 29, 32, .96);
+  border-bottom: 1px solid rgba(183,132,85,.28);
+  box-shadow: 0 1px rgba(240,228,207,.025) inset;
+}
+
+.brand-mark {
+  border-bottom-color: var(--ct-bronze);
+}
+.brand-mark i { background: var(--ct-bronze); }
+.wordmark { color: var(--ct-paper-100); }
+.tagline { color: #829590; }
+.header-object strong { color: var(--ct-paper-100); }
+.header-label, .review-status { color: #90a19d; }
+.header-divider { background: rgba(240,228,207,.12); }
+.review-status svg { color: var(--ct-bronze-soft); }
+
+/* Museum folio surfaces: slightly squared, visibly archival. */
+.object-stage,
+.evidence-panel,
+.record-chain {
+  border-radius: 2px;
+  border-color: rgba(240,228,207,.12);
+  box-shadow:
+    0 22px 68px rgba(5, 12, 13, .24),
+    0 1px rgba(240,228,207,.025) inset;
+}
+
+.workspace,
+.workspace.compare-mode {
+  gap: 14px;
+  padding: 14px 18px 0;
+}
+
+/* ---------- Object / examination surface ---------- */
+.object-stage {
+  background:
+    radial-gradient(circle at 52% 43%, rgba(63,91,83,.13), transparent 38%),
+    linear-gradient(150deg, #101b1d, #142529 55%, #172b2a);
+}
+
+.object-stage::before {
+  background:
+    radial-gradient(circle at 48% 43%, transparent 14%, rgba(7,15,16,.12) 62%, rgba(7,15,16,.56) 100%),
+    linear-gradient(rgba(240,228,207,.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(240,228,207,.012) 1px, transparent 1px);
+  background-size: auto, 84px 84px, 84px 84px;
+}
+
+.object-stage::after {
+  left: 28px;
+  right: 28px;
+  background: linear-gradient(90deg, transparent, rgba(183,132,85,.42), transparent);
+}
+
+.stage-number,
+.exam-label,
+.exam-status {
+  color: #889b96;
+}
+
+.object-caption span,
+.section-kicker,
+.eyebrow,
+.document-label {
+  color: var(--ct-bronze-soft);
+}
+
+.object-caption h1 {
+  color: var(--ct-paper-100);
+  font-size: 32px;
+  letter-spacing: -.035em;
+  text-shadow: 0 2px 18px rgba(0,0,0,.28);
+}
+.object-caption p { color: #93a49f; }
+
+.annotation-marker {
+  color: var(--ct-bronze-soft);
+}
+.annotation-marker::before { background: var(--ct-bronze); }
+.annotation-marker span {
+  color: var(--ct-paper-100);
+  border-color: rgba(183,132,85,.58);
+  background: rgba(17,29,32,.92);
+  box-shadow: 0 8px 30px rgba(0,0,0,.2);
+}
+
+/* Examination dock becomes a physical instrument strip, not floating glass. */
+.light-console {
+  border-color: rgba(183,132,85,.44);
+  background:
+    linear-gradient(180deg, rgba(37,58,59,.98), rgba(23,39,41,.99));
+  backdrop-filter: none;
+  box-shadow:
+    0 18px 44px rgba(4,11,12,.34),
+    inset 0 1px rgba(240,228,207,.05);
+}
+.light-console-copy svg { color: var(--ct-bronze-soft); }
+.light-console-copy strong { color: var(--ct-paper-100); }
+.light-console-copy span,
+.light-console p { color: #9caaa5; }
+.light-console output {
+  color: var(--ct-bronze-soft);
+  font-size: 18px;
+}
+.light-console input { accent-color: var(--ct-bronze); }
+
+/* ---------- Evidence work surface ---------- */
+.evidence-panel {
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(35,55,55,.99), rgba(26,44,44,.995));
+  border-color: rgba(240,228,207,.13);
+}
+
+.evidence-panel::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, transparent, rgba(183,132,85,.56) 16%, rgba(183,132,85,.18) 84%, transparent);
+  pointer-events: none;
+}
+
+.workflow-progress {
+  color: #879a95;
+}
+.workflow-progress i { background: rgba(240,228,207,.10); }
+.workflow-progress i.filled { background: var(--ct-bronze); }
+
+.panel-content h2 {
+  color: var(--ct-paper-100);
+  font-size: 39px;
+  line-height: .98;
+  letter-spacing: -.035em;
+}
+.lead {
+  color: #bcc5c0;
+  max-width: 42ch;
+}
+
+.object-meta div,
+.selected-record dl div,
+.finding-list div {
+  border-top-color: rgba(240,228,207,.11);
+}
+dt { color: #8fa19c; }
+dd { color: #e2d8c8; }
+
+.notice {
+  background: rgba(240,228,207,.045);
+  border-left-color: var(--ct-bronze);
+}
+.notice svg { color: var(--ct-bronze-soft); }
+.notice p { color: #aebbb6; }
+.notice strong { color: var(--ct-paper-100); }
+
+.primary-action {
+  background: var(--ct-bronze);
+  color: #132326;
+  border: 1px solid rgba(240,228,207,.08);
+  box-shadow: 0 10px 28px rgba(183,132,85,.12);
+}
+.primary-action:hover {
+  background: #c49260;
+  color: #102022;
+}
+.primary-action:disabled {
+  background: #314643;
+  color: #83918d;
+  border-color: rgba(240,228,207,.07);
+}
+.secondary-action {
+  border-color: rgba(29,35,36,.32);
+}
+
+/* ---------- 01 OPEN ---------- */
+.step-open .workspace {
+  grid-template-columns: minmax(0, 1.76fr) minmax(350px, .56fr);
+}
+.step-open .object-stage {
+  border-color: rgba(183,132,85,.30);
+  box-shadow:
+    0 28px 84px rgba(4,11,12,.32),
+    inset 0 0 0 1px rgba(240,228,207,.02);
+}
+.step-open .object-caption {
+  max-width: 520px;
+  bottom: 28px;
+}
+.step-open .object-caption h1 { font-size: 39px; }
+.step-open .evidence-panel {
+  background:
+    linear-gradient(180deg, rgba(49,75,69,.94), rgba(29,48,48,.99));
+}
+.step-open .panel-content {
+  margin-top: 37px;
+}
+.step-open .panel-content h2 {
+  font-size: 46px;
+  max-width: 330px;
+}
+.step-open .object-meta {
+  margin-top: 6px;
+}
+.step-open .object-meta div {
+  padding: 10px 0;
+}
+.step-open .primary-action {
+  margin-top: 6px;
+}
+
+/* ---------- 02 RECORDS ---------- */
+.step-records .evidence-panel {
+  background: linear-gradient(180deg, #263c3b, #1d3031);
+}
+
+/* The selected record is a parchment card laid on the archive desk. */
+.step-records .selected-record {
+  background:
+    linear-gradient(180deg, rgba(240,228,207,.98), rgba(226,212,188,.98));
+  color: var(--ct-charcoal);
+  border: 1px solid rgba(183,132,85,.34);
+  box-shadow: 0 14px 32px rgba(5,12,13,.18);
+}
+.step-records .selected-record .record-title,
+.step-records .selected-record > p,
+.step-records .selected-record dt {
+  color: #64716d;
+}
+.step-records .selected-record h3,
+.step-records .selected-record dd {
+  color: var(--ct-charcoal);
+}
+.step-records .selected-record dl div {
+  border-top-color: rgba(29,35,36,.15);
+}
+.step-records .record-note {
+  background: rgba(63,91,83,.10);
+  color: #465450;
+  border-left: 2px solid var(--ct-bronze);
+}
+.step-records .evidence-status.status-partial { color: #9b6538; }
+.step-records .evidence-status.status-verified { color: #5c765f; }
+
+/* ---------- 03 INSPECT ---------- */
+.step-inspect .object-stage {
+  border-color: rgba(112,139,148,.28);
+}
+.step-inspect .evidence-panel {
+  background:
+    linear-gradient(180deg, rgba(31,52,52,.98), rgba(22,39,41,.995));
+}
+.step-inspect .inspection-readout {
+  border-color: rgba(112,139,148,.30);
+  background:
+    linear-gradient(110deg, rgba(112,139,148,.10), transparent 42%),
+    #17282a;
+  box-shadow: inset 0 1px rgba(240,228,207,.03);
+}
+.step-inspect .inspection-readout svg { color: var(--ct-stone); }
+.step-inspect .inspection-readout strong { color: var(--ct-paper-100); }
+.step-inspect .feature-spec {
+  border-block-color: rgba(183,132,85,.26);
+}
+.step-inspect .feature-spec strong { color: var(--ct-paper-100); }
+
+/* ---------- RECORD CHAIN / EVIDENCE INDEX ---------- */
+.record-chain {
+  margin: 11px 18px 14px;
+  padding: 0 18px;
+  background:
+    linear-gradient(180deg, rgba(20,36,38,.98), rgba(17,30,32,.99));
+  border-color: rgba(240,228,207,.11);
+}
+.chain-heading { color: #81938e; }
+.record-node {
+  border-top-color: rgba(240,228,207,.12);
+}
+.record-node strong { color: #ddd4c5; }
+.node-date,
+.node-institution { color: #82948f; }
+.node-dot {
+  background: #536763;
+  box-shadow: 0 0 0 4px #142426;
+}
+.record-node.active {
+  border-color: var(--ct-bronze);
+}
+.record-node.active .node-dot {
+  background: var(--ct-bronze);
+}
+.handoff { color: #71827e; }
+.handoff i { border-color: rgba(112,139,148,.24); }
+.handoff.highlight { color: var(--ct-bronze-soft); }
+.handoff.highlight i { border-color: var(--ct-bronze); }
+
+/* ---------- 04 COMPARE ---------- */
+.workspace.compare-mode {
+  grid-template-columns: minmax(0, 1.08fr) minmax(580px, .92fr);
+}
+.workspace.compare-mode .evidence-panel {
+  background: linear-gradient(180deg, #233b3a, #1a2d2f);
+}
+.workspace.compare-mode .panel-content h2 {
+  font-size: 43px;
+}
+.comparison-pair-label {
+  border-color: rgba(240,228,207,.13);
+  background: rgba(17,29,32,.42);
+}
+.comparison-pair-label span { color: var(--ct-bronze-soft); }
+.comparison-pair-label strong { color: #91a39e; }
+
+.comparison-frame {
+  background: rgba(17,29,32,.40);
+  border-color: rgba(240,228,207,.13);
+}
+.comparison-frame.prior {
+  border-color: rgba(112,139,148,.28);
+}
+.comparison-frame.current {
+  border-color: rgba(183,132,85,.52);
+  background: linear-gradient(180deg, rgba(183,132,85,.08), rgba(17,29,32,.34));
+}
+.comparison-visual {
+  background: #111d20;
+  border-color: rgba(240,228,207,.09);
+}
+.comparison-documentary-gap {
+  background:
+    linear-gradient(rgba(112,139,148,.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(112,139,148,.055) 1px, transparent 1px),
+    #17272a;
+  background-size: 26px 26px, 26px 26px, auto;
+}
+.comparison-gap-content { color: #96a7a2; }
+.comparison-gap-content strong { color: #b7c2bd; }
+.comparison-gap-area,
+.comparison-reticle {
+  border-color: rgba(183,132,85,.46);
+  background: rgba(17,29,32,.90);
+  color: var(--ct-bronze-soft);
+}
+.comparison-sync-rail { color: var(--ct-bronze); }
+.comparison-limit {
+  border-color: rgba(183,132,85,.32);
+  background: rgba(183,132,85,.075);
+}
+.comparison-limit span,
+.comparison-limit > svg { color: var(--ct-bronze-soft); }
+.comparison-limit strong { color: var(--ct-paper-100); }
+.comparison-limit p { color: #aebbb6; }
+.comparison-finding {
+  background: rgba(240,228,207,.05);
+  border-left-color: var(--ct-bronze);
+}
+.comparison-finding p { color: #c6ccc7; }
+
+/* Captured evidence board uses blue-green institutional tone instead of burgundy. */
+.captured-evidence-stage {
+  background:
+    radial-gradient(circle at 52% 42%, rgba(88,114,104,.16), transparent 38%),
+    linear-gradient(180deg, #111d20 0%, #17282a 100%);
+}
+.capture-stage-meta { border-bottom-color: rgba(240,228,207,.12); }
+.capture-stage-meta span { color: var(--ct-bronze-soft); }
+.capture-stage-meta strong { color: #93a49f; }
+.capture-stage-photo-frame {
+  background: #111d20;
+  border-color: rgba(240,228,207,.14);
+  box-shadow: 0 26px 62px rgba(5,12,13,.32);
+}
+.capture-focus-ring { color: var(--ct-bronze-soft); }
+.capture-focus-ring i { border-color: rgba(183,132,85,.72); }
+.capture-focus-ring span {
+  background: rgba(17,29,32,.90);
+  border-color: rgba(183,132,85,.48);
+  color: var(--ct-bronze-soft);
+}
+.capture-stage-readout {
+  border-color: rgba(240,228,207,.13);
+  background: rgba(23,40,42,.92);
+  backdrop-filter: none;
+}
+.capture-stage-readout > div { border-right-color: rgba(240,228,207,.09); }
+.capture-stage-readout span { color: var(--ct-bronze-soft); }
+.capture-stage-readout strong { color: #d8d3c8; }
+
+/* ---------- 05 FINDING ---------- */
+.step-finding .workspace {
+  background:
+    radial-gradient(circle at 85% 12%, rgba(63,91,83,.12), transparent 30%),
+    linear-gradient(145deg, rgba(17,29,32,.18), rgba(49,75,69,.10));
+}
+.step-finding .evidence-panel {
+  border-color: rgba(183,132,85,.22);
+  background:
+    linear-gradient(180deg, rgba(35,56,55,.98), rgba(21,37,39,.995));
+  box-shadow: 0 28px 78px rgba(4,11,12,.28);
+}
+.step-finding .panel-content h2 {
+  font-size: 52px;
+  max-width: 740px;
+}
+.step-finding .finding-lead {
+  color: #b8c2bd;
+}
+.step-finding .evidence-lineage {
+  border-color: rgba(240,228,207,.12);
+  background: rgba(17,29,32,.44);
+}
+.step-finding .lineage-node {
+  border-color: rgba(240,228,207,.11);
+  background: linear-gradient(180deg, #1d3031, #172729);
+}
+.step-finding .lineage-node-wrap:not(:last-child)::after {
+  background: linear-gradient(90deg, rgba(183,132,85,.78), rgba(183,132,85,.18));
+}
+.step-finding .lineage-node-id span { color: var(--ct-bronze-soft); }
+.step-finding .lineage-node > strong { color: var(--ct-paper-100); }
+.step-finding .lineage-node > p,
+.step-finding .lineage-node > small { color: #9daba6; }
+.step-finding .finding-verdict {
+  max-width: 820px;
+  border: 1px solid rgba(183,132,85,.44);
+  background:
+    linear-gradient(120deg, rgba(183,132,85,.16), rgba(63,91,83,.18)),
+    #203635;
+  box-shadow: 0 14px 38px rgba(4,11,12,.18);
+}
+.step-finding .finding-verdict span { color: var(--ct-bronze-soft); }
+.step-finding .finding-verdict > strong {
+  color: var(--ct-paper-100);
+  font-size: 22px;
+}
+.step-finding .finding-verdict p { color: #c3cbc6; }
+.step-finding .finding-verdict small { color: #8fa09b; }
+
+/* ---------- 06 RECORD ---------- */
+.step-record .drawer-backdrop {
+  background:
+    radial-gradient(circle at 50% 20%, rgba(63,91,83,.18), transparent 35%),
+    rgba(9,20,22,.88);
+  backdrop-filter: blur(8px);
+}
+.step-record .record-drawer {
+  background:
+    linear-gradient(rgba(29,35,36,.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(29,35,36,.018) 1px, transparent 1px),
+    var(--ct-paper-100);
+  background-size: 34px 34px, 34px 34px, auto;
+  color: var(--ct-charcoal);
+  border: 1px solid rgba(183,132,85,.48);
+  box-shadow: 0 38px 110px rgba(4,11,12,.56);
+}
+.step-record .document-header {
+  border-bottom-color: var(--ct-paper-line);
+  background: rgba(226,212,188,.42);
+}
+.step-record .document-seal {
+  border-color: rgba(29,35,36,.44);
+  color: var(--ct-charcoal);
+  box-shadow: inset 0 0 0 3px rgba(183,132,85,.10);
+}
+.step-record .document-header span,
+.step-record .doc-meta span,
+.step-record .doc-gap span,
+.step-record .document-body footer span {
+  color: #64716d;
+}
+.step-record .document-header h2,
+.step-record .doc-meta strong,
+.step-record .doc-observation-copy strong,
+.step-record .doc-record strong {
+  color: var(--ct-charcoal);
+}
+.step-record .document-label { color: #8c603d; }
+.step-record .doc-meta {
+  border-block-color: var(--ct-paper-line);
+}
+.step-record .doc-observation {
+  border: 1px solid rgba(29,35,36,.16);
+  background: rgba(255,255,255,.16);
+}
+.step-record .doc-observation-visual {
+  background: #17272a;
+}
+.step-record .finding-copy {
+  background: rgba(63,91,83,.09);
+  border-left-color: var(--ct-bronze);
+}
+.step-record .finding-copy p { color: #283230; }
+.step-record .doc-lineage-track > div {
+  border-color: rgba(29,35,36,.16);
+  background: rgba(255,255,255,.12);
+}
+.step-record .doc-lineage-track > div span { color: #8c603d; }
+.step-record .doc-lineage-track > i { color: #8c603d; }
+.step-record .doc-lineage-finding {
+  background: rgba(183,132,85,.14) !important;
+  border-color: rgba(183,132,85,.48) !important;
+}
+.step-record .doc-record {
+  border-bottom-color: rgba(29,35,36,.14);
+}
+.step-record .doc-record span { color: #697672; }
+.step-record .doc-gap {
+  border-color: rgba(183,132,85,.38);
+  background: rgba(183,132,85,.08);
+}
+.step-record .document-body footer {
+  border-top-color: rgba(29,35,36,.18);
+}
+.step-record .drawer-actions {
+  background: rgba(226,212,188,.96);
+  border-top-color: rgba(29,35,36,.18);
+}
+.step-record .drawer-actions .primary-action {
+  background: var(--ct-smoke-900);
+  color: var(--ct-paper-100);
+  border-color: rgba(29,35,36,.26);
+}
+.step-record .drawer-actions .secondary-action {
+  color: var(--ct-charcoal);
+}
+.step-record .drawer-close { color: #596663; }
+
+/* ---------- Selection / focus ---------- */
+::selection {
+  background: rgba(183,132,85,.34);
+  color: var(--ct-paper-100);
+}
+button:focus-visible,
+input:focus-visible {
+  outline-color: var(--ct-bronze-soft);
+}
+
+/* ---------- Responsive V3 ---------- */
+@media (max-width: 1199px) {
+  .workspace,
+  .workspace.compare-mode,
+  .step-open .workspace {
+    gap: 12px;
+    padding: 12px 14px 0;
+  }
+
+  .object-stage,
+  .evidence-panel {
+    border-radius: 2px;
+  }
+
+  .step-finding .panel-content h2 { font-size: 45px; }
+}
+
+@media (max-width: 767px) {
+  .museum-header {
+    border-bottom-color: rgba(183,132,85,.24);
+  }
+
+  .workspace,
+  .workspace.compare-mode,
+  .step-open .workspace {
+    padding: 8px 8px 0;
+    gap: 8px;
+  }
+
+  .object-stage,
+  .evidence-panel {
+    border-left-color: rgba(240,228,207,.10);
+    border-right-color: rgba(240,228,207,.10);
+  }
+
+  .evidence-panel { padding-inline: 18px; }
+  .panel-content h2 { font-size: 32px; }
+  .step-open .panel-content h2 { font-size: 36px; }
+  .step-finding .panel-content h2 { font-size: 38px; }
+
+  .record-chain {
+    margin: 8px 8px 10px;
+  }
+
+  .step-record .record-drawer {
+    border: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .object-stage,
+  .evidence-panel,
+  .record-chain,
+  .record-drawer {
+    box-shadow: none;
+  }
+}
