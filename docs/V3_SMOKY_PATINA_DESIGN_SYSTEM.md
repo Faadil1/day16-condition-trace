@@ -122,16 +122,49 @@ Purpose: finish on a credible institutional artifact.
 - Bronze labels / finding accents
 - Blue-green only in embedded evidence imagery, not as document chrome
 
-## Motion
-- Keep motion purposeful and short.
-- 160–260ms for panel changes.
-- 300–450ms only for major object/document transitions.
-- Respect `prefers-reduced-motion`.
-- No ambient looping interface animations except the 3D object/light behavior itself.
+## Motion system
+Motion must explain workflow state and evidence transformation. It is not ambient decoration.
 
-## Workflow addition: AI Color Picker
+### Tool ownership
+- **Three.js / R3F** — canonical vessel, examination lighting, raking-light surface response.
+- **Framer Motion** — React mount/unmount and short structural transitions.
+- **Anime.js** — editorial choreography, staggered evidence reveals, timeline sequencing and signature reasoning-to-record transitions.
+
+### Anime.js rules
+- Use `createScope()` inside React so animations stay scoped to the current workflow root and are reverted on step change/unmount.
+- Respect `prefers-reduced-motion` through Anime.js scope media queries.
+- Prefer 420–650ms for editorial reveals and 40–100ms staggers between related evidence elements.
+- Do not animate every label. Animate hierarchy: headline → artifact → metadata → action.
+- No ambient looping UI animation.
+
+### V3 choreography by step
+- **Open:** hero statement reveals first, then object caption, then case brief.
+- **Records:** archive heading → chronology rule → four folios in stagger → selected detail.
+- **Inspect:** examination mode → target annotation → grazing-light instrument → review panel.
+- **Compare:** A and B enter from opposing sides → relationship rail → limitation/finding.
+- **Finding:** lineage nodes activate sequentially from `SRC-03` to `FND-01`, then the qualified finding resolves.
+- **Record:** document identity → metadata → observation → finding → lineage → archive/export actions.
+
+## Workflow additions
+
+### AI Color Picker
 Use AI Color Picker between visual-direction selection and design-system lock:
 
 `Visual direction → AI Color Picker → palette validation → design system → build → contrast/accessibility QA`
 
 For V3, `#24363A` is the validated primary smoky blue anchor.
+
+### Motion / Differentiation Gate
+Anime.js is now a supported execution tool in the permanent Differentiation Gate.
+
+Use the workflow:
+
+`Reference behavior (Rina / 60fps / Sohrab) → define signature behavior → choose execution tool (Anime.js / GSAP / Rive / Three.js) → build → reduced-motion + performance QA`
+
+Selection rule:
+- Anime.js: editorial DOM/SVG choreography and sequenced UI transitions.
+- GSAP: heavier scroll/complex timeline work when Anime.js is not sufficient.
+- Rive: authored interactive vector states.
+- Three.js: genuine 3D/object/light interactions.
+
+For Condition Trace V3, the selected combination is **Anime.js + Three.js**, with Framer Motion retained for basic React transitions.
