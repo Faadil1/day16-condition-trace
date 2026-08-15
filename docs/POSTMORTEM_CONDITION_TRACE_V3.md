@@ -3,6 +3,14 @@
 ## Executive outcome
 Condition Trace became materially stronger when the design process stopped treating UI polish as a styling pass and started treating it as a sequence of gated product decisions. The strongest improvements came from preserving proof logic first, choosing one visual metaphor, assigning each tool a job, and making motion communicate evidence rather than decorate the interface.
 
+The generalizable system is now framed as **TRACE**:
+
+- **T — Truth**
+- **R — Research & References**
+- **A — Art Direction & Architecture**
+- **C — Character & Construction**
+- **E — Evaluation & Evolution**
+
 ## What worked
 
 ### 1. Functional/proof baseline before art direction
@@ -61,6 +69,16 @@ The font families were appropriate, but many labels and evidence details were 5�
 
 Reusable rule: **Typography Lock + Typography QA** are separate moments. Lock families/roles early; audit actual rendered sizes after layout stabilizes.
 
+### 9. The showcase video is part of product truth
+A polished video can accidentally create stronger claims than the live product if proof-bearing moments are recreated cinematically instead of captured from the source experience.
+
+For Condition Trace, the correct approach is hybrid:
+- real V3 application footage for raking light, OBS-04 capture, Compare, Evidence Trace and Evidence Record;
+- Remotion for pacing, crops, annotations, sequencing and final storytelling;
+- cinematic Three.js recreation only for non-proof atmosphere when needed.
+
+Reusable rule: **Demo Narrative / Evidence Film Gate** — define what must come from the live product before editing. Presentation may clarify evidence but may not invent it.
+
 ## What did not work / created unnecessary iteration
 
 ### 1. Styling before composition
@@ -82,6 +100,11 @@ Correction: use tools as reference libraries first. Import only when the product
 More effects would have made Condition Trace less distinctive by moving it toward generic futuristic UI.
 
 Correction: uniqueness is produced by a coherent metaphor, not by effect count.
+
+### 5. A video can become a second product implementation
+Rebuilding the evidence workflow inside a cinematic renderer would duplicate logic and risk visual/proof drift.
+
+Correction: capture canonical product behavior and let the video layer edit it. Recreate only atmosphere, never proof.
 
 ## New canonical gates derived from this project
 
@@ -149,6 +172,17 @@ Validate the exact contexts in which the work will be judged or used:
 - screenshots/video
 - print/PDF/export where applicable
 
+### Gate 6.75 — Demo Narrative / Evidence Film
+Define:
+- narrative arc
+- proof-bearing shots
+- source-of-truth capture requirements
+- cinematic/non-proof shots
+- video typography
+- master format
+
+Rule: video polish cannot strengthen claims beyond the live product.
+
 ### Gate 7 — Freeze / Promotion
 Freeze proven layers, promote the selected branch and record the final design contract.
 
@@ -156,10 +190,21 @@ Freeze proven layers, promote the selected branch and record the final design co
 After completion, promote only generalizable lessons into the canonical workflow. Project-specific tricks remain project adapters.
 
 ## The reusable architecture
-The workflow should not be one giant prompt. It should have three layers:
+The workflow should not be one giant prompt. It has three layers:
 
 1. **Workflow Kernel** — stable gates, decision rules, anti-slop constraints, required outputs.
 2. **Project Adapter** — domain, audience, constraints, proof contract, design system and signature interactions for one project.
 3. **Tool Adapters** — Mobbin, AI Color Picker, Figma, Anime.js, Motion, Three.js, Bklit, etc.; each tool is invoked only when its gate/job requires it.
 
 This structure allows the system to evolve without forcing every project to use every reference or library.
+
+## Implementation recommendation for TRACE itself
+Do not begin with a monolithic plugin/app.
+
+Recommended sequence:
+1. keep the Workflow Kernel versioned in GitHub;
+2. create an executable skill that detects gates, prerequisites and outputs;
+3. maintain project adapters and tool adapters as machine-readable state;
+4. after the Kernel has been tested across multiple projects, expose it through a ChatGPT App/MCP layer.
+
+The app should orchestrate the workflow, not replace its source of truth.
