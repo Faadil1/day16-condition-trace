@@ -5,6 +5,7 @@ import { EvidencePanel } from './EvidencePanel'
 import { RecordChain } from './RecordChain'
 import { GeneratedRecord } from './GeneratedRecord'
 import { toGrazingAngle } from '../lib/examination'
+import { useEditorialMotion } from '../hooks/useEditorialMotion'
 import type { CapturedObservation, WorkflowStep } from '../types/evidence'
 
 const order: WorkflowStep[] = ['open', 'records', 'inspect', 'compare', 'finding', 'record']
@@ -15,6 +16,9 @@ export function AppShell() {
   const [lightAngle, setLightAngle] = useState(24)
   const [observation, setObservation] = useState<CapturedObservation | null>(null)
   const examinationCanvas = useRef<HTMLCanvasElement | null>(null)
+  const shellRef = useRef<HTMLElement | null>(null)
+
+  useEditorialMotion(shellRef, step)
 
   const captureObservation = () => {
     let imageDataUrl = ''
@@ -68,7 +72,7 @@ export function AppShell() {
   }, [step, lightAngle])
 
   return (
-    <main className={`app-shell step-${step}`} data-workflow-step={step}>
+    <main ref={shellRef} className={`app-shell step-${step}`} data-workflow-step={step}>
       <MuseumHeader />
       <div className={`workspace ${step === 'compare' ? 'compare-mode' : ''}`}>
         <ObjectStage
