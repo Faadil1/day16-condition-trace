@@ -7,6 +7,7 @@ import './styles/compare-stage.css'
 import './styles/vessel-v2.css'
 import './styles/evidence-lineage.css'
 import './styles/responsive.css'
+import './styles/uiux-v2.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
