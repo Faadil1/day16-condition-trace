@@ -8,6 +8,7 @@ import './styles/vessel-v2.css'
 import './styles/evidence-lineage.css'
 import './styles/responsive.css'
 import './styles/uiux-v2.css'
+import './styles/uiux-v3-smoky-patina.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
