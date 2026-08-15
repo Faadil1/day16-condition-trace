@@ -135,13 +135,24 @@ export function useEditorialMotion(rootRef: RefObject<HTMLElement | null>, step:
             duration: 500,
             delay: stagger(60),
           })
+          .add('.lineage-trace-path', {
+            strokeDashoffset: [1, 0],
+            duration: 1180,
+            ease: 'inOut(2)',
+          }, '<+=80')
+          .add('.lineage-trace-node', {
+            opacity: [0, 1],
+            scale: [0.55, 1],
+            duration: 360,
+            delay: stagger(120),
+          }, '<+=120')
           .add('.lineage-node', {
             opacity: [0, 1],
             y: [16, 0],
             scale: [0.985, 1],
             duration: 520,
             delay: stagger(95),
-          }, '<+=90')
+          }, '<-=420')
           .add('.finding-verdict', {
             opacity: [0, 1],
             y: [18, 0],
@@ -186,4 +197,52 @@ export function useEditorialMotion(rootRef: RefObject<HTMLElement | null>, step:
 
     return () => scope.revert()
   }, [rootRef, step])
+}
+
+export function useRecordBridgeMotion(rootRef: RefObject<HTMLElement | null>, active: boolean) {
+  useEffect(() => {
+    const root = rootRef.current
+    if (!root || !active) return
+
+    const scope = createScope({
+      root,
+      mediaQueries: {
+        reduceMotion: '(prefers-reduced-motion: reduce)',
+      },
+    }).add(self => {
+      if (self?.matches.reduceMotion) return
+
+      createTimeline({ defaults: { ease: 'out(3)' } })
+        .add('.record-bridge', {
+          opacity: [0, 1],
+          duration: 180,
+        })
+        .add('.record-bridge-fnd', {
+          opacity: [0, 1],
+          scale: [0.92, 1],
+          y: [8, 0],
+          duration: 420,
+        }, '<+=20')
+        .add('.record-bridge-rule i', {
+          scaleX: [0, 1],
+          transformOrigin: 'center',
+          duration: 420,
+          delay: stagger(70),
+        }, '<-=250')
+        .add('.record-bridge-label, .record-bridge-copy', {
+          opacity: [0, 1],
+          y: [8, 0],
+          duration: 420,
+          delay: stagger(80),
+        }, '<-=170')
+        .add('.record-bridge', {
+          opacity: [1, 0],
+          duration: 360,
+          delay: 260,
+          ease: 'inOut(2)',
+        })
+    })
+
+    return () => scope.revert()
+  }, [rootRef, active])
 }
