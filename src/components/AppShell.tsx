@@ -68,7 +68,7 @@ export function AppShell() {
   }, [step, lightAngle])
 
   return (
-    <main className="app-shell">
+    <main className={`app-shell step-${step}`} data-workflow-step={step}>
       <MuseumHeader />
       <div className={`workspace ${step === 'compare' ? 'compare-mode' : ''}`}>
         <ObjectStage
