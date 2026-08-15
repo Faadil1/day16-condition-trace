@@ -77,6 +77,8 @@ export function AppShell() {
           onLightAngle={setLightAngle}
           observation={observation}
           onCanvasReady={canvas => { examinationCanvas.current = canvas }}
+          selectedId={selectedId}
+          onSelectRecord={setSelectedId}
         />
         <EvidencePanel
           step={step}
