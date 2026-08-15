@@ -85,6 +85,7 @@ Condition Trace also became the proving ground for a reusable product/design wor
 
 Important project documents:
 
+- [`docs/V3_CHANGELOG.md`](docs/V3_CHANGELOG.md) — readable summary of the implemented V3 changes.
 - [`docs/UIUX_WORKFLOW_CANONICAL.md`](docs/UIUX_WORKFLOW_CANONICAL.md) — canonical gates, tools and anti-slop rules.
 - [`docs/TRACE_WORKFLOW_SYSTEM.md`](docs/TRACE_WORKFLOW_SYSTEM.md) — Workflow Kernel, Project Adapter and Tool Adapter architecture.
 - [`docs/POSTMORTEM_CONDITION_TRACE_V3.md`](docs/POSTMORTEM_CONDITION_TRACE_V3.md) — design post-mortem and promoted lessons.
