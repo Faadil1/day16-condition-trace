@@ -12,6 +12,7 @@ import './styles/uiux-v3-smoky-patina.css'
 import './styles/uiux-v3-art-direction.css'
 import './styles/signature-effects.css'
 import './styles/microinteractions.css'
+import './styles/typography-v3.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
