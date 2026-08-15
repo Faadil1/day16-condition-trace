@@ -1,0 +1,130 @@
+/* Condition Trace V3 — two intentional micro-interactions only. */
+
+/* 01 — selection mark travels between evidence folios via Motion layoutId. */
+.folio-selection-mark {
+  position: absolute;
+  z-index: 3;
+  left: -1px;
+  right: -1px;
+  top: -1px;
+  height: 3px;
+  pointer-events: none;
+  background: linear-gradient(90deg, #b78455 0%, #d0a779 46%, #8ea095 100%);
+  box-shadow: 0 4px 12px rgba(183, 132, 85, .12);
+}
+
+.records-folio:focus-visible {
+  outline: 2px solid rgba(208, 167, 121, .88);
+  outline-offset: 3px;
+}
+
+.records-folio.active .records-folio-index {
+  color: rgba(183, 132, 85, .72);
+}
+
+/* 02 — the exact examination frame is sealed before the UI enters Compare. */
+.observation-capture-seal {
+  position: absolute;
+  z-index: 20;
+  inset: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  pointer-events: none;
+  border: 1px solid rgba(183, 132, 85, .72);
+  background:
+    linear-gradient(90deg, rgba(183,132,85,.55) 0 28px, transparent 28px calc(100% - 28px), rgba(183,132,85,.55) calc(100% - 28px)),
+    linear-gradient(rgba(183,132,85,.55) 0 28px, transparent 28px calc(100% - 28px), rgba(183,132,85,.55) calc(100% - 28px)),
+    rgba(10, 21, 23, .46);
+  background-size: 100% 1px, 1px 100%, auto;
+  background-repeat: no-repeat;
+  box-shadow: inset 0 0 70px rgba(183, 132, 85, .05);
+}
+
+.observation-capture-seal > div {
+  min-width: min(360px, 64%);
+  padding: 14px 17px;
+  border: 1px solid rgba(183, 132, 85, .48);
+  background: rgba(17, 29, 32, .94);
+  box-shadow: 0 18px 52px rgba(3, 10, 11, .34);
+}
+
+.observation-capture-seal span,
+.observation-capture-seal strong,
+.observation-capture-seal small {
+  display: block;
+}
+
+.observation-capture-seal > div > span {
+  color: #d0a779;
+  font: 500 7px/1.3 'DM Mono', monospace;
+  letter-spacing: .16em;
+}
+
+.observation-capture-seal strong {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 6px;
+  color: #f0e4cf;
+  font: 500 14px/1.25 'Newsreader', serif;
+}
+
+.observation-capture-seal small {
+  margin-top: 5px;
+  color: #8ea095;
+  font: 500 7px/1.4 'DM Mono', monospace;
+  letter-spacing: .08em;
+}
+
+.capture-seal-crosshair {
+  position: relative;
+  width: 58px;
+  height: 58px;
+  flex: 0 0 58px;
+  border: 1px solid rgba(183, 132, 85, .62);
+  border-radius: 50%;
+  background: rgba(17, 29, 32, .72);
+}
+
+.capture-seal-crosshair::before,
+.capture-seal-crosshair::after,
+.capture-seal-crosshair i,
+.capture-seal-crosshair b {
+  content: '';
+  position: absolute;
+  display: block;
+  background: rgba(208, 167, 121, .74);
+}
+.capture-seal-crosshair::before { left: 50%; top: -8px; width: 1px; height: 74px; }
+.capture-seal-crosshair::after { top: 50%; left: -8px; height: 1px; width: 74px; }
+.capture-seal-crosshair i { inset: 18px; border-radius: 50%; background: transparent; border: 1px solid rgba(208,167,121,.72); }
+.capture-seal-crosshair b { left: 50%; top: 50%; width: 5px; height: 5px; border-radius: 50%; transform: translate(-50%, -50%); }
+
+@media (max-width: 767px) {
+  .observation-capture-seal {
+    inset: 10px;
+    gap: 10px;
+  }
+  .capture-seal-crosshair {
+    width: 40px;
+    height: 40px;
+    flex-basis: 40px;
+  }
+  .capture-seal-crosshair::before { top: -5px; height: 50px; }
+  .capture-seal-crosshair::after { left: -5px; width: 50px; }
+  .capture-seal-crosshair i { inset: 12px; }
+  .observation-capture-seal > div {
+    min-width: 0;
+    width: min(290px, calc(100% - 56px));
+    padding: 10px 11px;
+  }
+  .observation-capture-seal strong { font-size: 11px; }
+  .observation-capture-seal small { font-size: 6px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .folio-selection-mark { transition: none !important; }
+  .observation-capture-seal { display: none; }
+}
