@@ -14,7 +14,7 @@ export function useEditorialMotion(rootRef: RefObject<HTMLElement | null>, step:
         reduceMotion: '(prefers-reduced-motion: reduce)',
       },
     }).add(self => {
-      if (self.matches.reduceMotion) return
+      if (self?.matches.reduceMotion) return
 
       const reveal = (targets: string, y = 14, delay = 0) => {
         animate(targets, {
