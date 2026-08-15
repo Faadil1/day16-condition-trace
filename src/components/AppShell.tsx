@@ -15,6 +15,7 @@ export function AppShell() {
   const [selectedId, setSelectedId] = useState('return-arrival')
   const [lightAngle, setLightAngle] = useState(24)
   const [observation, setObservation] = useState<CapturedObservation | null>(null)
+  const [capturePulse, setCapturePulse] = useState(false)
   const [recordBridge, setRecordBridge] = useState(false)
   const examinationCanvas = useRef<HTMLCanvasElement | null>(null)
   const shellRef = useRef<HTMLElement | null>(null)
@@ -48,9 +49,18 @@ export function AppShell() {
   }
 
   const next = () => {
-    if (recordBridge) return
+    if (recordBridge || capturePulse) return
 
-    if (step === 'inspect') captureObservation()
+    if (step === 'inspect') {
+      clearTransitionTimers()
+      captureObservation()
+      setCapturePulse(true)
+      transitionTimers.current = [
+        window.setTimeout(() => setStep('compare'), 430),
+        window.setTimeout(() => setCapturePulse(false), 650),
+      ]
+      return
+    }
 
     if (step === 'finding') {
       clearTransitionTimers()
@@ -67,6 +77,7 @@ export function AppShell() {
 
   const reset = () => {
     clearTransitionTimers()
+    setCapturePulse(false)
     setRecordBridge(false)
     setStep('open')
     setSelectedId('return-arrival')
@@ -92,7 +103,7 @@ export function AppShell() {
     }
     window.addEventListener('keydown', handleKey)
     return () => window.removeEventListener('keydown', handleKey)
-  }, [step, lightAngle, recordBridge])
+  }, [step, lightAngle, recordBridge, capturePulse])
 
   useEffect(() => () => clearTransitionTimers(), [])
 
@@ -108,6 +119,7 @@ export function AppShell() {
           onCanvasReady={canvas => { examinationCanvas.current = canvas }}
           selectedId={selectedId}
           onSelectRecord={setSelectedId}
+          capturePulse={capturePulse}
         />
         <EvidencePanel
           step={step}
