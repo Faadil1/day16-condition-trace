@@ -1,0 +1,431 @@
+/*
+  Condition Trace — UI/UX V2
+  Direction: conservation desk / evidence theatre.
+  The proof model is unchanged; this layer only changes hierarchy, spatial rhythm and presentation.
+*/
+
+:root {
+  --ink: #100f0e;
+  --header: #141311;
+  --panel: #191715;
+  --surface: #24211e;
+  --rose: #eee7dc;
+  --rose-muted: #c9c0b4;
+  --rose-subtle: #9d9388;
+  --line: rgba(238, 231, 220, .13);
+  --muted: #b9afa4;
+  --ivory: #f1eadf;
+  --bronze: #b08a56;
+  --paper: #e9e0d2;
+  --verified: #9faa94;
+}
+
+html, body, #root { background: var(--ink); }
+body { color: var(--rose); }
+
+.app-shell {
+  grid-template-rows: 64px 1fr auto;
+  background:
+    radial-gradient(circle at 46% 28%, rgba(176, 138, 86, .055), transparent 34%),
+    linear-gradient(180deg, #11100f 0%, #0e0d0c 100%);
+}
+
+.museum-header {
+  min-height: 64px;
+  padding: 0 24px;
+  background: rgba(17, 16, 15, .94);
+  border-bottom: 1px solid rgba(238, 231, 220, .1);
+  backdrop-filter: blur(16px);
+}
+
+.brand-lockup { gap: 12px; }
+.brand-mark {
+  width: 26px;
+  height: 26px;
+  padding: 5px 4px;
+  border-bottom-color: rgba(176, 138, 86, .66);
+}
+.brand-mark i { width: 3px; background: var(--bronze); }
+.wordmark { font-size: 12px; letter-spacing: .2em; }
+.tagline { color: #8f877e; font-size: 6.5px; letter-spacing: .2em; }
+.header-object { gap: 13px; }
+.header-object strong { font-size: 11px; color: var(--ivory); }
+.header-label, .review-status { color: #9f958a; }
+.review-status { font-size: 7.5px; }
+.header-divider { height: 19px; background: rgba(238,231,220,.12); }
+
+.workspace,
+.workspace.compare-mode {
+  min-height: 0;
+  padding: 16px 20px 0;
+  gap: 16px;
+  background: transparent;
+}
+
+.workspace { grid-template-columns: minmax(0, 1.56fr) minmax(360px, .72fr); }
+.step-open .workspace { grid-template-columns: minmax(0, 1.72fr) minmax(350px, .58fr); }
+.step-records .workspace { grid-template-columns: minmax(0, 1.48fr) minmax(390px, .76fr); }
+.step-inspect .workspace { grid-template-columns: minmax(0, 1.64fr) minmax(385px, .68fr); }
+.workspace.compare-mode { grid-template-columns: minmax(0, 1.14fr) minmax(540px, .86fr); }
+
+.object-stage,
+.evidence-panel {
+  border: 1px solid rgba(238, 231, 220, .11);
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, .18);
+}
+
+.object-stage {
+  border-right: 1px solid rgba(238, 231, 220, .11);
+  background: #0d0c0b;
+}
+
+.object-stage::before {
+  background:
+    radial-gradient(circle at 48% 43%, transparent 9%, rgba(8, 7, 6, .18) 62%, rgba(8, 7, 6, .68) 100%),
+    linear-gradient(rgba(238,231,220,.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(238,231,220,.012) 1px, transparent 1px);
+  background-size: auto, 72px 72px, 72px 72px;
+}
+
+.object-stage::after {
+  left: 24px;
+  right: 24px;
+  bottom: 22px;
+  background: linear-gradient(90deg, transparent, rgba(238,231,220,.1), transparent);
+}
+
+.stage-number,
+.stage-examination-badge { top: 18px; }
+.stage-number { left: 20px; color: #8f867d; }
+.stage-examination-badge { right: 20px; }
+.exam-label { color: #aca297; }
+.exam-status { color: rgba(238,231,220,.3); }
+
+.object-caption { left: 24px; bottom: 24px; }
+.object-caption h1 {
+  margin-top: 8px;
+  color: var(--ivory);
+  font-size: 31px;
+  letter-spacing: -.025em;
+}
+.object-caption p { color: #a79d92; }
+.object-caption span,
+.section-kicker,
+.eyebrow,
+.document-label { color: var(--bronze); }
+
+.annotation-marker { color: var(--bronze); }
+.annotation-marker span {
+  border-color: rgba(176,138,86,.42);
+  background: rgba(14, 12, 10, .9);
+  border-radius: 2px;
+}
+
+.evidence-panel {
+  padding: 21px 22px 22px;
+  background:
+    linear-gradient(180deg, rgba(30, 28, 25, .98), rgba(23, 21, 19, .99));
+}
+
+.workflow-progress { color: #8f867d; }
+.workflow-progress i {
+  width: 20px;
+  height: 1px;
+  background: rgba(238,231,220,.12);
+}
+.workflow-progress i.filled { height: 2px; background: var(--bronze); }
+
+.panel-content { max-width: 430px; margin: 31px auto 0; }
+.panel-content h2 {
+  margin: 10px 0 15px;
+  color: var(--ivory);
+  font-size: 37px;
+  line-height: .98;
+  letter-spacing: -.028em;
+}
+.lead { color: #b9afa4; font-size: 12.75px; line-height: 1.66; }
+
+dt { color: #91887f; }
+dd { color: #d7cec3; }
+.object-meta div,
+.selected-record dl div,
+.finding-list div { border-top-color: rgba(238,231,220,.1); }
+
+.notice,
+.inspection-readout,
+.selected-record,
+.feature-spec,
+.comparison-frame,
+.comparison-limit,
+.finding-verdict,
+.evidence-lineage {
+  border-color: rgba(238,231,220,.12);
+}
+
+.notice {
+  background: rgba(238,231,220,.045);
+  border-left-color: rgba(176,138,86,.78);
+}
+.notice p, .inspection-readout p, .feature-spec p { color: #a9a096; }
+.notice strong { color: #dfd6cb; }
+
+.selected-record {
+  padding: 17px;
+  background: rgba(238,231,220,.025);
+  border-radius: 3px;
+}
+.selected-record h3 { color: var(--ivory); }
+.record-note { background: rgba(238,231,220,.045); }
+
+.inspection-readout {
+  background:
+    linear-gradient(135deg, rgba(176,138,86,.05), transparent 44%),
+    #141311;
+  border-radius: 3px;
+}
+.feature-spec { border-block-color: rgba(238,231,220,.1); }
+
+.primary-action,
+.secondary-action { border-radius: 2px; }
+.primary-action {
+  background: var(--bronze);
+  color: #16130f;
+  box-shadow: 0 8px 24px rgba(176,138,86,.12);
+}
+.primary-action:hover { background: #c29a61; }
+.primary-action:disabled {
+  background: #2a2723;
+  color: #796f66;
+  box-shadow: none;
+}
+.secondary-action { border-color: rgba(36,33,30,.34); }
+
+.light-console {
+  width: min(560px, calc(100% - 56px));
+  left: 50%;
+  right: auto;
+  bottom: 20px;
+  transform: translateX(-50%);
+  padding: 13px 16px 12px;
+  border: 1px solid rgba(238,231,220,.14);
+  border-radius: 4px;
+  background: rgba(18, 17, 15, .9);
+  box-shadow: 0 18px 48px rgba(0,0,0,.34);
+  backdrop-filter: blur(18px);
+}
+.light-console-copy strong { color: var(--ivory); }
+.light-console-copy span, .light-console p { color: #9f968c; }
+.light-console input { accent-color: var(--bronze); }
+
+.record-chain {
+  margin: 12px 20px 16px;
+  padding: 0 20px;
+  border: 1px solid rgba(238,231,220,.1);
+  border-radius: 5px;
+  background: rgba(20, 19, 17, .95);
+  box-shadow: 0 18px 50px rgba(0,0,0,.15);
+}
+.chain-heading { height: 34px; color: #91887f; }
+.record-node { border-top-color: rgba(238,231,220,.1); }
+.record-node.active { border-color: var(--bronze); }
+.record-node strong { color: #ddd4c9; font-weight: 500; }
+.node-date, .node-institution { color: #91887f; }
+.node-dot { background: rgba(238,231,220,.2); box-shadow: 0 0 0 4px #141311; }
+.record-node.active .node-dot { background: var(--bronze); }
+
+/* Compare becomes an evidence board rather than a dense dashboard panel. */
+.workspace.compare-mode .evidence-panel { padding: 22px 26px; }
+.workspace.compare-mode .panel-content { max-width: 650px; margin-top: 24px; }
+.workspace.compare-mode .panel-content h2 { font-size: 42px; }
+.workspace.compare-mode .comparison-frame {
+  background: rgba(238,231,220,.018);
+  border-radius: 3px;
+}
+.workspace.compare-mode .comparison-frame.current {
+  background: linear-gradient(180deg, rgba(176,138,86,.07), rgba(238,231,220,.018));
+}
+.comparison-pair-label { background: rgba(238,231,220,.018); }
+.comparison-limit { background: rgba(176,138,86,.055); }
+.comparison-finding { background: rgba(238,231,220,.045); }
+
+/* Finding leaves the generic two-column shell and becomes a dedicated reasoning canvas. */
+.step-finding .workspace {
+  display: block;
+  overflow: auto;
+  padding: 18px 20px 0;
+}
+.step-finding .object-stage { display: none; }
+.step-finding .evidence-panel {
+  min-height: calc(100vh - 64px - 188px);
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 24px 34px 30px;
+}
+.step-finding .workflow-progress { max-width: 1080px; margin: 0 auto; }
+.step-finding .panel-content {
+  max-width: 1080px;
+  margin: 28px auto 0;
+}
+.step-finding .panel-content h2 {
+  max-width: 680px;
+  font-size: 50px;
+  margin-bottom: 13px;
+}
+.step-finding .finding-lead { max-width: 720px; margin-bottom: 20px; }
+.step-finding .evidence-lineage {
+  padding: 15px;
+  margin: 0 0 18px;
+  background: rgba(238,231,220,.018);
+}
+.step-finding .lineage-flow {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 22px;
+}
+.step-finding .lineage-node-wrap { position: relative; min-width: 0; }
+.step-finding .lineage-arrow { display: none; }
+.step-finding .lineage-node-wrap:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  z-index: 4;
+  top: 50%;
+  left: calc(100% + 2px);
+  width: 18px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(176,138,86,.72), rgba(176,138,86,.16));
+}
+.step-finding .lineage-node {
+  height: 100%;
+  min-height: 144px;
+  padding: 13px 13px 12px;
+  background: rgba(15,14,13,.66);
+}
+.step-finding .lineage-node > strong { font-size: 11px; }
+.step-finding .lineage-node > p,
+.step-finding .lineage-node > small { font-size: 8px; }
+.step-finding .finding-verdict {
+  max-width: 760px;
+  margin: 18px auto 16px;
+  padding: 15px 17px;
+  background: linear-gradient(135deg, rgba(176,138,86,.1), rgba(238,231,220,.03));
+}
+.step-finding .finding-verdict > strong { font-size: 20px; }
+.step-finding .panel-content > .primary-action { max-width: 360px; margin-left: auto; }
+
+/* Final record becomes a review desk, not a side drawer. */
+.step-record .drawer-backdrop {
+  justify-content: center;
+  align-items: center;
+  padding: 22px;
+  background: rgba(7, 6, 5, .84);
+  backdrop-filter: blur(10px);
+}
+.step-record .record-drawer {
+  width: min(1120px, calc(100vw - 44px));
+  max-width: none;
+  height: calc(100vh - 44px);
+  border-radius: 5px;
+  box-shadow: 0 34px 100px rgba(0,0,0,.52);
+  animation: record-rise .42s cubic-bezier(.2,.8,.2,1);
+}
+@keyframes record-rise {
+  from { opacity: 0; transform: translateY(20px) scale(.992); }
+}
+.step-record .document-header { min-height: 102px; padding: 24px 72px 18px 38px; }
+.step-record .document-body { padding: 24px 38px 112px; }
+.step-record .document-header h2 { font-size: 31px; }
+.step-record .doc-observation { grid-template-columns: 240px 1fr; }
+.step-record .doc-observation-visual { height: 148px; }
+
+/* Mid-size desktop keeps the new card hierarchy but avoids cramped sidebars. */
+@media (min-width: 1200px) and (max-width: 1380px) {
+  .workspace { grid-template-columns: minmax(0, 1.42fr) minmax(360px, .78fr); }
+  .step-open .workspace { grid-template-columns: minmax(0, 1.56fr) minmax(350px, .66fr); }
+  .workspace.compare-mode { grid-template-columns: minmax(0, 1fr) minmax(520px, .92fr); }
+  .workspace.compare-mode .panel-content h2 { font-size: 37px; }
+  .panel-content h2 { font-size: 34px; }
+  .step-finding .panel-content h2 { font-size: 46px; }
+}
+
+/* Responsive continues to use the guided vertical mode from Gate 6. */
+@media (max-width: 1199px) {
+  .app-shell { grid-template-rows: 64px auto auto; }
+  .workspace,
+  .workspace.compare-mode,
+  .step-open .workspace,
+  .step-records .workspace,
+  .step-inspect .workspace {
+    grid-template-columns: minmax(0,1fr);
+    padding: 12px 14px 0;
+    gap: 12px;
+  }
+  .object-stage,
+  .evidence-panel { border-radius: 4px; }
+  .record-chain { margin: 10px 14px 14px; }
+  .panel-content { max-width: 760px; }
+  .light-console {
+    width: min(520px, calc(100% - 44px));
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+  }
+  .step-finding .workspace { display: block; padding: 12px 14px 0; }
+  .step-finding .evidence-panel { min-height: 0; padding: 24px clamp(24px,5vw,50px) 30px; }
+  .step-finding .panel-content { max-width: 900px; }
+  .step-finding .lineage-flow {
+    grid-template-columns: repeat(5, minmax(150px,1fr));
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+  .step-finding .finding-verdict { max-width: 760px; }
+  .step-record .drawer-backdrop { padding: 14px; }
+  .step-record .record-drawer {
+    width: min(900px, calc(100vw - 28px));
+    height: calc(100svh - 28px);
+  }
+}
+
+@media (max-width: 767px) {
+  .app-shell { grid-template-rows: 58px auto auto; }
+  .museum-header { min-height: 58px; padding: 0 14px; }
+  .workspace,
+  .workspace.compare-mode,
+  .step-open .workspace,
+  .step-records .workspace,
+  .step-inspect .workspace { padding: 9px 9px 0; gap: 9px; }
+  .evidence-panel { padding: 20px 15px 24px; }
+  .panel-content h2 { font-size: 30px; }
+  .record-chain { margin: 9px; padding-inline: 12px; }
+  .light-console {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    width: auto;
+    transform: none;
+  }
+  .step-finding .workspace { padding: 9px 9px 0; }
+  .step-finding .evidence-panel { padding: 20px 15px 24px; }
+  .step-finding .panel-content { margin-top: 22px; }
+  .step-finding .panel-content h2 { font-size: 34px; }
+  .step-finding .finding-lead { font-size: 11.5px; }
+  .step-finding .lineage-flow {
+    display: block;
+    overflow: visible;
+  }
+  .step-finding .lineage-node-wrap { margin-bottom: 5px; }
+  .step-finding .lineage-node-wrap:not(:last-child)::after { display: none; }
+  .step-finding .lineage-arrow { display: block; }
+  .step-finding .lineage-node { min-height: 0; }
+  .step-finding .panel-content > .primary-action { max-width: none; margin-left: 0; }
+  .step-record .drawer-backdrop { padding: 0; }
+  .step-record .record-drawer {
+    width: 100vw;
+    height: 100svh;
+    border-radius: 0;
+  }
+  .step-record .doc-observation { grid-template-columns: 1fr; }
+  .step-record .doc-observation-visual { height: 185px; }
+}
