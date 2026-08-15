@@ -60,8 +60,16 @@ export function EvidenceLineage({ observation }: { observation: CapturedObservat
         <strong>Traceable finding</strong>
       </div>
       <div className="lineage-flow">
+        <svg className="lineage-trace" viewBox="0 0 1000 80" preserveAspectRatio="none" aria-hidden="true">
+          <path className="lineage-trace-base" d="M50 40 H950" pathLength="1" />
+          <path className="lineage-trace-path" d="M50 40 H950" pathLength="1" />
+          {[50, 275, 500, 725, 950].map((cx, index) => (
+            <circle key={cx} className={`lineage-trace-node trace-node-${index + 1}`} cx={cx} cy="40" r="7" />
+          ))}
+        </svg>
+
         {nodes.map((node, index) => (
-          <div key={node.id} className="lineage-node-wrap">
+          <div key={node.id} className="lineage-node-wrap" data-evidence-id={node.id}>
             <article className={`lineage-node tone-${node.tone}`}>
               <div className="lineage-node-id">{node.icon}<span>{node.id}</span><em>{node.label}</em></div>
               <strong>{node.title}</strong>
