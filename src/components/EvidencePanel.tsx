@@ -67,17 +67,26 @@ export function EvidencePanel({ step, selectedId, lightAngle, observation, onNex
 
             {step === 'records' && <>
               <p className="lead">Select a folio in the archive to inspect what was documented at that exact custody moment.</p>
-              <div className="selected-record">
-                <div className="record-title"><span>{selected.date}</span><EvidenceStatus status={selected.evidenceStatus} /></div>
-                <h3>{selected.title}</h3>
-                <p>{selected.institution}</p>
-                <dl>
-                  <div><dt>Examiner</dt><dd>{selected.examiner} · {selected.signed ? 'Signed' : 'Unsigned'}</dd></div>
-                  <div><dt>Lighting</dt><dd>{selected.lighting}</dd></div>
-                  <div><dt>Feature</dt><dd>{selected.featureStatus}</dd></div>
-                </dl>
-                {selected.note && <div className="record-note">{selected.note}</div>}
-              </div>
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                  key={selected.id}
+                  className="selected-record"
+                  initial={{ opacity: 0, x: 8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -6 }}
+                  transition={{ duration: 0.18, ease: 'easeOut' }}
+                >
+                  <div className="record-title"><span>{selected.date}</span><EvidenceStatus status={selected.evidenceStatus} /></div>
+                  <h3>{selected.title}</h3>
+                  <p>{selected.institution}</p>
+                  <dl>
+                    <div><dt>Examiner</dt><dd>{selected.examiner} · {selected.signed ? 'Signed' : 'Unsigned'}</dd></div>
+                    <div><dt>Lighting</dt><dd>{selected.lighting}</dd></div>
+                    <div><dt>Feature</dt><dd>{selected.featureStatus}</dd></div>
+                  </dl>
+                  {selected.note && <div className="record-note">{selected.note}</div>}
+                </motion.div>
+              </AnimatePresence>
             </>}
 
             {step === 'inspect' && <>
