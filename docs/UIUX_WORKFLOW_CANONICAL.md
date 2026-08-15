@@ -1,4 +1,11 @@
-# Canonical UI/UX Workflow
+# Canonical UI/UX Workflow — TRACE
+
+TRACE is the compact human-readable frame for this workflow:
+- **T — Truth**: proof/product contract
+- **R — Research & References**: flow, domain metaphor, visual direction
+- **A — Art Direction & Architecture**: visual prototype, palette, system, typography
+- **C — Character & Construction**: differentiation, uniqueness, targeted implementation
+- **E — Evaluation & Evolution**: QA, evaluation capture, demo narrative, freeze and post-mortem
 
 This workflow is the default design process for hackathon/product builds. References are used to extract behavior, structure and quality bars — never to copy another product's identity.
 
@@ -183,6 +190,29 @@ Validate the exact contexts in which the work will be judged or consumed:
 
 Rule: a product can be correct in-browser and still fail in the way it is actually presented.
 
+## Gate 6.75 — Demo Narrative / Evidence Film
+Treat the showcase video as a product artifact rather than an afterthought.
+
+Define:
+- the narrative arc the evaluator should understand
+- which moments are proof-bearing and therefore must come from the real product
+- which moments may be cinematically framed or recreated for atmosphere only
+- video typography/readability
+- final limitation/outcome frame
+
+Default narrative structure:
+
+`Problem → Product-specific interaction → Evidence/state change → Qualified outcome → Final artifact`
+
+Rules:
+1. Real product footage is the source of truth for proof-bearing behavior.
+2. Editing/Remotion may crop, annotate, sequence and improve pacing but may not fabricate stronger evidence or capabilities.
+3. Cinematic recreations are acceptable only for non-proof atmosphere/transition shots.
+4. The primary signature interaction should appear early enough to make the product memorable.
+5. The final frame should preserve important limitations, not only the success state.
+
+Output: shot list + capture contract + approved master format.
+
 ## Gate 7 — Freeze / Promotion
 Treat branching as a design safety mechanism.
 
@@ -249,6 +279,16 @@ Use restrained archive grain, parchment fibre and smoky/patina surfaces. No neon
 
 Useful content must not depend on 5–8px text. Micro-identifiers may be smaller only when non-essential.
 
+## Demo narrative contract
+For the final showcase film:
+- capture all proof-bearing interactions from the real V3 app;
+- use Remotion for pacing, crops, annotations and cinematic continuity;
+- do not create a fake prior raking-light image;
+- keep the limitation `Prior physical absence cannot be confirmed` narratively visible;
+- preserve the sequence `records → examine → preserve → compare → qualify → archive`.
+
+See `docs/VIDEO_DEMO_GUIDE.md` for the complete shot plan.
+
 ## Tool policy for Condition Trace
 - Anime.js: yes — evidence choreography and Finding → Record bridge
 - Three.js: yes — raking-light signature
@@ -267,3 +307,4 @@ Useful content must not depend on 5–8px text. Micro-identifiers may be smaller
 5. Motion remains short and purposeful; reduced-motion always has a complete static state.
 6. The raking-light interaction remains the strongest wow moment.
 7. When uniqueness is weak, fix metaphor/composition before adding another library.
+8. Video polish may improve presentation but cannot strengthen the product's claims beyond the live experience.
