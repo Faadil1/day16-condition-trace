@@ -1,0 +1,204 @@
+/*
+  Condition Trace V3 — signature effects
+  Purpose: make evidence reasoning itself memorable without introducing generic AI chrome.
+  Signature 01 remains the Three.js raking-light examination.
+  Signature 02 is the bronze evidence trace resolving into the institutional record.
+*/
+
+/* ---------- Evidence trace ---------- */
+.lineage-flow {
+  position: relative;
+}
+
+.lineage-trace {
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  left: 4.25%;
+  width: 91.5%;
+  height: 80px;
+  transform: translateY(-40px);
+  overflow: visible;
+  pointer-events: none;
+}
+
+.lineage-trace-base,
+.lineage-trace-path {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+  stroke-linecap: round;
+}
+
+.lineage-trace-base {
+  stroke: rgba(112, 139, 148, .24);
+  stroke-width: 1;
+}
+
+.lineage-trace-path {
+  stroke: #b78455;
+  stroke-width: 1.35;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  filter: drop-shadow(0 0 4px rgba(183, 132, 85, .16));
+}
+
+.lineage-trace-node {
+  opacity: 0;
+  fill: #1d3031;
+  stroke: #b78455;
+  stroke-width: 1.25;
+  vector-effect: non-scaling-stroke;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.lineage-node-wrap {
+  position: relative;
+  z-index: 1;
+}
+
+.step-finding .lineage-node {
+  transition: border-color 180ms ease, background-color 180ms ease, transform 180ms ease;
+}
+
+.step-finding .lineage-node-wrap[data-evidence-id='FND-01'] .lineage-node {
+  border-color: rgba(183, 132, 85, .68);
+  box-shadow: 0 12px 32px rgba(5, 12, 13, .16), inset 0 0 0 1px rgba(208, 167, 121, .06);
+}
+
+/* ---------- Finding → Record bridge ---------- */
+.record-bridge {
+  position: fixed;
+  z-index: 120;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(63, 91, 83, .32), transparent 30%),
+    rgba(10, 20, 22, .84);
+  backdrop-filter: blur(9px);
+}
+
+.record-bridge-inner {
+  width: min(560px, calc(100vw - 42px));
+  display: grid;
+  justify-items: center;
+  text-align: center;
+}
+
+.record-bridge-fnd {
+  min-width: 94px;
+  padding: 9px 13px;
+  border: 1px solid rgba(183, 132, 85, .72);
+  color: #d0a779;
+  background: rgba(17, 29, 32, .9);
+  font: 500 11px/1 DM Mono, monospace;
+  letter-spacing: .16em;
+}
+
+.record-bridge-rule {
+  width: min(420px, 78vw);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 12px;
+  margin: 22px 0 17px;
+}
+
+.record-bridge-rule i {
+  display: block;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(183, 132, 85, .86));
+}
+.record-bridge-rule i:last-child {
+  background: linear-gradient(90deg, rgba(183, 132, 85, .86), transparent);
+}
+.record-bridge-rule em {
+  color: #8ea095;
+  font: 400 7px/1 DM Mono, monospace;
+  letter-spacing: .2em;
+  font-style: normal;
+}
+
+.record-bridge-label {
+  color: #f0e4cf;
+  font: 400 clamp(34px, 5vw, 58px)/.96 Newsreader, serif;
+  letter-spacing: -.035em;
+}
+
+.record-bridge-copy {
+  margin-top: 10px;
+  color: #92a09c;
+  font: 400 8px/1.4 DM Mono, monospace;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+}
+
+/* ---------- Material archive texture ---------- */
+.evidence-panel::after,
+.records-overview-stage::after,
+.record-drawer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  opacity: .13;
+  background-image:
+    radial-gradient(circle at 18% 22%, rgba(240, 228, 207, .30) 0 .45px, transparent .55px),
+    radial-gradient(circle at 72% 61%, rgba(112, 139, 148, .22) 0 .4px, transparent .55px),
+    repeating-linear-gradient(8deg, transparent 0 11px, rgba(240, 228, 207, .025) 12px, transparent 13px 27px);
+  background-size: 9px 11px, 13px 15px, auto;
+  mix-blend-mode: soft-light;
+}
+
+.evidence-panel > *,
+.records-overview-stage > *,
+.record-drawer > * {
+  position: relative;
+  z-index: 6;
+}
+
+/* Parchment artifacts get a separate, almost imperceptible fibre treatment. */
+.records-folio,
+.step-records .selected-record,
+.step-record .document-header,
+.step-record .document-body {
+  background-blend-mode: multiply;
+}
+
+.records-folio::after,
+.step-records .selected-record::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .14;
+  background:
+    repeating-linear-gradient(2deg, transparent 0 17px, rgba(29, 35, 36, .035) 18px, transparent 19px 38px),
+    radial-gradient(circle at 28% 30%, rgba(29, 35, 36, .12) 0 .35px, transparent .45px);
+  background-size: auto, 8px 10px;
+}
+
+.records-folio,
+.step-records .selected-record {
+  position: relative;
+  overflow: hidden;
+}
+.records-folio > *,
+.step-records .selected-record > * {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 1199px) {
+  .lineage-trace { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lineage-trace-path { stroke-dashoffset: 0; }
+  .lineage-trace-node { opacity: 1; }
+  .record-bridge { display: none; }
+}

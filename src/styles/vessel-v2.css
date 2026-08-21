@@ -1,0 +1,124 @@
+.grazing-band {
+  width: 58px;
+  background: linear-gradient(90deg, transparent, rgba(246, 230, 189, .035) 48%, rgba(246, 230, 189, .02) 58%, transparent);
+  mix-blend-mode: screen;
+  opacity: .72;
+}
+
+.comparison-documentary-gap {
+  display: grid;
+  place-items: center;
+  border: 1px dashed rgba(181, 138, 89, .26);
+  background:
+    radial-gradient(circle at 50% 48%, rgba(181, 138, 89, .035), transparent 42%),
+    #190e0c;
+}
+
+.comparison-gap-grid {
+  position: absolute;
+  inset: 0;
+  opacity: .32;
+  background-image:
+    linear-gradient(rgba(255, 220, 232, .035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 220, 232, .035) 1px, transparent 1px);
+  background-size: 18px 18px;
+  mask-image: radial-gradient(circle at 50% 50%, #000 10%, transparent 72%);
+}
+
+.comparison-gap-content {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  width: 82%;
+  text-align: center;
+}
+
+.comparison-gap-content svg { color: var(--bronze); opacity: .78; }
+
+.comparison-gap-content span {
+  color: var(--bronze);
+  font: 400 6px/1.45 DM Mono;
+  letter-spacing: .12em;
+}
+
+.comparison-gap-content strong {
+  color: var(--rose-subtle);
+  font: 500 8px/1.35 Manrope;
+}
+
+.comparison-gap-area {
+  position: absolute;
+  z-index: 4;
+  left: 7px;
+  bottom: 7px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--rose-subtle);
+  font: 400 5.5px DM Mono;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.comparison-captured-visual {
+  background: #120a08;
+}
+
+.comparison-captured-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: 64% 40%;
+  transform: scale(1.62);
+  transform-origin: 64% 40%;
+  filter: contrast(1.08) brightness(.92) saturate(.84);
+}
+
+.comparison-captured-visual::before {
+  content: "";
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 65% 40%, transparent 0 24%, rgba(10, 5, 4, .12) 46%, rgba(10, 5, 4, .38) 100%);
+}
+
+.comparison-capture-missing {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--rose-subtle);
+  font: 400 6px DM Mono;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.capture-stage-photo {
+  filter: contrast(1.035) saturate(.9) brightness(.96);
+}
+
+.capture-stage-photo-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0 0 70px rgba(10, 5, 4, .32);
+}
+
+.light-console output {
+  min-width: 42px;
+  text-align: right;
+}
+
+@media (max-height: 820px) {
+  .comparison-captured-photo {
+    transform: scale(1.48);
+  }
+}

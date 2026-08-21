@@ -1,0 +1,448 @@
+/*
+  Condition Trace V3 — Typography lock
+  Families stay intentionally restrained:
+  Newsreader = editorial / museum voice
+  Manrope = readable product language
+  DM Mono = evidence IDs / technical metadata
+
+  Rule: no meaningful content below ~9px. Reading text generally sits at 11.5–14.5px.
+*/
+
+:root {
+  --type-hero: clamp(64px, 5.7vw, 86px);
+  --type-screen: clamp(40px, 3.35vw, 50px);
+  --type-section: clamp(30px, 2.55vw, 38px);
+  --type-card-title: 21px;
+  --type-body-lg: 14px;
+  --type-body: 12.75px;
+  --type-small: 11.25px;
+  --type-meta: 10px;
+  --type-micro: 9px;
+}
+
+html {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: 'Manrope', sans-serif;
+  font-size: var(--type-body);
+  line-height: 1.55;
+}
+
+h1, h2, h3,
+.open-stage-hero p,
+.record-bridge-label,
+.object-caption h1,
+.records-stage-header h2,
+.records-folio > strong,
+.inspection-mode-card strong,
+.finding-verdict > strong,
+.document-header h2 {
+  font-family: 'Newsreader', serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+}
+
+.wordmark,
+.tagline,
+.header-label,
+.header-object strong,
+.review-status,
+.stage-number,
+.exam-label,
+.exam-status,
+.section-kicker,
+.eyebrow,
+.document-label,
+.workflow-progress,
+dt,
+.evidence-status,
+.records-stage-header span,
+.records-stage-rule,
+.records-folio-topline,
+.records-folio dt,
+.records-folio-source,
+.records-stage-footer,
+.lineage-heading span,
+.lineage-heading strong,
+.lineage-node-id span,
+.lineage-node-id em,
+.finding-verdict span,
+.finding-verdict small,
+.comparison-pair-label,
+.comparison-frame-head .eyebrow,
+.comparison-reticle,
+.comparison-meta > span,
+.comparison-observation span,
+.comparison-sync-rail span,
+.comparison-limit span,
+.capture-stage-meta span,
+.capture-stage-meta strong,
+.capture-focus-ring span,
+.capture-stage-readout span,
+.primary-action,
+.secondary-action,
+.node-date,
+.node-institution,
+.node-index,
+.chain-heading,
+.chain-preview-item,
+.handoff,
+.doc-id,
+.doc-lineage-track span,
+.doc-observation-copy small,
+.record-bridge-fnd,
+.record-bridge-rule em,
+.record-bridge-copy {
+  font-family: 'DM Mono', monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Header ---------- */
+.wordmark { font-size: 14px; font-weight: 500; }
+.tagline,
+.header-label { font-size: 9.5px; line-height: 1.35; }
+.header-object { font-size: 12px; }
+.header-object strong { font-size: 11.5px; line-height: 1.3; }
+.review-status { font-size: 9.5px; line-height: 1.3; }
+
+/* ---------- Shared stage typography ---------- */
+.stage-number,
+.exam-label { font-size: var(--type-meta); line-height: 1.3; }
+.exam-status { font-size: 9.5px; line-height: 1.35; }
+
+.object-caption span,
+.section-kicker,
+.eyebrow,
+.document-label {
+  font-size: var(--type-meta);
+  line-height: 1.35;
+  letter-spacing: .12em;
+}
+
+.object-caption h1 {
+  font-size: 34px;
+  line-height: 1.02;
+}
+.object-caption p { font-size: var(--type-small); line-height: 1.45; }
+.annotation-marker span { font-size: 9.5px; line-height: 1.25; }
+
+/* ---------- 01 Open ---------- */
+.open-stage-hero > span {
+  font-size: 9.5px;
+  line-height: 1.45;
+}
+.open-stage-hero h2 {
+  font-size: var(--type-hero);
+  line-height: .86;
+  letter-spacing: -.052em;
+}
+.open-stage-hero p {
+  font-size: clamp(18px, 1.55vw, 23px);
+  line-height: 1.3;
+}
+.open-stage-hero small {
+  font-size: 11.5px;
+  line-height: 1.62;
+}
+.step-open .object-caption h1 { font-size: 25px; }
+.step-open .object-caption p { font-size: 10.5px; }
+
+/* ---------- Evidence panel ---------- */
+.workflow-progress { font-size: 9.5px; line-height: 1.3; }
+.panel-content h2 {
+  font-size: var(--type-screen);
+  line-height: .98;
+  letter-spacing: -.034em;
+  text-wrap: balance;
+}
+.lead {
+  font-size: var(--type-body-lg);
+  line-height: 1.67;
+  max-width: 46ch;
+}
+
+dt {
+  font-size: var(--type-meta);
+  line-height: 1.35;
+  letter-spacing: .07em;
+}
+dd {
+  font-size: 13px;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.notice p { font-size: 11.5px; line-height: 1.55; }
+.notice strong { font-size: 10.5px; line-height: 1.35; }
+.primary-action,
+.secondary-action {
+  font-size: 10.5px;
+  line-height: 1.2;
+  font-weight: 500;
+  letter-spacing: .075em;
+}
+
+.record-title { font-size: 10px; }
+.selected-record h3 { font-size: 22px; line-height: 1.06; }
+.selected-record > p { font-size: 11.5px; line-height: 1.45; }
+.record-note { font-size: 11px; line-height: 1.5; }
+.evidence-status { font-size: 9px; line-height: 1.2; }
+
+.inspection-readout span,
+.feature-spec span { font-size: 9.5px; line-height: 1.3; }
+.inspection-readout strong,
+.feature-spec strong { font-size: 19px; line-height: 1.15; }
+.inspection-readout p,
+.feature-spec p { font-size: 11.5px; line-height: 1.55; }
+
+/* ---------- Instrument dock ---------- */
+.inspection-mode-card span { font-size: 9px; }
+.inspection-mode-card strong { font-size: 16px; line-height: 1.05; }
+.inspection-mode-card small { font-size: 9.5px; line-height: 1.4; }
+.step-inspect .light-console::before { font-size: 9px; line-height: 1.25; }
+.light-console-copy strong { font-size: 11px; line-height: 1.3; }
+.light-console-copy span { font-size: 10.5px; line-height: 1.4; }
+.light-console output { font-size: 23px; line-height: 1; }
+.light-console p { font-size: 10px; line-height: 1.45; }
+
+/* ---------- 02 Records ---------- */
+.records-stage-header span { font-size: 9.5px; line-height: 1.35; }
+.records-stage-header h2 {
+  font-size: clamp(38px, 3.35vw, 50px);
+  line-height: .96;
+}
+.records-stage-header p { font-size: 12px; line-height: 1.6; }
+.records-stage-rule { font-size: 9px; }
+.records-folio-topline { font-size: 9px; line-height: 1.3; }
+.records-folio > strong { font-size: var(--type-card-title); line-height: 1.04; }
+.records-folio > p { font-size: 10.5px; line-height: 1.4; }
+.records-folio dt { font-size: 9px; }
+.records-folio dd { font-size: 11px; line-height: 1.42; font-weight: 600; }
+.records-folio-source { font-size: 8.75px; line-height: 1.3; }
+.records-stage-footer { font-size: 9px; line-height: 1.35; }
+.records-folio-index { font-size: 19px; }
+
+/* ---------- Record chain ---------- */
+.chain-heading { font-size: 9.5px; }
+.chain-preview-item { font-size: 8.75px; }
+.node-index { font-size: 9px; }
+.node-date,
+.node-institution { font-size: 9.5px; line-height: 1.35; }
+.record-node strong { font-size: 12px; line-height: 1.35; }
+.handoff { font-size: 8.5px; }
+
+/* ---------- 04 Compare ---------- */
+.comparison-pair-label { font-size: 9.5px; line-height: 1.35; }
+.comparison-frame-head .eyebrow { font-size: 9px; line-height: 1.4; }
+.comparison-reticle { font-size: 8.5px; line-height: 1.2; }
+.comparison-meta > span { font-size: 9px; line-height: 1.3; }
+.comparison-meta > strong { font-size: 11.5px; line-height: 1.4; }
+.comparison-meta > p { font-size: 10.5px; line-height: 1.5; }
+.comparison-observation span { font-size: 9px; line-height: 1.3; }
+.comparison-observation strong { font-size: 10.5px; line-height: 1.45; }
+.comparison-sync-rail span { font-size: 8.5px; line-height: 1.35; }
+.comparison-limit span { font-size: 9px; line-height: 1.3; }
+.comparison-limit strong { font-size: 11px; line-height: 1.45; }
+.comparison-limit p { font-size: 10.5px; line-height: 1.5; }
+.comparison-finding p { font-size: 11px; line-height: 1.55; }
+
+.capture-stage-meta span,
+.capture-stage-meta strong { font-size: 9.5px; line-height: 1.35; }
+.capture-focus-ring span { font-size: 8.5px; line-height: 1.25; }
+.capture-stage-readout span { font-size: 9px; line-height: 1.3; }
+.capture-stage-readout strong { font-size: 11.5px; line-height: 1.4; }
+
+/* ---------- 05 Finding ---------- */
+.step-finding .workspace {
+  grid-template-columns: minmax(0, 1.16fr) minmax(500px, .84fr);
+}
+.step-finding .evidence-panel { padding-inline: 34px; }
+.step-finding .panel-content {
+  max-width: 520px;
+  margin-top: 22px;
+}
+.finding-lead { font-size: 12px; line-height: 1.55; }
+.lineage-heading span,
+.lineage-heading strong { font-size: 9px; line-height: 1.3; }
+.lineage-node-id span,
+.lineage-node-id em { font-size: 8.5px; line-height: 1.3; }
+.lineage-node > strong { font-size: 10.75px; line-height: 1.3; }
+.lineage-node > p,
+.lineage-node > small { font-size: 9.5px; line-height: 1.38; }
+.finding-verdict span { font-size: 9px; line-height: 1.3; }
+.finding-verdict > strong { font-size: 19px; line-height: 1.12; }
+.finding-verdict p { font-size: 10.75px; line-height: 1.5; }
+.finding-verdict small { font-size: 8.75px; line-height: 1.35; }
+
+/* ---------- 06 Evidence Record ---------- */
+.document-header span { font-size: 9.5px; line-height: 1.3; }
+.document-header h2 { font-size: 31px; line-height: 1; }
+.doc-id { font-size: 9px; line-height: 1.3; }
+.doc-meta span { font-size: 9.5px; line-height: 1.3; }
+.doc-meta strong { font-size: 12.5px; line-height: 1.4; }
+.doc-observation-copy > strong { font-size: 18px; line-height: 1.15; }
+.doc-observation-copy p { font-size: 11.5px; line-height: 1.48; }
+.doc-observation-copy small { font-size: 9.5px; line-height: 1.4; }
+.finding-copy p { font-size: 12px; line-height: 1.62; }
+.doc-lineage-track span { font-size: 8.75px; line-height: 1.3; }
+.doc-lineage-track strong { font-size: 10.5px; line-height: 1.35; }
+.doc-lineage-track small { font-size: 9px; line-height: 1.4; }
+.doc-record strong { font-size: 11.5px; line-height: 1.35; }
+.doc-record span { font-size: 9.5px; line-height: 1.4; }
+.doc-gap span,
+.document-body > footer span { font-size: 9px; line-height: 1.3; }
+.doc-gap p,
+.document-body > footer strong { font-size: 11px; line-height: 1.5; }
+
+/* Normalize non-loaded fractional Manrope weights used by early visual passes. */
+.records-folio dd,
+.records-folio > p,
+.records-stage-header p,
+.inspection-mode-card small,
+.open-stage-hero small {
+  font-weight: 500;
+}
+
+/* ---------- Tablet ---------- */
+@media (max-width: 1199px) {
+  :root {
+    --type-screen: clamp(38px, 5vw, 48px);
+    --type-section: clamp(29px, 4vw, 36px);
+  }
+
+  .step-finding .workspace { grid-template-columns: 1fr; }
+  .step-finding .evidence-panel { padding-inline: clamp(28px, 6vw, 72px); }
+  .step-finding .panel-content { max-width: 760px; }
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 767px) {
+  :root {
+    --type-hero: clamp(42px, 12vw, 54px);
+    --type-screen: clamp(34px, 9vw, 41px);
+    --type-section: 29px;
+    --type-card-title: 20px;
+    --type-body-lg: 14px;
+    --type-body: 13px;
+    --type-small: 11.5px;
+    --type-meta: 10px;
+    --type-micro: 9px;
+  }
+
+  .wordmark { font-size: 12px; }
+  .header-object strong { font-size: 10.5px; }
+  .review-status { font-size: 9px; }
+
+  .open-stage-hero > span { font-size: 8.5px; }
+  .open-stage-hero h2 { font-size: var(--type-hero); }
+  .open-stage-hero p { font-size: 14px; line-height: 1.32; }
+  .open-stage-hero small { font-size: 9.5px; line-height: 1.5; }
+
+  .object-caption span { font-size: 9px; }
+  .object-caption h1,
+  .step-open .object-caption h1 { font-size: 24px; }
+  .object-caption p,
+  .step-open .object-caption p { font-size: 10.5px; }
+
+  .stage-number,
+  .exam-label { font-size: 9.5px; }
+  .exam-status { font-size: 9px; }
+  .annotation-marker span { font-size: 9px; }
+
+  .workflow-progress { font-size: 9.5px; }
+  .section-kicker { font-size: 9.5px; }
+  .panel-content h2 { font-size: var(--type-screen); }
+  .lead { font-size: 14px; line-height: 1.62; }
+
+  dt { font-size: 10px; }
+  dd { font-size: 13px; }
+  .notice p { font-size: 12px; }
+  .notice strong { font-size: 10.5px; }
+  .primary-action,
+  .secondary-action { font-size: 10.5px; }
+
+  .selected-record h3 { font-size: 22px; }
+  .selected-record > p { font-size: 12px; }
+  .record-note { font-size: 11.5px; }
+  .evidence-status { font-size: 9px; }
+
+  .inspection-readout span,
+  .feature-spec span { font-size: 9.5px; }
+  .inspection-readout strong,
+  .feature-spec strong { font-size: 18px; }
+  .inspection-readout p,
+  .feature-spec p { font-size: 11.5px; }
+  .light-console-copy strong { font-size: 10.5px; }
+  .light-console-copy span { font-size: 9.5px; }
+  .light-console p { font-size: 9px; }
+
+  .records-stage-header span { font-size: 9px; }
+  .records-stage-header h2 { font-size: 36px; }
+  .records-stage-header p { font-size: 11.5px; }
+  .records-stage-rule { font-size: 9px; }
+  .records-folio-topline { font-size: 8.75px; }
+  .records-folio > strong { font-size: 20px; }
+  .records-folio > p { font-size: 10.5px; }
+  .records-folio dt { font-size: 9px; }
+  .records-folio dd { font-size: 10.5px; }
+  .records-folio-source { font-size: 8.5px; }
+  .records-stage-footer { font-size: 8.75px; }
+
+  .comparison-pair-label { font-size: 9px; }
+  .comparison-frame-head .eyebrow { font-size: 9px; }
+  .comparison-reticle { font-size: 8.25px; }
+  .comparison-meta > span,
+  .comparison-observation span,
+  .comparison-limit span { font-size: 9px; }
+  .comparison-meta > strong { font-size: 11.5px; }
+  .comparison-meta > p,
+  .comparison-limit p { font-size: 10.5px; }
+  .comparison-observation strong { font-size: 10.5px; }
+  .comparison-finding p { font-size: 11px; }
+
+  .capture-stage-meta span,
+  .capture-stage-meta strong { font-size: 9px; }
+  .capture-focus-ring span { font-size: 8.5px; }
+  .capture-stage-readout span { font-size: 9px; }
+  .capture-stage-readout strong { font-size: 11px; }
+
+  .finding-lead { font-size: 12px; }
+  .lineage-heading span,
+  .lineage-heading strong { font-size: 9px; }
+  .lineage-node-id span,
+  .lineage-node-id em { font-size: 8.5px; }
+  .lineage-node > strong { font-size: 11px; }
+  .lineage-node > p,
+  .lineage-node > small { font-size: 9.5px; }
+  .finding-verdict > strong { font-size: 19px; }
+  .finding-verdict p { font-size: 11px; }
+  .finding-verdict small { font-size: 9px; }
+
+  .document-header span { font-size: 9px; }
+  .document-header h2 { font-size: 26px; }
+  .doc-id { font-size: 9px; }
+  .doc-meta span { font-size: 9.5px; }
+  .doc-meta strong { font-size: 12.5px; }
+  .doc-observation-copy > strong { font-size: 18px; }
+  .doc-observation-copy p { font-size: 11.5px; }
+  .doc-observation-copy small { font-size: 9px; }
+  .finding-copy p { font-size: 12px; }
+  .doc-lineage-track span { font-size: 9px; }
+  .doc-lineage-track strong { font-size: 10.5px; }
+  .doc-lineage-track small { font-size: 9px; }
+  .doc-record strong { font-size: 11px; }
+  .doc-record span { font-size: 9.5px; }
+}
+
+@media (max-width: 479px) {
+  :root {
+    --type-hero: clamp(40px, 12vw, 49px);
+    --type-screen: 34px;
+  }
+
+  .records-stage-header h2 { font-size: 32px; }
+}
