@@ -8,7 +8,7 @@ on:
       - 'src/**'
       - 'package.json'
       - 'package-lock.json'
-      - 'submission-video/capture/v3-capture-baseline-v2.cjs'
+      - 'submission-video/capture/v3-capture-baseline-v3.cjs'
       - '.github/workflows/v3-capture-baseline.yml'
 
 permissions:
@@ -61,7 +61,7 @@ jobs:
           CAPTURE_URL: http://127.0.0.1:4173
           CAPTURE_SHA: ${{ github.event.pull_request.head.sha }}
           CAPTURE_REF: ${{ github.event.pull_request.head.ref }}
-        run: node submission-video/capture/v3-capture-baseline-v2.cjs
+        run: node submission-video/capture/v3-capture-baseline-v3.cjs
 
       - name: Upload V3 capture package
         if: always()
