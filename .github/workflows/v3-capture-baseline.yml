@@ -30,7 +30,7 @@ jobs:
           cache: npm
 
       - name: Install application dependencies
-        run: npm ci
+        run: npm install --no-package-lock
 
       - name: Build exact PR state
         run: npm run build
