@@ -1,0 +1,83 @@
+name: V3 capture baseline
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - design/uiux-v3-smoky-patina
+    paths:
+      - 'src/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'submission-video/capture/v3-capture-baseline.cjs'
+      - '.github/workflows/v3-capture-baseline.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout V3 branch
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Install application dependencies
+        run: npm ci
+
+      - name: Build exact branch state
+        run: npm run build
+
+      - name: Install Playwright Chromium
+        run: |
+          npm install --no-save --package-lock=false playwright@1.60.0
+          npx playwright install --with-deps chromium
+
+      - name: Start local production preview
+        shell: bash
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4173 > /tmp/condition-trace-v3-preview.log 2>&1 &
+          echo $! > /tmp/condition-trace-v3-preview.pid
+          for i in {1..40}; do
+            if curl -fsS http://127.0.0.1:4173 >/dev/null; then
+              echo 'Vite preview is ready.'
+              exit 0
+            fi
+            sleep 1
+          done
+          echo 'Vite preview did not become ready.'
+          cat /tmp/condition-trace-v3-preview.log
+          exit 1
+
+      - name: Capture V3 submission baseline
+        env:
+          CAPTURE_URL: http://127.0.0.1:4173
+          CAPTURE_SHA: ${{ github.sha }}
+          CAPTURE_REF: ${{ github.ref_name }}
+        run: node submission-video/capture/v3-capture-baseline.cjs
+
+      - name: Upload V3 capture package
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: condition-trace-v3-capture-baseline
+          path: submission-video/v3-captures/
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Upload preview log on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: condition-trace-v3-preview-log
+          path: /tmp/condition-trace-v3-preview.log
+          if-no-files-found: ignore
+          retention-days: 7
