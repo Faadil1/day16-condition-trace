@@ -11,6 +11,15 @@ on:
       - 'package-lock.json'
       - 'submission-video/capture/v3-capture-baseline.cjs'
       - '.github/workflows/v3-capture-baseline.yml'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'src/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'submission-video/capture/v3-capture-baseline.cjs'
+      - '.github/workflows/v3-capture-baseline.yml'
 
 permissions:
   contents: read
