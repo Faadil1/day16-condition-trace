@@ -57,7 +57,7 @@ async function waitForCanvas(page) {
   await page.waitForFunction(() => {
     const canvas = document.querySelector('canvas');
     return Boolean(canvas && canvas.width > 0 && canvas.height > 0);
-  }, { timeout: 15000 });
+  }, null, { timeout: 15000 });
   await sleep(1400);
 }
 
@@ -138,6 +138,15 @@ async function reachInspectReady(page) {
   await sleep(550);
 }
 
+async function triggerObservationCapture(page) {
+  const button = page.getByRole('button', { name: /Capture observation/i });
+  await button.evaluate(el => el.click());
+  await sleep(120);
+  await assertBodyText(page, 'OBS-04', 'OBS-04 preservation seal mounted');
+  await assertBodyText(page, 'FRAME PRESERVED', 'OBS-04 frame-preserved state visible');
+  await assertBodyText(page, 'Human-reviewed observation captured', 'OBS-04 human-reviewed status visible');
+}
+
 async function mainCapture(browser) {
   const viewport = { width: 1920, height: 1080 };
   const context = await browser.newContext({ viewport, deviceScaleFactor: 1, acceptDownloads: true });
@@ -172,9 +181,9 @@ async function mainCapture(browser) {
   noteAssertion('Inspect / Capture observation enabled', !(await captureButton.isDisabled()));
   await capture(page, '03-condition-trace-v3-raking-light-16x9.png', 'Inspect / raking-light signature', viewport);
 
-  await captureButton.click();
-  await page.getByText('OBS-04 / FRAME PRESERVED', { exact: false }).waitFor({ state: 'visible', timeout: 380 });
-  await assertBodyText(page, 'Human-reviewed observation captured', 'OBS-04 preservation seal visible');
+  // Use a DOM click instead of Playwright actionability waiting so the short
+  // 430ms OBS-04 preservation seal is captured deterministically.
+  await triggerObservationCapture(page);
   await capture(page, '04-condition-trace-v3-obs04-preserved-16x9.png', 'OBS-04 / frame preserved', viewport);
 
   await assertStep(page, 'compare');
@@ -231,7 +240,7 @@ async function responsiveCheck(browser, viewport, filename, mode) {
 
   if (mode === 'finding') {
     await reachInspectReady(page);
-    await page.getByRole('button', { name: /Capture observation/i }).click();
+    await triggerObservationCapture(page);
     await assertStep(page, 'compare');
     await sleep(850);
     await page.getByRole('button', { name: /Continue to finding/i }).click();
