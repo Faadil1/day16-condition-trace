@@ -1,67 +1,71 @@
 import React from 'react';
 import {
   AbsoluteFill,
-  useCurrentFrame,
-  interpolate,
-  Sequence,
-  OffthreadVideo,
   Audio,
+  interpolate,
+  OffthreadVideo,
+  Sequence,
   staticFile,
+  useCurrentFrame,
 } from 'remotion';
-import { Title } from './components/Title';
-import { Label } from './components/Label';
-import { EndFrame } from './components/EndFrame';
 
-export const COMP_WIDTH = 1920;
-export const COMP_HEIGHT = 1080;
-export const COMP_FPS = 30;
-export const COMP_FRAMES = 990;
+export const WIDTH = 1920;
+export const HEIGHT = 1080;
+export const FPS = 30;
+export const DURATION = 2700; // 90 seconds
 
-const SETUP_FR = 240;
-const PILLAR = 96;
-const SCALE = COMP_HEIGHT / 900;
-const FADE = 4;
+const VIDEO_W = 1920;
+const VIDEO_H = 1080;
 
-const VideoClip: React.FC<{ src: string; seqDuration: number }> = ({ src, seqDuration }) => {
+const TitleCard: React.FC = () => {
   const frame = useCurrentFrame();
-  const opacity = interpolate(frame, [0, FADE, seqDuration - FADE, seqDuration], [0, 1, 1, 0], {
-    extrapolateLeft: 'clamp',
-    extrapolateRight: 'clamp',
-  });
-
+  const opacity = interpolate(frame, [0, 18, 72, 90], [0, 1, 1, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
   return (
-    <AbsoluteFill style={{ opacity, backgroundColor: '#1D1210' }}>
-      <div style={{ position: 'absolute', top: 0, left: 0, width: PILLAR, height: COMP_HEIGHT, background: '#1D1210', zIndex: 1 }} />
-      <div style={{ position: 'absolute', top: 0, right: 0, width: PILLAR, height: COMP_HEIGHT, background: '#1D1210', zIndex: 1 }} />
-      <div style={{ position: 'absolute', width: 1440, height: 900, left: '50%', top: '50%', transform: `translate(-50%, -50%) scale(${SCALE})`, transformOrigin: 'center center' }}>
-        <OffthreadVideo src={src} startFrom={SETUP_FR} endAt={SETUP_FR + seqDuration} style={{ width: '100%', height: '100%', display: 'block' }} />
-      </div>
+    <AbsoluteFill style={{ opacity, background: 'linear-gradient(180deg, #120c09 0%, #1f1410 100%)', color: '#f5e4c8', fontFamily: 'Georgia, serif' }}>
+      <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at 50% 35%, rgba(181,138,89,0.16), transparent 42%)' }} />
+      <div style={{ position: 'absolute', left: 96, top: 88, letterSpacing: '0.4em', color: '#b58a59', fontSize: 22 }}>CONDITION TRACE</div>
+      <div style={{ position: 'absolute', left: 96, top: 150, fontSize: 58, fontWeight: 700, letterSpacing: '0.08em', lineHeight: 1.05, maxWidth: 980 }}>Canonical V3 - Live Workflow Verification</div>
+      <div style={{ position: 'absolute', left: 96, top: 330, fontSize: 24, letterSpacing: '0.2em', color: '#e7d2ad' }}>CT-1847 / Return Examination</div>
+      <div style={{ position: 'absolute', left: 96, top: 394, width: 180, height: 1, background: '#b58a59', opacity: 0.7 }} />
     </AbsoluteFill>
   );
 };
 
-export const ConditionTraceFinalV3: React.FC = () => {
+const FooterCard: React.FC = () => {
   const frame = useCurrentFrame();
-  const titleOpacity = interpolate(frame, [0, 12, 78, 90], [0, 1, 1, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
-  const endOpacity = interpolate(frame, [911, 927], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
-  const label1Opacity = interpolate(frame, [185, 197, 238, 250], [0, 1, 1, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
-  const label2Opacity = interpolate(frame, [280, 292, 368, 380], [0, 1, 1, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
-  const label3Opacity = interpolate(frame, [695, 707, 763, 775], [0, 1, 1, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+  const opacity = interpolate(frame, [0, 12, 72, 90], [0, 1, 1, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+  return (
+    <AbsoluteFill style={{ opacity, background: 'linear-gradient(180deg, #120c09 0%, #1a110d 100%)', color: '#f5e4c8', fontFamily: 'Georgia, serif' }}>
+      <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at 50% 35%, rgba(181,138,89,0.14), transparent 38%)' }} />
+      <div style={{ position: 'absolute', left: 96, top: 100, fontSize: 52, fontWeight: 700, letterSpacing: '0.08em' }}>Condition Trace</div>
+      <div style={{ position: 'absolute', left: 96, top: 200, fontSize: 24, letterSpacing: '0.16em', color: '#b58a59' }}>Trace the record. Not the blame.</div>
+      <div style={{ position: 'absolute', left: 96, top: 275, fontSize: 22, letterSpacing: '0.18em' }}>Canonical V3 live verification</div>
+      <div style={{ position: 'absolute', left: 96, top: 320, fontSize: 18, letterSpacing: '0.14em', opacity: 0.8 }}>Day 16 - 30 Days of Real Business Problems</div>
+    </AbsoluteFill>
+  );
+};
+
+export const CanonicalV3Verification: React.FC = () => {
+  const frame = useCurrentFrame();
+  const videoOpacity = interpolate(frame, [84, 96], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+  const outroOpacity = interpolate(frame, [2550, 2580], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
 
   return (
-    <AbsoluteFill style={{ backgroundColor: '#1D1210' }}>
-      <Sequence from={86} durationInFrames={79}><VideoClip src={staticFile('segments/01-open-object.webm')} seqDuration={79} /></Sequence>
-      <Sequence from={161} durationInFrames={94}><VideoClip src={staticFile('segments/02-review-record-chain.webm')} seqDuration={94} /></Sequence>
-      <Sequence from={251} durationInFrames={334}><VideoClip src={staticFile('segments/03-raking-reveal.webm')} seqDuration={334} /></Sequence>
-      <Sequence from={581} durationInFrames={94}><VideoClip src={staticFile('segments/04-compare-documentation.webm')} seqDuration={94} /></Sequence>
-      <Sequence from={671} durationInFrames={109}><VideoClip src={staticFile('segments/05-first-documented-appearance.webm')} seqDuration={109} /></Sequence>
-      <Sequence from={776} durationInFrames={139}><VideoClip src={staticFile('segments/06-evidence-drawer.webm')} seqDuration={139} /></Sequence>
-
-      {titleOpacity > 0.01 && <AbsoluteFill style={{ opacity: titleOpacity, zIndex: 10 }}><Title /></AbsoluteFill>}
-      {label1Opacity > 0.01 && <Label opacity={label1Opacity} text="TRACE THE DOCUMENTATION" />}
-      {label2Opacity > 0.01 && <Label opacity={label2Opacity} text="CHANGE THE EXAMINATION CONDITION" />}
-      {label3Opacity > 0.01 && <Label opacity={label3Opacity} text="TRACE THE EVIDENCE" />}
-      {endOpacity > 0.01 && <AbsoluteFill style={{ opacity: endOpacity, zIndex: 20 }}><EndFrame /></AbsoluteFill>}
+    <AbsoluteFill style={{ backgroundColor: '#120c09' }}>
+      <Sequence from={0} durationInFrames={90}><TitleCard /></Sequence>
+      <Sequence from={90} durationInFrames={2460}>
+        <AbsoluteFill style={{ backgroundColor: '#120c09' }}>
+          <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+            <div style={{ width: VIDEO_W, height: VIDEO_H, transform: 'scale(1)', transformOrigin: 'center center' }}>
+              <OffthreadVideo src={staticFile('canonical-v3-live/canonical-v3-live-recording.webm')} startFrom={0} endAt={2460} style={{ width: '100%', height: '100%' }} />
+            </div>
+          </div>
+          <div style={{ position: 'absolute', left: 84, top: 52, letterSpacing: '0.22em', color: '#b58a59', fontFamily: 'Georgia, serif', fontSize: 18 }}>LIVE APP CAPTURE</div>
+          <div style={{ position: 'absolute', left: 84, top: 86, letterSpacing: '0.15em', color: '#f3e1be', fontFamily: 'Georgia, serif', fontSize: 22, fontWeight: 700 }}>Authenticated V3 deployment</div>
+          <div style={{ position: 'absolute', right: 84, bottom: 48, fontFamily: 'Georgia, serif', fontSize: 16, letterSpacing: '0.16em', color: '#b58a59' }}>Step-by-step browser recording</div>
+        </AbsoluteFill>
+      </Sequence>
+      <Sequence from={2550} durationInFrames={150}><FooterCard /></Sequence>
       <Audio src={staticFile('audio/main-audio.wav')} />
     </AbsoluteFill>
   );

@@ -1,21 +1,17 @@
 {
   "name": "condition-trace-submission-video",
   "version": "1.0.0",
-  "description": "Remotion submission film for Condition Trace — Day 16",
+  "description": "Remotion verification video for Condition Trace canonical V3",
   "scripts": {
-    "capture":        "node capture/capture-segments.cjs",
-    "audio":          "node audio/generate-audio.cjs",
-    "render":         "npx remotion render ConditionTraceFinalV3 renders/Condition_Trace_Day16_Final_V3_1080p.mp4 --codec h264 --crf 18 --pixel-format yuv420p",
-    "render-silent":  "npx remotion render ConditionTraceFinalV3 renders/Condition_Trace_Day16_Final_V3_Silent_1080p.mp4 --codec h264 --crf 18 --pixel-format yuv420p --muted",
-    "qc":             "node qc/qc.cjs",
-    "cover-portrait": "npx remotion still CoverPortrait screenshots/07-condition-trace-v3-cover-4x5.png --frame 0",
-    "cover-square":   "npx remotion still CoverSquare screenshots/05-condition-trace-cover-square.png --frame 0",
-    "studio":         "npx remotion studio"
+    "capture": "node capture/record-demo.cjs",
+    "render": "npx remotion render CanonicalV3Verification renders/Canonical_V3_Verification_1080p.mp4 --codec h264 --crf 18 --pixel-format yuv420p",
+    "render-silent": "npx remotion render CanonicalV3Verification renders/Canonical_V3_Verification_Silent_1080p.mp4 --codec h264 --crf 18 --pixel-format yuv420p --muted",
+    "studio": "npx remotion studio"
   },
   "dependencies": {
-    "remotion": "^4.0.0",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "remotion": "^4.0.0"
   },
   "devDependencies": {
     "@remotion/cli": "^4.0.0",
@@ -27,4 +23,3 @@
     "entryPoint": "src/index.ts"
   }
 }
-
