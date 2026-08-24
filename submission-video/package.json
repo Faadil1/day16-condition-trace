@@ -5,10 +5,10 @@
   "scripts": {
     "capture":        "node capture/capture-segments.cjs",
     "audio":          "node audio/generate-audio.cjs",
-    "render":         "npx remotion render ConditionTraceFinal renders/Condition_Trace_Final_1080p.mp4 --codec h264 --crf 18 --pixel-format yuv420p",
-    "render-silent":  "npx remotion render ConditionTraceFinal renders/Condition_Trace_Final_Silent_1080p.mp4 --codec h264 --crf 18 --pixel-format yuv420p --muted",
+    "render":         "npx remotion render ConditionTraceFinalV3 renders/Condition_Trace_Day16_Final_V3_1080p.mp4 --codec h264 --crf 18 --pixel-format yuv420p",
+    "render-silent":  "npx remotion render ConditionTraceFinalV3 renders/Condition_Trace_Day16_Final_V3_Silent_1080p.mp4 --codec h264 --crf 18 --pixel-format yuv420p --muted",
     "qc":             "node qc/qc.cjs",
-    "cover-portrait": "npx remotion still CoverPortrait screenshots/04-condition-trace-cover-4x5.png --frame 0",
+    "cover-portrait": "npx remotion still CoverPortrait screenshots/07-condition-trace-v3-cover-4x5.png --frame 0",
     "cover-square":   "npx remotion still CoverSquare screenshots/05-condition-trace-cover-square.png --frame 0",
     "studio":         "npx remotion studio"
   },
@@ -27,3 +27,4 @@
     "entryPoint": "src/index.ts"
   }
 }
+
