@@ -14,3 +14,4 @@ assets/canonical-v3-live/
 assets/v3-final-source/*.mp4
 qc/frames/
 qc/final-frames/
+audio/*.wav
