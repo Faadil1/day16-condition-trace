@@ -1,0 +1,18 @@
+{
+  "sourceFile": "submission-video/evidence/canonical-v3-live/canonical-v3-live-recording-v2.webm",
+  "sourceDuration": 61.48,
+  "sourceResolution": "1920x1080",
+  "sourceFps": 25,
+  "sourceCodec": "vp8",
+  "determinedBy": "manual frame-scan of the raw WebM at 2s and then 0.5s resolution around each transition boundary; timestamps below are visually confirmed real application states, not assumed",
+  "windows": {
+    "open": { "start": 1.0, "end": 12.5, "note": "Case brief / Condition Trace hero, CT-1847, vessel idle" },
+    "records": { "start": 14.0, "end": 19.5, "note": "Evidence record chain, four folios" },
+    "inspect_start": { "start": 22.0, "end": 24.0, "note": "Surface inspection begins, raking light low angle" },
+    "inspect_reveal": { "start": 24.0, "end": 31.0, "note": "Progressive ArrowRight angle reduction to CAPTURE READY (~29.0s), held to 31.0s" },
+    "obs04": { "start": 31.3, "end": 32.3, "note": "Capture transient: OBS-04 / FRAME PRESERVED seal" },
+    "compare": { "start": 32.5, "end": 40.8, "note": "Evidence comparison: AREA MATCH / LIGHTING GAP" },
+    "finding": { "start": 41.6, "end": 48.8, "note": "Qualified finding, evidence lineage SRC-03..FND-01" },
+    "record": { "start": 50.6, "end": 61.3, "note": "Generated Evidence Record document, CT-1847" }
+  }
+}

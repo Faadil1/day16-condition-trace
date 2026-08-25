@@ -4,8 +4,9 @@
   "description": "Remotion verification video for Condition Trace canonical V3",
   "scripts": {
     "capture": "node capture/record-demo.cjs",
-    "render": "npx remotion render CanonicalV3Verification renders/Canonical_V3_Verification_1080p.mp4 --codec h264 --crf 18 --pixel-format yuv420p",
-    "render-silent": "npx remotion render CanonicalV3Verification renders/Canonical_V3_Verification_Silent_1080p.mp4 --codec h264 --crf 18 --pixel-format yuv420p --muted",
+    "render": "npx remotion render ConditionTraceDay16Final renders/Condition_Trace_Day16_Final_V3_1080p.mp4 --codec h264 --crf 18 --pixel-format yuv420p",
+    "render-silent": "npx remotion render ConditionTraceDay16Final renders/Condition_Trace_Day16_Final_V3_Silent_1080p.mp4 --codec h264 --crf 18 --pixel-format yuv420p --muted",
+    "qc": "node qc/qc.cjs",
     "studio": "npx remotion studio"
   },
   "dependencies": {

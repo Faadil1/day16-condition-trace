@@ -1,14 +1,7 @@
 import React from 'react';
 import { Composition } from 'remotion';
-import { CanonicalV3Verification, DURATION, WIDTH, HEIGHT, FPS } from './ConditionTraceFinal';
+import { ConditionTraceDay16Final, DURATION, WIDTH, HEIGHT, FPS } from './ConditionTraceFinal';
 
 export const Root: React.FC = () => (
-  <Composition
-    id="CanonicalV3Verification"
-    component={CanonicalV3Verification}
-    durationInFrames={DURATION}
-    fps={FPS}
-    width={WIDTH}
-    height={HEIGHT}
-  />
+  <Composition id="ConditionTraceDay16Final" component={ConditionTraceDay16Final} durationInFrames={DURATION} fps={FPS} width={WIDTH} height={HEIGHT} />
 );

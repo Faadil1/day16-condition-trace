@@ -1,78 +1,30 @@
-/**
- * ContactSheet — 1920×1080 QC contact sheet.
- * Displays 8 frame thumbnails in a 4×2 grid, each labelled with timestamp.
- * Frames are pre-rendered PNGs stored in assets/contact-frames/.
- */
 import React from 'react';
 import { AbsoluteFill, Img, staticFile } from 'remotion';
 
-const FRAMES = [
-  { file: 'frame-0105.png', label: '3.5 s — Opening object'   },
-  { file: 'frame-0210.png', label: '7.0 s — Record chain'     },
-  { file: 'frame-0390.png', label: '13.0 s — Raking light'    },
-  { file: 'frame-0525.png', label: '17.5 s — Crack visible'   },
-  { file: 'frame-0645.png', label: '21.5 s — Compare'         },
-  { file: 'frame-0750.png', label: '25.0 s — Finding'         },
-  { file: 'frame-0840.png', label: '28.0 s — Evidence drawer' },
-  { file: 'frame-0930.png', label: '31.0 s — End card'        },
+const cells = [
+  ['1s', 'qc/f01-title.png'],
+  ['4s', 'qc/f02-open.png'],
+  ['8s', 'qc/f03-records.png'],
+  ['13s', 'qc/f04-raking.png'],
+  ['18.5s', 'qc/f05-obs04.png'],
+  ['23s', 'qc/f06-compare.png'],
+  ['29s', 'qc/f07-trace.png'],
+  ['34s', 'qc/f08-record.png'],
+  ['37s', 'qc/f09-end.png'],
 ];
 
-const CELL_W = 460;
-const CELL_H = 259; // 460 × 9/16 = 258.75
-
 export const ContactSheet: React.FC = () => (
-  <AbsoluteFill style={{ background: '#0E0908', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 0 }}>
-
-    {/* Header */}
-    <div style={{
-      width: '100%',
-      padding: '20px 40px 12px',
-      display: 'flex',
-      alignItems: 'baseline',
-      justifyContent: 'space-between',
-    }}>
-      <div style={{
-        fontFamily: '"Courier New", Courier, monospace',
-        fontSize: 14, fontWeight: 700, letterSpacing: '0.22em',
-        color: '#FFDCE8', textTransform: 'uppercase',
-      }}>
-        CONDITION TRACE — QC CONTACT SHEET
-      </div>
-      <div style={{
-        fontFamily: '"Courier New", Courier, monospace',
-        fontSize: 11, color: '#B58A59', letterSpacing: '0.16em', textTransform: 'uppercase',
-      }}>
-        1920×1080 · 30 fps · H.264 · 33 s
-      </div>
-    </div>
-
-    {/* Grid */}
-    <div style={{
-      display: 'grid',
-      gridTemplateColumns: 'repeat(4, 1fr)',
-      gap: 4,
-      padding: '4px 24px 16px',
-      width: '100%',
-      boxSizing: 'border-box',
-    }}>
-      {FRAMES.map(({ file, label }) => (
-        <div key={file} style={{ display: 'flex', flexDirection: 'column' }}>
-          <div style={{ width: '100%', aspectRatio: '16/9', overflow: 'hidden', position: 'relative' }}>
-            <Img
-              src={staticFile(`contact-frames/${file}`)}
-              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-            />
+  <AbsoluteFill style={{ backgroundColor: '#120c09', color: '#f3e1be', fontFamily: 'Georgia, serif', padding: 42 }}>
+    <div style={{ fontSize: 32, letterSpacing: '0.18em', marginBottom: 20 }}>DAY 16 FINAL CUT QC</div>
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 18 }}>
+      {cells.map(([label, src]) => (
+        <div key={src} style={{ background: '#1a110d', border: '1px solid rgba(181,138,89,0.45)', padding: 8 }}>
+          <div style={{ position: 'relative', width: '100%', aspectRatio: '16 / 9', overflow: 'hidden', background: '#000' }}>
+            <Img src={staticFile(src)} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           </div>
-          <div style={{
-            fontFamily: '"Courier New", Courier, monospace',
-            fontSize: 10, color: '#B58A59', letterSpacing: '0.14em',
-            textTransform: 'uppercase', padding: '5px 4px 0',
-          }}>
-            {label}
-          </div>
+          <div style={{ marginTop: 8, fontSize: 14, letterSpacing: '0.18em', color: '#b58a59' }}>{label}</div>
         </div>
       ))}
     </div>
-
   </AbsoluteFill>
 );

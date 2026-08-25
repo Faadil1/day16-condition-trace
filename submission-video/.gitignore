@@ -5,3 +5,12 @@ assets/live-condition-trace-capture.webm
 assets/contact-frames/
 assets/segments/
 verification/
+
+# raw / large intermediate video (not committed; regenerate from manifest.json)
+public/
+evidence/
+assets/canonical-v3-live-recording-v2.webm
+assets/canonical-v3-live/
+assets/v3-final-source/*.mp4
+qc/frames/
+qc/final-frames/
