@@ -10,17 +10,21 @@ export function RecordChain({ selectedId, onSelect, expanded, highlightPeriod }:
   expanded: boolean
   highlightPeriod: boolean
 }) {
+  const handoffLabel = (index: number) => {
+    if (index !== 2) return 'SIGNED HANDOFF'
+    return highlightPeriod ? 'PERIOD REQUIRING REVIEW' : 'NON-EQUIVALENT CONDITIONS'
+  }
+
   return (
     <motion.section
       className={`record-chain ${expanded ? 'expanded' : ''}`}
       animate={{ height: expanded ? 178 : 74 }}
     >
       <div className="chain-heading">
-        <span>RECORD CHAIN / 04 MOMENTS</span>
+        <span>EVIDENCE PROVENANCE / 04 MOMENTS</span>
         {!expanded && <span>Review chain to continue</span>}
       </div>
 
-      {/* Subdued inactive preview shown before chain is expanded */}
       {!expanded && (
         <div className="chain-preview">
           {previewLabels.map((label, i) => (
@@ -33,24 +37,28 @@ export function RecordChain({ selectedId, onSelect, expanded, highlightPeriod }:
       )}
 
       {expanded && (
-        <div className="record-track">
+        <div className="record-track provenance-rail">
           {records.map((record, index) => (
             <div className="track-segment" key={record.id}>
               <button
                 className={`record-node ${selectedId === record.id ? 'active' : ''}`}
                 onClick={() => onSelect(record.id)}
-                aria-label={`Open ${record.title}`}
+                aria-label={`Open ${record.title}. ${record.lighting}. ${record.evidenceStatus}.`}
               >
                 <span className="node-index">0{index + 1}</span>
                 <span className="node-dot" />
                 <span className="node-date">{record.date}</span>
                 <strong>{record.shortLabel}</strong>
                 <span className="node-institution">{record.institution}</span>
+                <span className="node-lighting">{record.lighting}</span>
                 <EvidenceStatus status={record.evidenceStatus} />
               </button>
               {index < records.length - 1 && (
-                <div className={`handoff ${highlightPeriod && index === 2 ? 'highlight' : ''}`}>
-                  <span>{index === 2 ? 'Between handoffs' : 'Handoff'}</span><i />
+                <div
+                  className={`handoff ${index === 2 ? 'evidence-gap' : ''} ${highlightPeriod && index === 2 ? 'highlight' : ''}`}
+                  aria-label={handoffLabel(index)}
+                >
+                  <span>{handoffLabel(index)}</span><i />
                 </div>
               )}
             </div>

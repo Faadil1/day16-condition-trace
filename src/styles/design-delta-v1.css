@@ -1,0 +1,409 @@
+/*
+  Condition Trace — Design Delta V1
+  Scope: conservation examination rail, evidence provenance rail, deliberate record sealing.
+  Mechanisms are domain-native and intentionally avoid generic SaaS/glass styling.
+*/
+
+/* ---------- 01 / Conservation examination rail ---------- */
+.light-console {
+  width: 462px;
+}
+
+.light-console-copy {
+  align-items: start;
+}
+
+.light-console-copy > svg {
+  margin-top: 1px;
+  color: var(--ct-bronze-soft, var(--bronze));
+}
+
+.light-console-copy output {
+  min-width: 42px;
+  text-align: right;
+  color: var(--ct-paper-100, var(--ivory));
+}
+
+.examination-rail {
+  margin: 12px 0 9px;
+  padding: 10px 0 7px;
+  border-top: 1px solid rgba(240, 228, 207, .11);
+  border-bottom: 1px solid rgba(240, 228, 207, .08);
+}
+
+.examination-rail-scale {
+  position: relative;
+  height: 14px;
+  color: rgba(240, 228, 207, .58);
+  font: 400 7px/1 DM Mono, monospace;
+  letter-spacing: .05em;
+}
+
+.examination-rail-scale span {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+}
+
+.examination-rail-scale span:nth-child(1) { left: 0; transform: none; }
+.examination-rail-scale span:nth-child(2) { left: 47.37%; }
+.examination-rail-scale span:nth-child(3) { left: 78.95%; }
+.examination-rail-scale span:nth-child(4) { left: 100%; transform: translateX(-100%); }
+
+.examination-track-wrap {
+  position: relative;
+  height: 28px;
+  display: flex;
+  align-items: center;
+}
+
+.examination-track {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: rgba(240, 228, 207, .11);
+  box-shadow: 0 0 0 1px rgba(17, 29, 32, .52) inset;
+}
+
+.examination-track::after {
+  content: '';
+  position: absolute;
+  inset: -6px 21.05% -6px 78.95%;
+  background: rgba(183, 132, 85, .08);
+  border-inline: 1px solid rgba(183, 132, 85, .3);
+  pointer-events: none;
+}
+
+.examination-track-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  transform-origin: left center;
+  background: linear-gradient(90deg, rgba(112,139,148,.42), rgba(183,132,85,.82));
+  transition: width .08s linear;
+}
+
+.examination-marker {
+  position: absolute;
+  top: -6px;
+  bottom: -6px;
+  width: 1px;
+  background: rgba(240, 228, 207, .22);
+}
+
+.examination-marker.marker-relief { left: 47.37%; }
+.examination-marker.marker-review { left: 78.95%; background: rgba(183,132,85,.76); }
+
+.examination-thumb {
+  position: absolute;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--ct-paper-100, var(--ivory));
+  border: 2px solid var(--ct-smoke-950, var(--ink));
+  box-shadow: 0 0 0 1px rgba(183,132,85,.62), 0 0 18px rgba(183,132,85,.18);
+  transition: left .08s linear, box-shadow .18s ease;
+}
+
+.examination-rail.band-review .examination-thumb {
+  box-shadow: 0 0 0 1px var(--ct-bronze-soft, var(--bronze)), 0 0 22px rgba(183,132,85,.32);
+}
+
+.light-console .examination-native-control {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  width: 100%;
+  height: 28px;
+  margin: 0;
+  opacity: 0;
+  cursor: ew-resize;
+  touch-action: none;
+}
+
+.examination-track-wrap:focus-within .examination-track {
+  outline: 2px solid var(--ct-paper-100, var(--ivory));
+  outline-offset: 5px;
+}
+
+.examination-zones {
+  display: grid;
+  grid-template-columns: 47.37fr 31.58fr 21.05fr;
+  gap: 0;
+  margin-top: 1px;
+  color: rgba(240, 228, 207, .42);
+  font: 500 7px/1 DM Mono, monospace;
+  letter-spacing: .12em;
+}
+
+.examination-zones span:nth-child(2) {
+  text-align: center;
+}
+
+.examination-zones span:nth-child(3) {
+  text-align: right;
+  color: var(--ct-bronze-soft, var(--bronze));
+}
+
+.examination-band-readout {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 18px;
+  margin-top: 10px;
+}
+
+.examination-band-readout span {
+  color: var(--ct-bronze-soft, var(--bronze));
+  font: 500 7px/1 DM Mono, monospace;
+  letter-spacing: .13em;
+}
+
+.examination-band-readout strong {
+  color: rgba(240, 228, 207, .76);
+  font: 500 8px/1.35 Manrope, sans-serif;
+  text-align: right;
+}
+
+.examination-rail.band-review .examination-band-readout strong {
+  color: var(--ct-paper-100, var(--ivory));
+}
+
+.inspection-readout.band-review {
+  border-color: rgba(183,132,85,.48);
+  box-shadow: 0 0 0 1px rgba(183,132,85,.06) inset;
+}
+
+/* ---------- 02 / Evidence provenance rail ---------- */
+.record-chain.expanded .chain-heading > span:first-child {
+  color: rgba(240, 228, 207, .62);
+}
+
+.provenance-rail .record-node {
+  min-width: 0;
+}
+
+.node-lighting {
+  display: block;
+  margin-top: 5px;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: rgba(240, 228, 207, .46);
+  font: 400 7px/1.3 DM Mono, monospace;
+  letter-spacing: .045em;
+  text-transform: uppercase;
+}
+
+.provenance-rail .record-node .evidence-status {
+  margin-top: 5px;
+}
+
+.provenance-rail .handoff {
+  width: 76px;
+  flex: 0 0 76px;
+  height: 34px;
+  margin-top: -16px;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+.provenance-rail .handoff span {
+  max-width: 74px;
+  min-height: 16px;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  color: rgba(240, 228, 207, .34);
+  font: 500 6px/1.15 DM Mono, monospace;
+  letter-spacing: .07em;
+  text-align: center;
+  white-space: normal;
+}
+
+.provenance-rail .handoff i {
+  margin-top: 0;
+}
+
+.provenance-rail .handoff.evidence-gap span {
+  color: rgba(208, 167, 121, .72);
+}
+
+.provenance-rail .handoff.evidence-gap i {
+  border-top-style: solid;
+  border-color: rgba(183, 132, 85, .5);
+  position: relative;
+}
+
+.provenance-rail .handoff.evidence-gap i::before,
+.provenance-rail .handoff.evidence-gap i::after {
+  content: '';
+  position: absolute;
+  top: -3px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--ct-smoke-900, var(--header));
+  border: 1px solid rgba(183,132,85,.62);
+}
+
+.provenance-rail .handoff.evidence-gap i::before { left: -1px; }
+.provenance-rail .handoff.evidence-gap i::after { right: -1px; }
+
+.provenance-rail .handoff.evidence-gap.highlight span {
+  color: var(--ct-bronze-soft, var(--bronze));
+}
+
+.provenance-rail .handoff.evidence-gap.highlight i {
+  border-color: var(--ct-bronze-soft, var(--bronze));
+  box-shadow: 0 0 12px rgba(183,132,85,.16);
+}
+
+/* ---------- 03 / Deliberate record seal ---------- */
+.hold-to-seal {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  min-height: 62px;
+  margin-top: 18px;
+  padding: 0 18px;
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr) 44px;
+  align-items: center;
+  gap: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(183, 132, 85, .58);
+  background: rgba(17, 29, 32, .38);
+  color: var(--ct-paper-100, var(--ivory));
+  cursor: pointer;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.hold-to-seal::after {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  z-index: -1;
+  border: 1px solid rgba(240, 228, 207, .045);
+  pointer-events: none;
+}
+
+.hold-to-seal-fill {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  transform-origin: left center;
+  background:
+    linear-gradient(90deg, rgba(49,75,69,.56), rgba(88,114,104,.46) 68%, rgba(183,132,85,.31));
+  will-change: transform;
+}
+
+.hold-to-seal-icon {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  color: var(--ct-bronze-soft, var(--bronze));
+  border: 1px solid rgba(183,132,85,.38);
+}
+
+.hold-to-seal-copy {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  text-align: left;
+}
+
+.hold-to-seal-copy span {
+  color: var(--ct-bronze-soft, var(--bronze));
+  font: 500 7px/1 DM Mono, monospace;
+  letter-spacing: .14em;
+}
+
+.hold-to-seal-copy strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font: 500 9px/1.2 DM Mono, monospace;
+  letter-spacing: .095em;
+  text-transform: uppercase;
+}
+
+.hold-to-seal-rule {
+  position: relative;
+  width: 44px;
+  height: 12px;
+  display: block;
+  border-inline: 1px solid rgba(240,228,207,.18);
+}
+
+.hold-to-seal-rule::before,
+.hold-to-seal-rule::after,
+.hold-to-seal-rule i {
+  content: '';
+  position: absolute;
+  top: 50%;
+  height: 1px;
+  background: rgba(240,228,207,.28);
+}
+
+.hold-to-seal-rule::before { left: 5px; width: 8px; }
+.hold-to-seal-rule i { left: 17px; width: 10px; background: var(--ct-bronze-soft, var(--bronze)); }
+.hold-to-seal-rule::after { right: 5px; width: 8px; }
+
+.hold-to-seal:hover {
+  border-color: rgba(208,167,121,.78);
+}
+
+.hold-to-seal:focus-visible {
+  outline: 2px solid var(--ct-paper-100, var(--ivory));
+  outline-offset: 3px;
+}
+
+.hold-to-seal.is-holding {
+  border-color: var(--ct-bronze-soft, var(--bronze));
+}
+
+.hold-to-seal.is-sealed {
+  border-color: rgba(158,176,157,.8);
+}
+
+.hold-to-seal.is-sealed .hold-to-seal-icon,
+.hold-to-seal.is-sealed .hold-to-seal-copy span {
+  color: var(--verified, #9eb09d);
+}
+
+@media (max-width: 1180px) {
+  .light-console {
+    width: min(430px, calc(100% - 40px));
+  }
+
+  .provenance-rail .handoff {
+    width: 62px;
+    flex-basis: 62px;
+  }
+
+  .provenance-rail .handoff span {
+    max-width: 60px;
+    font-size: 5.5px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .examination-track-fill,
+  .examination-thumb,
+  .hold-to-seal,
+  .hold-to-seal-fill {
+    transition: none !important;
+    animation: none !important;
+  }
+}

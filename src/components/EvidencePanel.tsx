@@ -1,11 +1,12 @@
 import { ArrowRight, Lightbulb, ShieldCheck } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { objectRecord, records } from '../data/objectRecord'
-import { toGrazingAngle } from '../lib/examination'
+import { getExaminationBand, isCaptureReady, toGrazingAngle } from '../lib/examination'
 import type { CapturedObservation, WorkflowStep } from '../types/evidence'
 import { EvidenceStatus } from './EvidenceStatus'
 import { ComparisonView } from './ComparisonView'
 import { EvidenceLineage } from './EvidenceLineage'
+import { HoldToSealButton } from './HoldToSealButton'
 
 const stepMeta: Record<WorkflowStep, { n: string; label: string }> = {
   open: { n: '01', label: 'Case brief' },
@@ -24,14 +25,14 @@ export function EvidencePanel({ step, selectedId, lightAngle, observation, onNex
   onNext: () => void
 }) {
   const selected = records.find(r => r.id === selectedId) ?? records[3]
-  const ready = lightAngle >= 72
+  const ready = isCaptureReady(lightAngle)
   const grazingAngle = toGrazingAngle(lightAngle)
+  const examinationBand = getExaminationBand(lightAngle)
   const buttons: Partial<Record<WorkflowStep, string>> = {
     open: 'Begin examination',
     records: 'Enter surface inspection',
     inspect: 'Capture observation',
     compare: 'Continue to finding',
-    finding: 'Generate evidence record',
   }
 
   return (
@@ -91,12 +92,12 @@ export function EvidencePanel({ step, selectedId, lightAngle, observation, onNex
 
             {step === 'inspect' && <>
               <p className="lead">Lower the grazing angle until the shoulder relief is legible, then preserve that exact examination frame as a human-reviewed observation.</p>
-              <div className="inspection-readout">
+              <div className={`inspection-readout band-${examinationBand.id}`}>
                 <Lightbulb size={20} />
                 <div>
                   <span>EXAMINATION CONDITION</span>
-                  <strong>{ready ? `${grazingAngle}° from surface · capture ready` : `${grazingAngle}° from surface`}</strong>
-                  <p>{ready ? 'Surface relief is legible. Capture will preserve this examination frame.' : 'Lower the grazing angle to strengthen relief without asserting automated detection.'}</p>
+                  <strong>{grazingAngle}° from surface · {examinationBand.label.toLowerCase()}</strong>
+                  <p>{ready ? 'Surface relief is legible. Capture will preserve this examination frame.' : examinationBand.detail}</p>
                 </div>
               </div>
               <div className="feature-spec"><span>AREA OF INTEREST</span><strong>Upper-right shoulder</strong><p>Observation remains human-reviewed; no feature is automatically detected or classified.</p></div>
@@ -120,6 +121,8 @@ export function EvidencePanel({ step, selectedId, lightAngle, observation, onNex
                 {buttons[step]} <ArrowRight size={17} />
               </button>
             )}
+
+            {step === 'finding' && <HoldToSealButton onSeal={onNext} />}
           </div>
         </motion.div>
       </AnimatePresence>

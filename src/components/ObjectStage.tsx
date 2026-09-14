@@ -5,7 +5,7 @@ import { Check, Crosshair, MoveHorizontal } from 'lucide-react'
 import * as THREE from 'three'
 import { CeramicVessel } from './CeramicVessel'
 import { objectRecord, records } from '../data/objectRecord'
-import { toGrazingAngle } from '../lib/examination'
+import { getExaminationBand, toGrazingAngle } from '../lib/examination'
 import type { CapturedObservation, WorkflowStep } from '../types/evidence'
 
 function CameraRig({ inspection }: { inspection: boolean }) {
@@ -128,6 +128,8 @@ export function ObjectStage({ step, lightAngle, onLightAngle, observation, onCan
   const x = -4.6 + (lightAngle / 90) * 9.2
   const bandLeft = `${(lightAngle / 90) * 82 + 7}%`
   const grazingAngle = toGrazingAngle(lightAngle)
+  const examinationBand = getExaminationBand(lightAngle)
+  const railProgress = `${Math.max(0, Math.min(100, (lightAngle / 90) * 100))}%`
   const vesselOffset = open ? 0.72 : 0
 
   return (
@@ -229,20 +231,48 @@ export function ObjectStage({ step, lightAngle, onLightAngle, observation, onCan
           <div className="light-console-copy">
             <MoveHorizontal size={16} />
             <div>
-              <strong>Grazing angle</strong>
-              <span>Lower angle increases surface-relief visibility</span>
+              <strong>Grazing-light examination</strong>
+              <span>Lower the angle until surface relief enters the review range</span>
             </div>
             <output>{grazingAngle}°</output>
           </div>
-          <input
-            aria-label="Raking-light control"
-            aria-valuetext={`${grazingAngle} degrees from surface`}
-            type="range"
-            min="0"
-            max="90"
-            value={lightAngle}
-            onChange={e => onLightAngle(Number(e.target.value))}
-          />
+
+          <div className={`examination-rail band-${examinationBand.id}`}>
+            <div className="examination-rail-scale" aria-hidden="true">
+              <span>24°</span>
+              <span>15°</span>
+              <span>9°</span>
+              <span>5°</span>
+            </div>
+            <div className="examination-track-wrap">
+              <div className="examination-track" aria-hidden="true">
+                <span className="examination-track-fill" style={{ width: railProgress }} />
+                <i className="examination-marker marker-relief" />
+                <i className="examination-marker marker-review" />
+                <b className="examination-thumb" style={{ left: railProgress }} />
+              </div>
+              <input
+                className="examination-native-control"
+                aria-label="Raking-light control"
+                aria-valuetext={`${grazingAngle} degrees from surface, ${examinationBand.label.toLowerCase()}`}
+                type="range"
+                min="0"
+                max="90"
+                value={lightAngle}
+                onChange={e => onLightAngle(Number(e.target.value))}
+              />
+            </div>
+            <div className="examination-zones" aria-hidden="true">
+              <span>DIFFUSE</span>
+              <span>RELIEF</span>
+              <span>REVIEW</span>
+            </div>
+            <div className="examination-band-readout" aria-live="polite">
+              <span>{examinationBand.label}</span>
+              <strong>{examinationBand.detail}</strong>
+            </div>
+          </div>
+
           <p>Angle shown from the object surface. Simulated examination; interpretation remains human-reviewed.</p>
         </div>
       )}
