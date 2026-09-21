@@ -112,17 +112,17 @@ async function waitStep(page, step) {
 
   const seal = page.locator('.hold-to-seal');
   await seal.waitFor({ state: 'visible', timeout: 10000 });
-  const box = await seal.boundingBox();
-  if (!box) throw new Error('Hold-to-seal button has no bounding box');
 
+  // Use the component's real keyboard press-and-hold path. Keep Enter down
+  // through both the 900 ms seal and the short record-bridge transition.
+  await seal.focus();
   mark('hold-to-seal-start');
-  await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
-  await page.mouse.down();
-  await wait(1050);
-  await page.mouse.up();
+  await page.keyboard.down('Enter');
+  await wait(1600);
   mark('hold-to-seal-complete');
 
   await waitStep(page, 'record');
+  await page.keyboard.up('Enter');
   await wait(1300);
   mark('record-stable');
   const recordText = await page.locator('body').innerText();
