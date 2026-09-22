@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import type { CSSProperties } from 'react'
 import { LockKeyhole } from 'lucide-react'
 
 const HOLD_DURATION_MS = 900
@@ -108,8 +109,10 @@ export function HoldToSealButton({ onSeal }: { onSeal: () => void }) {
       }}
       onClick={event => event.preventDefault()}
       aria-label={reduceMotion ? 'Seal evidence record' : 'Hold to seal evidence record'}
+      style={{ '--seal-progress': progress } as CSSProperties}
     >
       <span className="hold-to-seal-fill" style={{ transform: `scaleX(${progress})` }} aria-hidden="true" />
+      <span className="hold-to-seal-mechanism" aria-hidden="true"><i /><b /><em /></span>
       <span className="hold-to-seal-icon" aria-hidden="true"><LockKeyhole size={16} /></span>
       <span className="hold-to-seal-copy">
         <span>{phase}</span>
