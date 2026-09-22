@@ -73,6 +73,8 @@ async function waitStep(page, step) {
 
   await key(page, ' ');
   await waitStep(page, 'finding');
+  await page.waitForFunction(() => document.body.innerText.includes('SRC-03') && document.body.innerText.includes('FND-01'), null, { timeout: 8000 });
+  await wait(520);
   const findingText = await page.locator('body').innerText();
   for (const token of ['SRC-03', 'OBS-04', 'CMP-01', 'LIM-01', 'FND-01']) {
     if (!findingText.includes(token)) throw new Error('Finding missing ' + token);
