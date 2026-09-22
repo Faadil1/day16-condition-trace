@@ -133,7 +133,12 @@ export function ObjectStage({ step, lightAngle, onLightAngle, observation, onCan
   const vesselOffset = open ? 0.72 : 0
 
   return (
-    <section className={`object-stage ${compare ? 'compare-capture-mode' : ''} ${recordsMode ? 'records-archive-mode' : ''}`} aria-label={recordsMode ? 'Evidence archive' : 'Three-dimensional object examination'}>
+    <section
+      className={`object-stage evidence-in-motion-stage ${compare ? 'compare-capture-mode' : ''} ${recordsMode ? 'records-archive-mode' : ''}`}
+      data-examination-band={inspection ? examinationBand.id : undefined}
+      data-review-ready={inspection && examinationBand.id === 'review' ? 'true' : 'false'}
+      aria-label={recordsMode ? 'Evidence archive' : 'Three-dimensional object examination'}
+    >
       <div className="stage-number">{recordsMode ? 'EVIDENCE ARCHIVE / 04 RECORDS' : 'OBJECT / 01'}</div>
 
       {open && (
@@ -151,7 +156,12 @@ export function ObjectStage({ step, lightAngle, onLightAngle, observation, onCan
         </>
       )}
 
-      {inspection && <div className="grazing-band" style={{ left: bandLeft }} aria-hidden="true" />}
+      {inspection && (
+        <>
+          <div className="grazing-band" style={{ left: bandLeft }} aria-hidden="true" />
+          <div className="evidence-focus-field" aria-hidden="true"><i /><b /></div>
+        </>
+      )}
 
       {recordsMode ? (
         <RecordsOverviewStage selectedId={selectedId} onSelect={onSelectRecord} />
@@ -289,7 +299,16 @@ export function ObjectStage({ step, lightAngle, onLightAngle, observation, onCan
           >
             <span className="capture-seal-crosshair" aria-hidden="true"><i /><b /></span>
             <div>
-              <span>OBS-04 / FRAME PRESERVED</span>
+              <div className="capture-seal-idline">
+                <motion.span
+                  layoutId="evidence-obs04-carrier"
+                  className="evidence-carrier evidence-carrier-capture"
+                  transition={{ type: 'spring', stiffness: 360, damping: 34, mass: 0.62 }}
+                >
+                  OBS-04
+                </motion.span>
+                <span>/ FRAME PRESERVED</span>
+              </div>
               <strong><Check size={14} /> Human-reviewed observation captured</strong>
               <small>{grazingAngle}° from surface · Upper-right shoulder</small>
             </div>
