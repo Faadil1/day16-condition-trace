@@ -1,0 +1,469 @@
+/*
+  Condition Trace — Evidence in Motion V4
+  Interaction-language pass inspired by material interfaces, editorial continuity,
+  and physical archival mechanics. This layer changes presentation only; the
+  canonical evidence claims and workflow semantics remain untouched.
+*/
+
+:root {
+  --ct-motion-bronze: #c99863;
+  --ct-motion-bronze-soft: #e0b884;
+  --ct-motion-ink: #0d1a1d;
+  --ct-motion-paper: #f0e4cf;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 01 — LIGHT IS THE INSTRUMENT                                                */
+/* -------------------------------------------------------------------------- */
+
+.evidence-in-motion-stage {
+  isolation: isolate;
+}
+
+.step-inspect .evidence-in-motion-stage canvas,
+.step-inspect .evidence-in-motion-stage .object-caption,
+.step-inspect .evidence-in-motion-stage .inspection-mode-card,
+.step-inspect .evidence-in-motion-stage .annotation-marker,
+.step-inspect .evidence-in-motion-stage .light-console {
+  transition:
+    filter 420ms cubic-bezier(.2,.75,.2,1),
+    opacity 420ms cubic-bezier(.2,.75,.2,1),
+    transform 520ms cubic-bezier(.2,.75,.2,1);
+}
+
+.evidence-focus-field {
+  position: absolute;
+  z-index: 7;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.evidence-focus-field::before {
+  content: '';
+  position: absolute;
+  inset: -10%;
+  opacity: .18;
+  background:
+    radial-gradient(ellipse at 61% 34%, rgba(224,184,132,.22), transparent 18%),
+    radial-gradient(ellipse at 54% 48%, transparent 18%, rgba(4,10,11,.36) 66%, rgba(4,10,11,.66) 100%);
+  transition: opacity 520ms ease;
+}
+
+.evidence-focus-field i {
+  position: absolute;
+  left: 56%;
+  top: 15%;
+  width: 12%;
+  height: 58%;
+  opacity: .16;
+  transform: rotate(9deg) skewX(-7deg);
+  transform-origin: top center;
+  filter: blur(10px);
+  background: linear-gradient(90deg, transparent, rgba(240,210,162,.38), transparent);
+  mix-blend-mode: screen;
+  transition:
+    left 480ms cubic-bezier(.2,.75,.2,1),
+    opacity 420ms ease,
+    width 420ms ease;
+}
+
+.evidence-focus-field b {
+  position: absolute;
+  left: 59.4%;
+  top: 29.5%;
+  width: 74px;
+  height: 74px;
+  opacity: 0;
+  border: 1px solid rgba(201,152,99,.55);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 14px rgba(201,152,99,.025),
+    inset 0 0 0 1px rgba(240,228,207,.035);
+  transition: opacity 380ms ease, transform 520ms cubic-bezier(.2,.75,.2,1);
+  transform: scale(.82);
+}
+
+.step-inspect .object-stage[data-examination-band='relief'] .evidence-focus-field::before {
+  opacity: .29;
+}
+.step-inspect .object-stage[data-examination-band='relief'] .evidence-focus-field i {
+  left: 58%;
+  width: 10%;
+  opacity: .27;
+}
+
+.step-inspect .object-stage[data-review-ready='true'] .evidence-focus-field::before {
+  opacity: .42;
+}
+.step-inspect .object-stage[data-review-ready='true'] .evidence-focus-field i {
+  left: 60.5%;
+  width: 8%;
+  opacity: .40;
+}
+.step-inspect .object-stage[data-review-ready='true'] .evidence-focus-field b {
+  opacity: .75;
+  transform: scale(1);
+}
+
+/* At the review threshold the chrome gives a little visual ground to the object. */
+.step-inspect .object-stage[data-review-ready='true'] .inspection-mode-card {
+  opacity: .72;
+  transform: translateY(-2px);
+}
+.step-inspect .object-stage[data-review-ready='true'] .object-caption {
+  opacity: .80;
+}
+.step-inspect .object-stage[data-review-ready='true'] .light-console {
+  border-color: rgba(201,152,99,.68);
+  box-shadow:
+    0 22px 58px rgba(3,9,10,.42),
+    inset 0 1px rgba(240,228,207,.06),
+    0 0 0 1px rgba(201,152,99,.08);
+}
+
+/* -------------------------------------------------------------------------- */
+/* 02 — EVIDENCE HAS CONTINUITY                                                */
+/* -------------------------------------------------------------------------- */
+
+.evidence-carrier {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  border: 1px solid rgba(201,152,99,.62);
+  color: var(--ct-motion-bronze-soft);
+  background:
+    linear-gradient(180deg, rgba(201,152,99,.11), rgba(17,29,32,.04)),
+    rgba(13,26,29,.94);
+  box-shadow:
+    0 10px 28px rgba(3,9,10,.24),
+    inset 0 0 0 1px rgba(240,228,207,.03);
+  font: 500 7px/1 'DM Mono', monospace;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.capture-seal-idline {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #d0a779;
+  font: 500 7px/1.3 'DM Mono', monospace;
+  letter-spacing: .16em;
+}
+
+.capture-seal-idline > span:not(.evidence-carrier) {
+  color: #b4a38d;
+}
+
+.evidence-carrier-capture {
+  min-width: 62px;
+  padding: 5px 8px;
+  border-radius: 999px;
+}
+
+.comparison-frame-head-current {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 7px;
+}
+
+.evidence-carrier-compare {
+  min-width: 58px;
+  padding: 4px 7px;
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(201,152,99,.16), rgba(17,29,32,.06)),
+    rgba(17,29,32,.94);
+}
+
+.evidence-carrier-lineage {
+  border-color: rgba(201,152,99,.62) !important;
+  background:
+    linear-gradient(180deg, rgba(201,152,99,.10), rgba(23,39,41,.94)) !important;
+  box-shadow:
+    0 16px 38px rgba(4,11,12,.22),
+    inset 0 0 0 1px rgba(224,184,132,.05);
+}
+
+.document-label-observation {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+
+.evidence-carrier-record {
+  padding: 4px 7px;
+  color: #80542e;
+  border-color: rgba(140,96,61,.46);
+  background: rgba(183,132,85,.10);
+  box-shadow: none;
+}
+
+/* A quiet provenance thread continues through Compare. */
+.step-compare .comparison-frame.current {
+  position: relative;
+}
+.step-compare .comparison-frame.current::after {
+  content: '';
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: -6px;
+  height: 1px;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(201,152,99,.72) 0 12px,
+      transparent 12px 19px
+    );
+  opacity: .36;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 03 — EVIDENCE HAS PHYSICAL RESISTANCE                                       */
+/* -------------------------------------------------------------------------- */
+
+.hold-to-seal {
+  --seal-progress: 0;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  padding-left: 62px !important;
+}
+
+.hold-to-seal-mechanism {
+  position: absolute;
+  z-index: 4;
+  left: 13px;
+  top: 50%;
+  width: 36px;
+  height: 36px;
+  transform: translateY(-50%) rotate(calc(var(--seal-progress) * 112deg));
+  transition: transform 80ms linear;
+  border: 1px solid rgba(201,152,99,.55);
+  border-radius: 50%;
+  box-shadow:
+    inset 0 0 0 5px rgba(201,152,99,.04),
+    0 0 0 1px rgba(240,228,207,.02);
+}
+
+.hold-to-seal-mechanism::before,
+.hold-to-seal-mechanism::after {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  border-radius: 50%;
+  border: 1px dashed rgba(224,184,132,.36);
+}
+.hold-to-seal-mechanism::after {
+  inset: 12px;
+  border-style: solid;
+  border-color: rgba(224,184,132,.62);
+}
+
+.hold-to-seal-mechanism i,
+.hold-to-seal-mechanism b,
+.hold-to-seal-mechanism em {
+  position: absolute;
+  display: block;
+  left: 50%;
+  top: 50%;
+  background: var(--ct-motion-bronze-soft);
+  transform-origin: 0 0;
+}
+
+.hold-to-seal-mechanism i {
+  width: 10px;
+  height: 1px;
+  transform: rotate(calc(22deg + var(--seal-progress) * 42deg));
+}
+.hold-to-seal-mechanism b {
+  width: 7px;
+  height: 1px;
+  transform: rotate(calc(145deg - var(--seal-progress) * 28deg));
+}
+.hold-to-seal-mechanism em {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.hold-to-seal.is-holding {
+  transform: translateY(1px) scale(.997);
+  box-shadow:
+    inset 0 0 0 1px rgba(201,152,99,.12),
+    0 8px 18px rgba(4,11,12,.16);
+}
+
+.hold-to-seal.is-holding .hold-to-seal-mechanism {
+  box-shadow:
+    inset 0 0 0 5px rgba(201,152,99,.07),
+    0 0 0 5px rgba(201,152,99,.025),
+    0 0 22px rgba(201,152,99,.12);
+}
+
+.hold-to-seal.is-sealed .hold-to-seal-mechanism {
+  border-color: rgba(224,184,132,.92);
+  transform: translateY(-50%) rotate(118deg) scale(.96);
+  transition: transform 260ms cubic-bezier(.18,1.45,.32,1);
+}
+
+.hold-to-seal-icon {
+  opacity: .55;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 04 — THE ARCHIVE CLOSES THE LOOP                                            */
+/* -------------------------------------------------------------------------- */
+
+.record-bridge-chain {
+  width: min(650px, 84vw);
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 28px;
+}
+
+.record-bridge-node {
+  position: relative;
+  padding: 8px 10px;
+  opacity: 0;
+  border: 1px solid rgba(240,228,207,.10);
+  color: #839791;
+  background: rgba(17,29,32,.64);
+  font: 500 7px/1 'DM Mono', monospace;
+  letter-spacing: .14em;
+}
+
+.record-bridge-node:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: calc(100% + 1px);
+  top: 50%;
+  width: 8px;
+  height: 1px;
+  background: rgba(201,152,99,.48);
+}
+
+.record-bridge-node.node-2,
+.record-bridge-node.node-5 {
+  color: var(--ct-motion-bronze-soft);
+  border-color: rgba(201,152,99,.48);
+}
+
+.record-bridge-fnd {
+  box-shadow:
+    0 12px 34px rgba(4,11,12,.32),
+    0 0 0 5px rgba(201,152,99,.025);
+}
+
+/* The final document feels like the physical destination of the trace. */
+.step-record .record-drawer {
+  transform-origin: 50% 42%;
+}
+
+.step-record .doc-lineage-track {
+  position: relative;
+}
+.step-record .doc-lineage-track::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  left: 3%;
+  right: 3%;
+  top: 50%;
+  height: 1px;
+  background: rgba(140,96,61,.22);
+}
+.step-record .doc-lineage-track > * {
+  position: relative;
+  z-index: 1;
+}
+
+.step-record .document-seal {
+  position: relative;
+  overflow: visible;
+}
+.step-record .document-seal::after {
+  content: '';
+  position: absolute;
+  inset: -7px;
+  border: 1px dashed rgba(140,96,61,.30);
+  border-radius: 50%;
+}
+
+/* -------------------------------------------------------------------------- */
+/* RESPONSIVE + REDUCED MOTION                                                 */
+/* -------------------------------------------------------------------------- */
+
+@media (max-width: 1199px) {
+  .comparison-frame-head-current {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .comparison-frame-head-current .evidence-status {
+    grid-column: 2;
+  }
+  .record-bridge-chain {
+    width: min(560px, 88vw);
+  }
+}
+
+@media (max-width: 767px) {
+  .evidence-focus-field b { display: none; }
+  .evidence-focus-field i { filter: blur(7px); }
+
+  .comparison-frame-head-current {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .evidence-carrier-compare {
+    order: 3;
+  }
+
+  .hold-to-seal {
+    padding-left: 52px !important;
+  }
+  .hold-to-seal-mechanism {
+    left: 10px;
+    width: 30px;
+    height: 30px;
+  }
+
+  .record-bridge-chain {
+    grid-template-columns: repeat(5, auto);
+    gap: 4px;
+    width: calc(100vw - 28px);
+  }
+  .record-bridge-node {
+    padding: 6px 4px;
+    font-size: 5.5px;
+    letter-spacing: .08em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .evidence-focus-field,
+  .hold-to-seal-mechanism,
+  .record-bridge-chain {
+    display: none;
+  }
+
+  .evidence-carrier {
+    transition: none !important;
+  }
+
+  .step-inspect .evidence-in-motion-stage canvas,
+  .step-inspect .evidence-in-motion-stage .object-caption,
+  .step-inspect .evidence-in-motion-stage .inspection-mode-card,
+  .step-inspect .evidence-in-motion-stage .annotation-marker,
+  .step-inspect .evidence-in-motion-stage .light-console {
+    transition: none !important;
+  }
+}
