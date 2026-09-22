@@ -217,12 +217,26 @@ export function useRecordBridgeMotion(rootRef: RefObject<HTMLElement | null>, ac
           opacity: [0, 1],
           duration: 180,
         })
+        .add('.record-bridge-node', {
+          opacity: [0, 1],
+          y: [9, 0],
+          scale: [0.975, 1],
+          duration: 300,
+          delay: stagger(62),
+        }, '<+=20')
+        .add('.record-bridge-chain', {
+          scaleX: [1, 0.58],
+          opacity: [1, 0.28],
+          y: [0, 12],
+          duration: 430,
+          ease: 'inOut(2)',
+        }, '<+=100')
         .add('.record-bridge-fnd', {
           opacity: [0, 1],
           scale: [0.92, 1],
           y: [8, 0],
           duration: 420,
-        }, '<+=20')
+        }, '<-=280')
         .add('.record-bridge-rule i', {
           scaleX: [0, 1],
           transformOrigin: 'center',
