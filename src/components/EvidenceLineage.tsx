@@ -1,4 +1,5 @@
 import { AlertTriangle, ArrowDown, CheckCircle2, GitCompareArrows, ScanLine } from 'lucide-react'
+import { motion } from 'framer-motion'
 import type { CapturedObservation } from '../types/evidence'
 
 export function EvidenceLineage({ observation }: { observation: CapturedObservation | null }) {
@@ -70,12 +71,16 @@ export function EvidenceLineage({ observation }: { observation: CapturedObservat
 
         {nodes.map((node, index) => (
           <div key={node.id} className="lineage-node-wrap" data-evidence-id={node.id}>
-            <article className={`lineage-node tone-${node.tone}`}>
+            <motion.article
+              layoutId={node.id === captured ? 'evidence-obs04-carrier' : undefined}
+              className={`lineage-node tone-${node.tone} ${node.id === captured ? 'evidence-carrier-lineage' : ''}`}
+              transition={node.id === captured ? { type: 'spring', stiffness: 360, damping: 34, mass: 0.62 } : undefined}
+            >
               <div className="lineage-node-id">{node.icon}<span>{node.id}</span><em>{node.label}</em></div>
               <strong>{node.title}</strong>
               <p>{node.detail}</p>
               <small>{node.outcome}</small>
-            </article>
+            </motion.article>
             {index < nodes.length - 1 && <ArrowDown className="lineage-arrow" size={13} aria-hidden="true" />}
           </div>
         ))}
