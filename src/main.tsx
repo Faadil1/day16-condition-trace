@@ -21,3 +21,5 @@ createRoot(document.getElementById('root')!).render(
     <App />
   </StrictMode>,
 )
+
+import './styles/evidence-in-motion-v4.css'
