@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from 'react'
+import { LayoutGroup } from 'framer-motion'
 import { MuseumHeader } from './MuseumHeader'
 import { ObjectStage } from './ObjectStage'
 import { EvidencePanel } from './EvidencePanel'
@@ -109,40 +110,47 @@ export function AppShell() {
 
   return (
     <main ref={shellRef} className={`app-shell step-${step}`} data-workflow-step={step}>
-      <MuseumHeader />
-      <div className={`workspace ${step === 'compare' ? 'compare-mode' : ''}`}>
-        <ObjectStage
-          step={step}
-          lightAngle={lightAngle}
-          onLightAngle={setLightAngle}
-          observation={observation}
-          onCanvasReady={canvas => { examinationCanvas.current = canvas }}
-          selectedId={selectedId}
-          onSelectRecord={setSelectedId}
-          capturePulse={capturePulse}
-        />
-        <EvidencePanel
-          step={step}
-          selectedId={selectedId}
-          lightAngle={lightAngle}
-          observation={observation}
-          onNext={next}
-        />
-      </div>
-      <RecordChain selectedId={selectedId} onSelect={setSelectedId} expanded={step !== 'open'} highlightPeriod={step === 'finding' || step === 'record'} />
-
-      {recordBridge && (
-        <div className="record-bridge" aria-hidden="true">
-          <div className="record-bridge-inner">
-            <span className="record-bridge-fnd">FND-01</span>
-            <div className="record-bridge-rule"><i /><em>TRACE RESOLVED</em><i /></div>
-            <strong className="record-bridge-label">Evidence Record</strong>
-            <small className="record-bridge-copy">Qualified finding → institutional record</small>
-          </div>
+      <LayoutGroup id="condition-trace-evidence-continuity">
+        <MuseumHeader />
+        <div className={`workspace ${step === 'compare' ? 'compare-mode' : ''}`}>
+          <ObjectStage
+            step={step}
+            lightAngle={lightAngle}
+            onLightAngle={setLightAngle}
+            observation={observation}
+            onCanvasReady={canvas => { examinationCanvas.current = canvas }}
+            selectedId={selectedId}
+            onSelectRecord={setSelectedId}
+            capturePulse={capturePulse}
+          />
+          <EvidencePanel
+            step={step}
+            selectedId={selectedId}
+            lightAngle={lightAngle}
+            observation={observation}
+            onNext={next}
+          />
         </div>
-      )}
+        <RecordChain selectedId={selectedId} onSelect={setSelectedId} expanded={step !== 'open'} highlightPeriod={step === 'finding' || step === 'record'} />
 
-      {step === 'record' && <GeneratedRecord observation={observation} onClose={() => setStep('finding')} />}
+        {recordBridge && (
+          <div className="record-bridge" aria-hidden="true">
+            <div className="record-bridge-inner">
+              <div className="record-bridge-chain" aria-hidden="true">
+                {['SRC-03', 'OBS-04', 'CMP-01', 'LIM-01', 'FND-01'].map((id, index) => (
+                  <span key={id} className={`record-bridge-node node-${index + 1}`}>{id}</span>
+                ))}
+              </div>
+              <span className="record-bridge-fnd">FND-01</span>
+              <div className="record-bridge-rule"><i /><em>TRACE RESOLVED</em><i /></div>
+              <strong className="record-bridge-label">Evidence Record</strong>
+              <small className="record-bridge-copy">Qualified finding → institutional record</small>
+            </div>
+          </div>
+        )}
+
+        {step === 'record' && <GeneratedRecord observation={observation} onClose={() => setStep('finding')} />}
+      </LayoutGroup>
     </main>
   )
 }
