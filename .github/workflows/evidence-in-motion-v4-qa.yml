@@ -1,0 +1,53 @@
+name: Evidence in Motion V4 QA
+
+on:
+  push:
+    branches:
+      - design/evidence-in-motion-v4
+
+permissions:
+  contents: read
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install --no-package-lock --legacy-peer-deps
+
+      - name: Install Playwright
+        run: |
+          npm install --no-save --no-package-lock --legacy-peer-deps playwright@1.55.0
+          npx playwright install --with-deps chromium
+
+      - name: Build
+        run: npm run build
+
+      - name: Start preview
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4173 > /tmp/ct-v4.log 2>&1 &
+          for i in {1..40}; do
+            if curl -fsS http://127.0.0.1:4173 >/dev/null; then exit 0; fi
+            sleep 0.5
+          done
+          cat /tmp/ct-v4.log
+          exit 1
+
+      - name: Capture V4
+        env:
+          CAPTURE_URL: http://127.0.0.1:4173
+        run: node submission-video/capture/evidence-in-motion-v4-qa.cjs
+
+      - name: Upload QA artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: condition-trace-evidence-in-motion-v4-qa
+          path: evidence-in-motion-v4-qa/
+          retention-days: 14
