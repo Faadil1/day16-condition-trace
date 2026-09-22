@@ -1,4 +1,5 @@
 import { ArrowRight, ImageOff, Link2, ScanLine, TriangleAlert } from 'lucide-react'
+import { motion } from 'framer-motion'
 import { records } from '../data/objectRecord'
 import { toGrazingAngle } from '../lib/examination'
 import type { CapturedObservation } from '../types/evidence'
@@ -67,8 +68,15 @@ export function ComparisonView({ observationAngle, observation }: { observationA
         </div>
 
         <article className="comparison-frame current">
-          <div className="comparison-frame-head">
+          <div className="comparison-frame-head comparison-frame-head-current">
             <span className="eyebrow">B · CAPTURED RETURN ARRIVAL</span>
+            <motion.span
+              layoutId="evidence-obs04-carrier"
+              className="evidence-carrier evidence-carrier-compare"
+              transition={{ type: 'spring', stiffness: 360, damping: 34, mass: 0.62 }}
+            >
+              {observation?.id ?? 'OBS-04'}
+            </motion.span>
             <EvidenceStatus status={current.evidenceStatus} />
           </div>
           <CapturedEvidencePlate imageDataUrl={observation?.imageDataUrl} />
