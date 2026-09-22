@@ -1,4 +1,5 @@
 import { ArrowLeft, Download, X } from 'lucide-react'
+import { motion } from 'framer-motion'
 import { coreFinding, objectRecord, records } from '../data/objectRecord'
 import type { CapturedObservation } from '../types/evidence'
 import { EvidenceStatus } from './EvidenceStatus'
@@ -70,7 +71,16 @@ export function GeneratedRecord({ observation, onClose }: { observation: Capture
               {observation?.imageDataUrl ? <img src={observation.imageDataUrl} alt="Captured raking-light observation of the upper-right shoulder" /> : <span>CAPTURE UNAVAILABLE</span>}
             </div>
             <div className="doc-observation-copy">
-              <span className="document-label">CAPTURED OBSERVATION / {observation?.id ?? 'OBS-04'}</span>
+              <span className="document-label document-label-observation">
+                CAPTURED OBSERVATION /
+                <motion.span
+                  layoutId="evidence-obs04-carrier"
+                  className="evidence-carrier evidence-carrier-record"
+                  transition={{ type: 'spring', stiffness: 360, damping: 34, mass: 0.62 }}
+                >
+                  {observation?.id ?? 'OBS-04'}
+                </motion.span>
+              </span>
               <strong>{observation?.feature ?? 'Hairline crack legible'}</strong>
               <p>{observation?.area ?? 'Upper-right shoulder'} · {observation?.angle ?? 9}° from surface · Human-reviewed</p>
               <small>{observation?.capturedAt ? `Review capture ${new Date(observation.capturedAt).toLocaleString()}` : 'Captured during return-arrival examination'}</small>
