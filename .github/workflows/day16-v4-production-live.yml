@@ -1,0 +1,41 @@
+name: Day 16 V4 Production Live Recording
+
+on:
+  push:
+    branches:
+      - capture/day16-v4-live-2026-09-22
+
+permissions:
+  contents: read
+
+jobs:
+  record:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Playwright
+        run: |
+          npm install --no-save --no-package-lock --legacy-peer-deps playwright@1.55.0
+          npx playwright install --with-deps chromium
+
+      - name: Record production V4
+        env:
+          CAPTURE_URL: https://day16-condition-trace.vercel.app/
+        run: node submission-video/capture/day16-v4-production-live.cjs
+
+      - name: Upload live recording
+        uses: actions/upload-artifact@v4
+        with:
+          name: day16-v4-production-live
+          path: day16-v4-live-output/
+          if-no-files-found: error
+          retention-days: 14
