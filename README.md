@@ -200,6 +200,16 @@ Current documentation:
 
 ---
 
+## Portfolio package
+
+The current Contra-ready case-study copy and metadata live in:
+
+- [`docs/PORTFOLIO_CONTRA.md`](docs/PORTFOLIO_CONTRA.md)
+
+This file is the publishing source for the V4 portfolio story and should be kept aligned with the live product contract.
+
+---
+
 ## Run locally
 
 ```bash
