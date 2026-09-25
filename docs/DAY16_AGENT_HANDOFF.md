@@ -1,4 +1,4 @@
-# Day 16 Agent Handoff — Condition Trace V3
+# Day 16 Agent Handoff — Condition Trace V4
 
 Use this file when continuing Condition Trace from another conversation or coding agent.
 
@@ -6,23 +6,30 @@ Use this file when continuing Condition Trace from another conversation or codin
 
 Repository: `Faadil1/day16-condition-trace`
 
-Current V3 working branch:
+Current promoted branch:
 
 ```text
-design/uiux-v3-smoky-patina
+main
 ```
 
-Do not assume `main` contains the latest V3 design until an explicit promotion/merge has occurred.
+Current direction:
 
-## Read these files first, in order
+```text
+Evidence in Motion V4
+```
 
-1. `README.md` — product purpose and limitations.
-2. `docs/UIUX_WORKFLOW_CANONICAL.md` — reusable design rules and Condition Trace adapter.
-3. `docs/TRACE_WORKFLOW_SYSTEM.md` — TRACE architecture and how gates/tools are organized.
-4. `docs/POSTMORTEM_CONDITION_TRACE_V3.md` — what worked, what failed, what was promoted into the workflow.
-5. `docs/VIDEO_DEMO_GUIDE.md` — exact showcase-film strategy and shot list.
+Do not continue from the old V3 Smoky Patina branch as if it were current. V3 is now historical design documentation.
 
-Before modifying proof-bearing behavior, inspect the current React components and V3 CSS rather than relying on older screenshots or memory.
+## Read these files first
+
+1. `README.md` — current product contract and release state.
+2. `docs/V4_EVIDENCE_IN_MOTION.md` — current V4 interaction/design contract.
+3. `docs/UIUX_WORKFLOW_CANONICAL.md` — reusable design rules.
+4. `docs/TRACE_WORKFLOW_SYSTEM.md` — TRACE architecture.
+5. `docs/POSTMORTEM_CONDITION_TRACE_V3.md` — historical lessons only.
+6. `docs/VIDEO_DEMO_GUIDE.md` — original video strategy; verify against current V4 before using.
+
+Before modifying proof-bearing behavior, inspect the current React components and `src/styles/evidence-in-motion-v4.css`.
 
 ---
 
@@ -31,128 +38,109 @@ Before modifying proof-bearing behavior, inspect the current React components an
 Condition Trace is a conservation evidence workflow for establishing the **first documented appearance** of a surface feature across non-equivalent records.
 
 Canonical conclusion:
+
 - first documented appearance: **Aug 3, 2026**;
-- prior records are diffuse-light documentation and do not provide an equivalent raking-light comparison;
+- prior records use diffuse-light documentation;
+- the return-arrival record adds raking light;
+- earlier documentation is not an equivalent examination;
 - prior physical absence therefore **cannot be confirmed**;
-- no cause, exact physical timing or liability determination is made.
+- no cause, exact physical timing, responsibility, or liability determination is made.
 
-If any proposed design/video copy strengthens these claims, stop and reopen the Proof Contract instead of silently changing them.
-
----
-
-# Frozen / high-confidence product layers
-
-Treat these as frozen unless a real bug is found:
-
-- Canonical Vessel V2 geometry/material identity.
-- Upper-right-shoulder hairline feature behavior.
-- Grazing-light/raking-light examination logic.
-- OBS-04 captured observation pipeline.
-- Honest Compare A/B logic.
-- Evidence lineage:
-  `SRC-03 → OBS-04 → CMP-01 → LIM-01 → FND-01`
-- Qualified finding language.
-- Evidence Record content/export logic.
-- Responsive baseline and reduced-motion behavior.
-
-Visual polish may change presentation but should not rewrite these facts.
+Never upgrade the finding beyond the evidence.
 
 ---
 
-# Current V3 art direction
+# Frozen / high-confidence layers
 
-Name: **Smoky Patina Archive**
+Treat these as frozen unless a concrete bug is found:
 
-Core palette:
-- smoky blue-green anchor: `#24363A`
-- patina green: `#3F5B53`
-- parchment: `#F0E4CF`
-- charcoal: `#1D2324`
-- bronze evidence/action: `#B78455`
-- stone blue: `#708B94`
-
-Typography:
-- Newsreader — editorial/display
-- Manrope — reading/UI
-- DM Mono — IDs, dates, states, technical notation
-
-Typography was explicitly re-audited late in V3. Do not reintroduce 5–8px readable content. Microtype is reserved for non-essential identifiers.
+- canonical vessel identity;
+- upper-right-shoulder hairline feature;
+- raking-light examination logic;
+- OBS-04 captured observation pipeline;
+- honest Compare logic;
+- evidence lineage:
+  `SRC-03 → OBS-04 → CMP-01 → LIM-01 → FND-01`;
+- qualified finding language;
+- Evidence Record content;
+- responsive baseline;
+- reduced-motion behavior.
 
 ---
 
-# Signature interaction hierarchy
+# V4 interaction laws
 
-1. **Raking-light examination** — primary signature / strongest wow moment.
-2. **Evidence Trace** — Anime.js + SVG lineage animation.
-3. **Finding → Evidence Record** — resolution signature.
-4. **Archive record selection** — moving bronze selection mark.
-5. **OBS-04 preservation seal** — short capture micro-interaction.
+1. **Evidence has continuity.**
+2. **Light is the instrument.**
+3. **Evidence has resistance.**
+4. **Archive closes the loop.**
 
-Do not add another major effect unless it performs a genuinely new product job. More motion is not automatically more unique.
+Signature interaction hierarchy:
 
----
+1. raking-light reveal;
+2. OBS-04 preservation;
+3. evidence continuity through Compare;
+4. animated evidence lineage;
+5. Finding → Record collapse;
+6. hold-to-seal finalization.
 
-# Technology ownership
-
-- Three.js / React Three Fiber — object, camera, lighting, spatial examination.
-- Anime.js — editorial choreography, SVG evidence path, staged sequences.
-- Motion / Framer Motion — React transitions, layout motion, record-selection movement.
-- React Bits / Magic UI — reference sources only unless a component solves a real job.
-- Rive — not currently needed.
-- KokonutUI Liquid Glass — intentionally rejected for this visual direction.
-- Bklit — not relevant to this workflow.
+Do not add effects that do not perform a product job.
 
 ---
 
-# Next recommended task: final showcase video
+# Current implementation landmarks
 
-Do **not** begin by redesigning the application again.
+Key files include:
 
-Read `docs/VIDEO_DEMO_GUIDE.md` and use the hybrid route:
+- `src/components/AppShell.tsx`
+- `src/components/ObjectStage.tsx`
+- `src/components/ComparisonView.tsx`
+- `src/components/EvidenceLineage.tsx`
+- `src/components/GeneratedRecord.tsx`
+- `src/components/HoldToSealButton.tsx`
+- `src/hooks/useEditorialMotion.ts`
+- `src/styles/evidence-in-motion-v4.css`
 
-1. capture real V3 footage for all proof-bearing interactions;
-2. create a separate `/video` Remotion project only if a cinematic edit is desired;
-3. use Remotion for timing, crops, titles, transition logic and final end card;
-4. keep Three.js proof shots sourced from the canonical application whenever possible.
+The V4 browser QA flow exists to validate the visual states deterministically.
 
-The final film should follow:
+---
+
+# Current release state
+
+V4 is promoted to `main`.
+
+Production URL:
 
 ```text
-Open → Records → Raking-light Inspect → OBS-04 Preserve → Compare → Evidence Trace → Finding → Evidence Record
+https://day16-condition-trace.vercel.app
 ```
 
-Target master:
-- 1920×1080
-- 30fps
-- ~38–45 seconds
+The Phase II comeback film is a publishing artifact layered on top of the live product. Do not treat edited video as stronger evidence than the deployed interaction.
 
----
-
-# Suggested first prompt for a coding agent
+For social/demo work, preserve this hierarchy:
 
 ```text
-We are continuing Condition Trace Day 16 on branch design/uiux-v3-smoky-patina.
-Before changing anything, read README.md, docs/UIUX_WORKFLOW_CANONICAL.md,
-docs/TRACE_WORKFLOW_SYSTEM.md, docs/POSTMORTEM_CONDITION_TRACE_V3.md,
-and docs/VIDEO_DEMO_GUIDE.md.
-
-Treat the canonical proof logic and current V3 design as frozen unless you find a concrete bug.
-Our next task is the final showcase film. Build from the hybrid strategy in VIDEO_DEMO_GUIDE.md:
-real application capture for proof-bearing moments, Remotion for edit/choreography, and no fabricated evidence.
-First return a concise capture plan and proposed file structure. Do not modify the app until that plan is reviewed.
+real product behavior
+→ deterministic capture
+→ editorial cut
+→ narration / sound design
 ```
+
+Never fabricate a product behavior in post.
 
 ---
 
-# Completion criteria for the video phase
+# If continuing the project
 
-The video phase is complete only when:
-- the real raking-light examination is visible;
-- OBS-04 preservation is visible;
-- Compare visibly preserves the documentation gap;
-- the Evidence Trace is understandable;
-- FND-01 resolves into the Evidence Record;
-- the limitation remains clear;
-- text is readable at normal playback scale;
-- the film does not suggest automatic detection, cause or liability;
-- the final video accurately represents what the live app can do.
+The next work should be additive and release-oriented, not another wholesale redesign.
+
+Good next tasks:
+
+- polish repository/public case-study documentation;
+- refresh showcase screenshots from the current V4 runtime;
+- maintain production proof;
+- package social/portfolio assets;
+- collect post-release feedback;
+- only reopen product design if a concrete usability or evidence problem appears.
+
+Avoid reopening V3-vs-V4 aesthetic exploration without a real problem.
